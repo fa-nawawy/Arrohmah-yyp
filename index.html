@@ -34,42 +34,16 @@
         ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* --- STYLING CETAK STRUK THERMAL & RAPOR --- */
+        /* --- STYLING CETAK STRUK & RAPOR UMUM --- */
         @media print {
             body > *:not(#print-area) { display: none !important; }
             body { background: white; margin: 0; padding: 0; }
             #print-area { display: block !important; position: absolute; left: 0; top: 0; width: 100%; color: black; }
             @page { margin: 0; }
         }
-        .thermal-receipt {
-            font-family: 'Courier New', Courier, monospace;
-            width: 100%; max-width: 300px;
-            margin: 0 auto; padding: 15px;
-            background: white; color: black; font-size: 12px;
-        }
-        .thermal-receipt h2 { font-size: 16px; font-weight: bold; margin: 0 0 5px 0; text-align: center; }
-        .thermal-receipt p { margin: 2px 0; text-align: center; font-size: 11px; }
-        .thermal-receipt .divider { border-bottom: 1px dashed black; margin: 8px 0; }
-        .thermal-receipt .flex-row { display: flex; justify-content: space-between; margin-bottom: 3px; font-size: 11px;}
-        
-        /* PERBAIKAN STYLING RAPOR */
-        .rapor-print { font-family: 'Times New Roman', Times, serif; background: white; color: black; width: 100%; max-width: 100%; margin: 0 auto; padding: 30px; font-size: 11pt;}
-        .rapor-print table { border-collapse: collapse; width: 100%; margin-bottom: 20px;}
-        .rapor-print th, .rapor-print td { border: 1px solid black; padding: 8px; vertical-align: middle;}
-        .rapor-print .no-border { border: none !important; margin-bottom: 20px;}
-        .rapor-print .no-border td { border: none !important; padding: 4px 8px; }
-        .kop-rapor-garis { border-bottom: 4px double black; padding-bottom: 8px; margin-bottom: 5px; position: relative; text-align: center; }
-
-        /* --- STYLING KARTU ID --- */
-        .id-card { width: 300px; height: 500px; display: flex; flex-direction: column; background: white; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); overflow: hidden; position: relative; border: 1px solid #e2e8f0; margin: 0 auto; background-color: #ffffff; }
-        .id-card-header { height: 110px; flex-shrink: 0; background: #0ea5e9; display: flex; align-items: center; justify-content: center; color: white; text-align: center; transition: background 0.3s; padding-bottom: 20px;}
-        .id-card-body { flex: 1; padding: 20px; display: flex; flex-direction: column; align-items: center; background-color: #f8fafc; transition: background-color 0.3s; }
-        .profile-img-container { width: 120px; height: 120px; border-radius: 50%; padding: 4px; background: white; margin-top: -80px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); cursor: pointer; position: relative; z-index: 10; border: 1px solid #e2e8f0; transition: transform 0.2s;}
-        .profile-img-container:hover { transform: scale(1.05); }
-        .profile-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; background: #f1f5f9; }
-        .barcode-container { margin-top: auto; width: 100%; display: flex; justify-content: center; background: white; padding: 5px; border-radius: 8px;}
-        #barcode { max-width: 100%; height: 40px; }
         
         /* Modal Cropper */
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 999999; display: none; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
@@ -148,7 +122,7 @@
                         <label class="block text-[11px] font-bold text-gray-700 mb-1">Username</label>
                         <div class="relative group">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400"><i class="fa-solid fa-user text-xs"></i></div>
-                         <input type="text" id="login-user" class="w-full border-2 border-gray-200 rounded-xl pl-8 p-2.5 focus:border-blue-500 focus:ring-0 outline-none text-xs" required placeholder="Masukkan username...">
+                            <input type="text" id="login-user" class="w-full border-2 border-gray-200 rounded-xl pl-8 p-2.5 focus:border-blue-500 focus:ring-0 outline-none text-xs" required placeholder="Masukkan username...">
                         </div>
                     </div>
                     <div>
@@ -360,7 +334,7 @@
                         </div>
                     </div>
                 </div>
-
+ 
                 <!-- DATA SISWA -->
                 <div id="tab-siswa" class="tab-content max-w-6xl mx-auto">
                     <div class="mb-8"><h2 class="text-2xl font-bold text-gray-800">Manajemen Siswa</h2></div>
@@ -419,89 +393,66 @@
 
                 <!-- DATA NILAI (AKADEMIK) -->
                 <div id="tab-nilai" class="tab-content max-w-6xl mx-auto">
-                    <div class="mb-8 flex justify-between items-center">
-                        <div>
-                            <h2 class="text-2xl font-bold text-gray-800">Input Nilai Akademik</h2>
-                            <p class="text-gray-500 text-sm">Pilih siswa dan mata pelajaran untuk mengisi nilai rapor.</p>
+                    <div class="animate-fade-in bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                        <!-- Header & Pilihan Siswa -->
+                        <div class="p-4 md:p-6 border-b border-gray-100 bg-gray-50 flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-4">
+                            <div>
+                                <h2 class="text-base md:text-xl font-bold text-gray-800 flex items-center gap-2"><i class="fa-solid fa-columns text-blue-600 text-lg"></i> Input Nilai Rapor</h2>
+                                <p class="text-xs md:text-sm text-gray-500 mt-1">Pilih siswa lalu masukkan nilai akademik.</p>
+                            </div>
+                            <div class="w-full md:min-w-[250px]">
+                                <select id="input-nilai-siswa" onchange="window.handleSelectStudentForNilai()" class="w-full px-3 md:px-4 py-2 md:py-2.5 border border-blue-300 bg-blue-50 text-blue-900 font-bold rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-sm">
+                                    <option value="">-- Pilih Siswa --</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <div class="lg:col-span-1 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-                            <h3 class="font-bold mb-4 border-b pb-2"><i class="fa-solid fa-pen-to-square text-blue-500 mr-2"></i>Form Nilai</h3>
-                            <form onsubmit="window.simpanNilai(event)" class="space-y-4">
-                                <div>
-                                    <label class="block text-sm font-medium mb-1">Pilih Siswa</label>
-                                    <select id="input-nilai-siswa" class="w-full border p-2.5 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 bg-white" required onchange="window.muatNilaiSiswa()"></select>
+
+                        <!-- Area Formulir Nilai -->
+                        <div class="p-4 md:p-6" id="area-form-nilai">
+                            <div class="text-center py-12 md:py-16">
+                                <div class="bg-gray-100 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
+                                    <i class="fa-solid fa-pen-to-square text-gray-400 text-2xl md:text-3xl"></i>
                                 </div>
-                                <div>
-                                    <label class="block text-sm font-medium mb-1">Pilih Mata Pelajaran</label>
-                                    <select id="input-nilai-mapel" class="w-full border p-2.5 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 bg-white" required></select>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium mb-1">Nilai Angka (0-100)</label>
-                                    <input type="number" id="input-nilai-angka" class="w-full border p-2.5 rounded-lg outline-none focus:ring-2 focus:ring-blue-500" min="0" max="100" required placeholder="Cth: 85">
-                                </div>
-                                <button type="submit" class="w-full bg-blue-600 text-white rounded-lg p-2.5 font-bold hover:bg-blue-700 mt-2 flex justify-center items-center gap-2 shadow-md">
-                                    <i class="fa-solid fa-save"></i> Simpan Nilai
-                                </button>
-                            </form>
-                        </div>
-                        
-                        <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-                            <h3 class="font-bold mb-4 border-b pb-2">Daftar Nilai Siswa Terpilih</h3>
-                            <div class="overflow-x-auto">
-                                <table class="w-full text-sm text-left">
-                                    <thead class="bg-gray-100/80 text-xs text-gray-500 uppercase border-b border-gray-200">
-                                        <tr>
-                                            <th class="px-4 py-3">Mata Pelajaran</th>
-                                            <th class="px-4 py-3 text-center">Nilai Angka</th>
-                                            <th class="px-4 py-3 text-center">Predikat</th>
-                                            <th class="px-4 py-3 text-center"><i class="fa-solid fa-gear"></i></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="table-nilai-siswa" class="divide-y divide-gray-100 bg-white">
-                                        <tr><td colspan="4" class="text-center py-6 text-gray-500">Pilih siswa di sebelah kiri terlebih dahulu.</td></tr>
-                                    </tbody>
-                                </table>
+                                <h3 class="text-base md:text-lg font-medium text-gray-900 mb-1">Pilih Siswa Terlebih Dahulu</h3>
+                                <p class="text-xs md:text-sm text-gray-500">Gunakan menu dropdown di atas.</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- CETAK RAPOR (AKADEMIK) -->
+                <!-- CETAK RAPOR (AKADEMIK) MENGGUNAKAN DESAIN BARU -->
                 <div id="tab-rapor" class="tab-content max-w-5xl mx-auto">
-                    <div class="mb-8">
-                        <h2 class="text-2xl font-bold text-gray-800">Cetak Rapor Siswa</h2>
-                        <p class="text-gray-500 text-sm">Pilih siswa dan format periode untuk mencetak Laporan Hasil Belajar.</p>
-                    </div>
-                    
-                    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 max-w-xl mx-auto relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-50 rounded-bl-full -z-10"></div>
-                        <h3 class="font-bold mb-4 border-b pb-2 flex items-center text-indigo-800"><i class="fa-solid fa-print mr-2 text-indigo-500"></i>Pengaturan Cetak</h3>
+                    <div class="animate-fade-in space-y-4 md:space-y-6 overflow-x-auto pb-8">
                         
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-sm font-medium mb-1">Pilih Siswa</label>
-                                <select id="cetak-rapor-siswa" class="w-full border p-2.5 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500 bg-white"></select>
-                            </div>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-sm font-medium mb-1">Semester</label>
-                                    <select id="cetak-rapor-semester" class="w-full border p-2.5 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500 bg-white">
-                                        <option value="Ganjil">Ganjil</option>
-                                        <option value="Genap">Genap</option>
+                        <!-- Panel Pengaturan Cetak -->
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-indigo-50 p-4 rounded-xl border border-indigo-100">
+                            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full sm:w-auto">
+                                <div class="flex items-center gap-2 w-full sm:w-auto bg-white px-3 py-2 rounded-lg border border-indigo-200 shadow-sm">
+                                    <label class="text-sm font-bold text-indigo-900 whitespace-nowrap">Siswa:</label>
+                                    <select id="cetak-rapor-siswa" class="bg-transparent text-sm font-bold text-indigo-700 outline-none w-full cursor-pointer max-w-[200px]"></select>
+                                </div>
+                                <div class="flex items-center gap-2 w-full sm:w-auto bg-white px-3 py-2 rounded-lg border border-indigo-200 shadow-sm">
+                                    <label class="text-sm font-bold text-indigo-900 whitespace-nowrap">Pilih Rapor:</label>
+                                    <select id="cetak-rapor-imda" class="bg-transparent text-sm font-bold text-indigo-700 outline-none w-full cursor-pointer">
+                                        <option value="i1_a">Nilai IMDA SATU</option>
+                                        <option value="i2_a">Nilai IMDA DUA</option>
+                                        <option value="i3_a">Nilai IMDA TIGA</option>
+                                        <option value="average">Rata-rata Akhir</option>
                                     </select>
                                 </div>
-                                <div>
-                                    <label class="block text-sm font-medium mb-1">Tahun Ajaran</label>
-                                    <input type="text" id="cetak-rapor-tahun" class="w-full border p-2.5 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500" value="2025/2026">
+                                <div class="flex items-center gap-2 w-full sm:w-auto bg-white px-3 py-2 rounded-lg border border-indigo-200 shadow-sm hidden">
+                                    <input type="text" id="cetak-rapor-tahun" class="bg-transparent text-sm font-bold text-indigo-700 outline-none w-24" value="1447 H" placeholder="Tahun Ajaran">
                                 </div>
                             </div>
                             
-                            <button onclick="window.cetakRapor()" class="w-full bg-indigo-600 text-white rounded-xl p-3 font-bold hover:bg-indigo-700 shadow-lg flex items-center justify-center gap-2 mt-6 transition-transform hover:scale-[1.01]">
-                                <i class="fa-solid fa-print"></i> Pratinjau & Cetak Rapor
-                            </button>
+                            <button onclick="window.cetakRapor()" class="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-lg font-bold flex items-center justify-center gap-2 shadow-sm transition-all"><i class="fa-solid fa-print text-sm"></i> CETAK RAPOR</button>
+                        </div>
+
+                        <!-- Info Instruksi -->
+                        <div class="text-center text-gray-500 text-sm mt-8 border-2 border-dashed border-gray-300 p-8 rounded-xl">
+                            <i class="fa-solid fa-print text-4xl mb-4 text-gray-400"></i>
+                            <p>Silakan atur pilihan di atas lalu klik tombol <b>Cetak Rapor</b>.</p>
+                            <p>Sistem akan memformat dan menyesuaikan tabel rapor secara otomatis agar pas untuk dicetak di kertas A4.</p>
                         </div>
                     </div>
                 </div>
@@ -1146,7 +1097,7 @@
             const cek = window.appState.siswa.find(s => s.nis === nis);
             if(cek) return window.showAlert('Gagal', 'NIS siswa sudah terdaftar!', 'error');
             
-            window.appState.siswa.push({ id: Date.now(), nis, nama, kelas, wali, saldo: 0 });
+            window.appState.siswa.push({ id: Date.now(), nis, nama, kelas, wali, saldo: 0, perilaku: {kerajinan: 'A', kedisiplinan: 'A', kebersihan: 'A'}, kehadiran: {sakit: 0, izin: 0, alpa: 0} });
             window.saveState(); window.updateAllViews();
             
             document.getElementById('siswa-nis').value = ''; document.getElementById('siswa-nama').value = '';
@@ -1171,6 +1122,183 @@
 
         window.hapusMapel = (id) => {
             window.showConfirm("Hapus Mapel", "Yakin ingin menghapus mata pelajaran ini?", () => { window.appState.mapel = window.appState.mapel.filter(m => m.id !== id); window.saveState(); window.updateAllViews(); });
+        };
+
+        window.tambahGuru = (e) => {
+            e.preventDefault();
+            const nip = document.getElementById('guru-nip').value.trim(); const nama = document.getElementById('guru-nama').value.trim();
+            const jabatan = document.getElementById('guru-jabatan').value.trim(); const hp = document.getElementById('guru-hp').value.trim();
+            if (!nip || !nama) return window.showAlert('Gagal', 'NIP dan Nama Guru wajib diisi.', 'error');
+            const cekDuplikat = window.appState.guru.find(g => String(g.nip) === nip);
+            if (cekDuplikat) return window.showAlert('Gagal', 'NIP atau ID Guru tersebut sudah terdaftar di sistem.', 'error');
+            window.appState.guru.push({ id: Date.now(), nip, nama, jabatan, hp }); window.saveState(); window.updateAllViews();
+            document.getElementById('guru-nip').value = ''; document.getElementById('guru-nama').value = ''; document.getElementById('guru-jabatan').value = ''; document.getElementById('guru-hp').value = '';
+            window.showAlert('Berhasil', 'Data Guru berhasil disimpan.', 'success');
+        };
+
+        window.hapusGuru = (id) => { window.showConfirm("Hapus Guru", "Apakah Anda yakin ingin menghapus data guru ini?", () => { window.appState.guru = window.appState.guru.filter(g => g.id !== id); window.saveState(); window.updateAllViews(); }); };
+
+        window.renderTabelBarang = () => {
+            const table = document.getElementById('table-barang-lengkap');
+            if (!table) return;
+            const keyword = (document.getElementById('cari-barang-inventaris')?.value || '').toLowerCase();
+            const isAdmin = window.currentUser && window.currentUser.role === 'admin';
+            
+            let filtered = window.appState.atk || [];
+            if (keyword) {
+                filtered = filtered.filter(a => (a.nama_barang || '').toLowerCase().includes(keyword) || (a.kode_barang || '').toLowerCase().includes(keyword));
+            }
+            
+            table.innerHTML = filtered.length === 0 ? '<tr><td colspan="6" class="text-center py-6 text-gray-500">Tidak ada barang.</td></tr>' : filtered.map(a => {
+                const btnEdit = isAdmin ? `<button onclick="window.editATK(${a.id})" class="text-blue-500 hover:text-blue-700 bg-blue-50 p-1.5 rounded-lg"><i class="fa-solid fa-pen"></i></button>` : '';
+                const btnHapus = isAdmin ? `<button onclick="window.hapusATK(${a.id})" class="text-red-500 hover:text-red-700 bg-red-50 p-1.5 rounded-lg ml-1"><i class="fa-solid fa-trash"></i></button>` : '';
+                return `
+                <tr class="hover:bg-gray-50 border-b border-gray-100">
+                    <td class="px-6 py-3 font-medium text-gray-500 text-xs font-mono">${a.kode_barang || '-'}</td>
+                    <td class="px-6 py-3 font-bold text-sm text-gray-800">${a.nama_barang}</td>
+                    <td class="px-6 py-3 text-right text-xs text-gray-500">${window.formatRp(a.harga_beli || 0)}</td>
+                    <td class="px-6 py-3 text-right font-bold text-sm text-orange-600">${window.formatRp(a.harga_jual)}</td>
+                    <td class="px-6 py-3 text-center text-sm font-bold ${a.stok < 5 ? 'text-red-500 bg-red-50 px-2 py-1 rounded' : 'text-gray-700'}">${a.stok}</td>
+                    <td class="px-6 py-3 text-center whitespace-nowrap">${btnEdit}${btnHapus}</td>
+                </tr>`;
+            }).join('');
+        };
+
+        window.bukaModalATK = () => {
+            document.getElementById('atk-mode').value = 'add';
+            document.getElementById('atk-id').value = '';
+            document.getElementById('modal-atk-title').innerText = 'Tambah Barang Baru';
+            document.getElementById('label-atk-stok').innerText = 'Stok Awal';
+            document.getElementById('atk-kode').value = '';
+            document.getElementById('atk-nama').value = '';
+            document.getElementById('atk-beli').value = '';
+            document.getElementById('atk-jual').value = '';
+            document.getElementById('atk-stok').value = '';
+            document.getElementById('atk-hint').classList.add('hidden');
+            document.getElementById('modal-atk').classList.replace('hidden', 'flex');
+        };
+
+        window.editATK = (id) => {
+            const atk = window.appState.atk.find(a => a.id === id);
+            if(!atk) return;
+            document.getElementById('atk-mode').value = 'edit';
+            document.getElementById('atk-id').value = atk.id;
+            document.getElementById('modal-atk-title').innerText = 'Edit Barang';
+            document.getElementById('label-atk-stok').innerText = 'Tambah Stok (Isi 0 jika tetap)';
+            document.getElementById('atk-kode').value = atk.kode_barang || '';
+            document.getElementById('atk-nama').value = atk.nama_barang || '';
+            document.getElementById('atk-beli').value = atk.harga_beli || '';
+            document.getElementById('atk-jual').value = atk.harga_jual || '';
+            document.getElementById('atk-stok').value = 0;
+            document.getElementById('atk-hint').classList.add('hidden');
+            document.getElementById('modal-atk').classList.replace('hidden', 'flex');
+        };
+
+        window.cekKodeATK = () => {
+            const kode = document.getElementById('atk-kode').value.trim().toUpperCase();
+            const mode = document.getElementById('atk-mode').value;
+            const hint = document.getElementById('atk-hint');
+            
+            if (mode === 'add' && kode) {
+                const existing = window.appState.atk.find(a => a.kode_barang === kode);
+                if (existing) {
+                    hint.classList.remove('hidden');
+                    document.getElementById('atk-nama').value = existing.nama_barang;
+                    document.getElementById('atk-beli').value = existing.harga_beli || '';
+                    document.getElementById('atk-jual').value = existing.harga_jual;
+                } else {
+                    hint.classList.add('hidden');
+                }
+            } else {
+                hint.classList.add('hidden');
+            }
+        };
+
+        window.simpanATK = (e) => {
+            e.preventDefault();
+            const mode = document.getElementById('atk-mode').value;
+            const id = document.getElementById('atk-id').value;
+            const kode = document.getElementById('atk-kode').value.trim().toUpperCase();
+            const nama = document.getElementById('atk-nama').value.trim();
+            const beli = parseInt(document.getElementById('atk-beli').value) || 0;
+            const jual = parseInt(document.getElementById('atk-jual').value) || 0;
+            const stokInput = parseInt(document.getElementById('atk-stok').value) || 0;
+
+            if (!nama || jual <= 0) return window.showAlert('Gagal', 'Nama barang dan Harga Jual wajib diisi!', 'error');
+
+            if (mode === 'add') {
+                const existing = window.appState.atk.find(a => a.kode_barang && a.kode_barang === kode);
+                if (existing && kode) {
+                    existing.stok += stokInput;
+                    existing.harga_beli = beli;
+                    existing.harga_jual = jual;
+                } else {
+                    window.appState.atk.push({ id: Date.now(), kode_barang: kode, nama_barang: nama, harga_beli: beli, harga_jual: jual, stok: stokInput });
+                }
+            } else {
+                const idx = window.appState.atk.findIndex(a => String(a.id) === String(id));
+                if (idx > -1) {
+                    window.appState.atk[idx].kode_barang = kode;
+                    window.appState.atk[idx].nama_barang = nama;
+                    window.appState.atk[idx].harga_beli = beli;
+                    window.appState.atk[idx].harga_jual = jual;
+                    window.appState.atk[idx].stok += stokInput; 
+                }
+            }
+
+            window.saveState();
+            window.updateAllViews();
+            document.getElementById('modal-atk').classList.replace('flex', 'hidden');
+            window.showAlert('Berhasil', 'Data barang berhasil disimpan.', 'success');
+        };
+
+        window.hapusATK = (id) => {
+            window.showConfirm("Hapus Barang", "Yakin ingin menghapus barang ini dari sistem?", () => {
+                window.appState.atk = window.appState.atk.filter(a => a.id !== id);
+                window.saveState();
+                window.updateAllViews();
+            });
+        };
+
+        window.renderRiwayatSiswa = (id) => {
+            const siswa = window.appState.siswa.find(s => s.id === id);
+            const container = document.getElementById('riwayat-container');
+            if (!siswa) {
+                container.classList.add('hidden');
+                return;
+            }
+
+            container.classList.remove('hidden');
+            document.getElementById('riwayat-nama').innerText = siswa.nama;
+            document.getElementById('riwayat-nis').innerText = siswa.nis;
+            document.getElementById('riwayat-kelas').innerText = `Kelas ${siswa.kelas}`;
+            document.getElementById('riwayat-saldo').innerText = window.formatRp(siswa.saldo);
+
+            const isAdmin = window.currentUser && window.currentUser.role === 'admin';
+
+            const tabungan = window.appState.tabungan.filter(t => t.id_siswa === id).reverse();
+            document.getElementById('riwayat-tabel-tabungan').innerHTML = tabungan.length > 0 ? tabungan.map(t => {
+                const btnHapus = isAdmin ? `<td class="px-3 py-2 text-center text-red-400 hover:text-red-600 cursor-pointer" onclick="window.hapusTabungan(${t.id})"><i class="fa-solid fa-trash text-[10px]"></i></td>` : `<td class="px-3 py-2 text-center">-</td>`;
+                return `
+                <tr class="border-b hover:bg-gray-50">
+                    <td class="px-3 py-2 text-[10px] text-gray-500">${t.tanggal}</td>
+                    <td class="px-3 py-2 text-xs font-medium"><span class="px-1.5 py-0.5 rounded-md ${t.jenis==='Setor'?'bg-green-100 text-green-700':'bg-red-100 text-red-700'}">${t.jenis}</span><br><span class="text-[9px] text-gray-400">${t.keterangan || ''}</span></td>
+                    <td class="px-3 py-2 text-right font-bold text-xs ${t.jenis==='Setor'?'text-green-600':'text-red-600'}">${window.formatRp(t.nominal)}</td>
+                    ${btnHapus}
+                </tr>`;
+            }).join('') : `<tr><td colspan="4" class="text-center py-4 text-xs text-gray-400">Belum ada transaksi.</td></tr>`;
+
+            const spp = window.appState.spp.filter(p => p.id_siswa === id).reverse();
+            document.getElementById('riwayat-tabel-spp').innerHTML = spp.length > 0 ? spp.map(p => {
+                const btnHapus = isAdmin ? `<td class="px-3 py-2 text-center text-red-400 hover:text-red-600 cursor-pointer" onclick="window.hapusSPP(${p.id})"><i class="fa-solid fa-trash text-[10px]"></i></td>` : `<td class="px-3 py-2 text-center">-</td>`;
+                return `
+                <tr class="border-b hover:bg-gray-50">
+                    <td class="px-3 py-2 text-[10px] text-gray-500">${p.tanggal}</td>
+                    <td class="px-3 py-2 text-xs font-medium text-blue-700">${p.bulan} ${p.tahun}</td>
+                    <td class="px-3 py-2 text-right font-bold text-xs text-gray-700">${window.formatRp(p.nominal)}</td>
+                    ${btnHapus}
+                </tr>`;
+            }).join('') : `<tr><td colspan="4" class="text-center py-4 text-xs text-gray-400">Belum ada pembayaran.</td></tr>`;
         };
 
         /* ======= TABUNGAN ======= */
@@ -1343,179 +1471,361 @@
             });
         };
 
-        window.tambahGuru = (e) => {
-            e.preventDefault();
-            const nip = document.getElementById('guru-nip').value.trim(); const nama = document.getElementById('guru-nama').value.trim();
-            const jabatan = document.getElementById('guru-jabatan').value.trim(); const hp = document.getElementById('guru-hp').value.trim();
-            if (!nip || !nama) return window.showAlert('Gagal', 'NIP dan Nama Guru wajib diisi.', 'error');
-            const cekDuplikat = window.appState.guru.find(g => String(g.nip) === nip);
-            if (cekDuplikat) return window.showAlert('Gagal', 'NIP atau ID Guru tersebut sudah terdaftar di sistem.', 'error');
-            window.appState.guru.push({ id: Date.now(), nip, nama, jabatan, hp }); window.saveState(); window.updateAllViews();
-            document.getElementById('guru-nip').value = ''; document.getElementById('guru-nama').value = ''; document.getElementById('guru-jabatan').value = ''; document.getElementById('guru-hp').value = '';
-            window.showAlert('Berhasil', 'Data Guru berhasil disimpan.', 'success');
-        };
 
-        window.hapusGuru = (id) => { window.showConfirm("Hapus Guru", "Apakah Anda yakin ingin menghapus data guru ini?", () => { window.appState.guru = window.appState.guru.filter(g => g.id !== id); window.saveState(); window.updateAllViews(); }); };
-
-        /* ================= INPUT NILAI & RAPOR ================= */
-        window.simpanNilai = (e) => {
-            e.preventDefault();
-            const idSiswa = parseInt(document.getElementById('input-nilai-siswa').value); const idMapel = parseInt(document.getElementById('input-nilai-mapel').value); const nilaiAngka = parseInt(document.getElementById('input-nilai-angka').value);
-            if(!idSiswa || !idMapel || isNaN(nilaiAngka)) return window.showAlert('Gagal', 'Pilih Siswa, Pilih Mata Pelajaran, dan pastikan Nilai sudah terisi.', 'error');
-            const existingIdx = window.appState.nilai.findIndex(n => n.id_siswa === idSiswa && n.id_mapel === idMapel);
-            if(existingIdx >= 0) window.appState.nilai[existingIdx].nilai = nilaiAngka; else window.appState.nilai.push({ id: Date.now(), id_siswa: idSiswa, id_mapel: idMapel, nilai: nilaiAngka });
-            window.saveState(); window.updateAllViews(); document.getElementById('input-nilai-angka').value = '';
-            window.showAlert('Berhasil', 'Nilai akademik berhasil disimpan.', 'success');
-        };
-
-        window.muatNilaiSiswa = () => {
-            const idSiswa = parseInt(document.getElementById('input-nilai-siswa').value); const table = document.getElementById('table-nilai-siswa');
-            if(!table) return;
-            if(!idSiswa) { table.innerHTML = '<tr><td colspan="4" class="text-center py-6 text-gray-500">Pilih siswa di sebelah kiri terlebih dahulu untuk melihat daftar nilainya.</td></tr>'; return; }
-            
-            const isAdmin = window.currentUser && window.currentUser.role === 'admin';
-            const nilaiSiswa = window.appState.nilai.filter(n => n.id_siswa === idSiswa);
-            
-            if(nilaiSiswa.length === 0) { table.innerHTML = '<tr><td colspan="4" class="text-center py-6 text-gray-500">Belum ada nilai yang diinput untuk siswa ini. Silakan input pada form.</td></tr>'; return; }
-            table.innerHTML = nilaiSiswa.map(n => {
-                const mapel = window.appState.mapel.find(m => m.id === n.id_mapel) || {nama: 'Mapel Telah Dihapus'};
-                const predikat = n.nilai >= 90 ? 'A' : n.nilai >= 80 ? 'B' : n.nilai >= 70 ? 'C' : 'D';
-                const stylePred = predikat === 'A' || predikat === 'B' ? 'text-green-600' : (predikat === 'C' ? 'text-orange-500' : 'text-red-500');
-                const btnHapus = isAdmin ? `<button onclick="window.hapusNilai(${n.id})" class="text-red-500 hover:text-red-700 bg-red-50 p-1.5 rounded-md"><i class="fa-solid fa-trash text-[10px]"></i></button>` : '';
-                return `<tr class="hover:bg-gray-50 border-b border-gray-100"><td class="px-4 py-3 text-sm font-medium text-gray-800">${mapel.nama}</td><td class="px-4 py-3 font-bold text-sm text-center">${n.nilai}</td><td class="px-4 py-3 font-bold text-sm text-center ${stylePred}">${predikat}</td><td class="px-4 py-3 text-center">${btnHapus}</td></tr>`;
-            }).join('');
-        };
+        /* ================= INPUT NILAI & RAPOR (VANILLA JS) ================= */
         
-        window.hapusNilai = (id) => { window.showConfirm("Hapus Nilai", "Apakah Anda yakin ingin menghapus data nilai ini?", () => { window.appState.nilai = window.appState.nilai.filter(n => n.id !== id); window.saveState(); window.updateAllViews(); }); };
+        window.nilaiState = { activeStudentId: null, activeInputMenu: 'input1', editSubjects: [], editPerilaku: { kerajinan: 'A', kedisiplinan: 'A', kebersihan: 'A' }, editKehadiran: { sakit: 0, izin: 0, alpa: 0 } };
 
+        window.handleSelectStudentForNilai = () => {
+            const select = document.getElementById('input-nilai-siswa'); const idSiswa = parseInt(select.value);
+            if(!idSiswa) { window.nilaiState.activeStudentId = null; window.renderNilaiForm(); return; }
+
+            window.nilaiState.activeStudentId = idSiswa; const siswa = window.appState.siswa.find(s => s.id === idSiswa);
+
+            let mapels = window.appState.mapel.filter(m => m.kelas.toLowerCase() === siswa.kelas.toLowerCase());
+            if(mapels.length === 0) mapels = window.appState.mapel; 
+
+            window.nilaiState.editSubjects = mapels.map(m => {
+                const existing = window.appState.nilai.find(n => n.id_siswa === idSiswa && n.id_mapel === m.id) || {};
+                return {
+                    id: m.id, mapel: m.nama,
+                    input1Harian: existing.i1_h || 0, input1Imda: existing.i1_i || 0, input1Nilai: existing.i1_a || 0,
+                    input2Harian: existing.i2_h || 0, input2Imda: existing.i2_i || 0, input2Nilai: existing.i2_a || 0,
+                    input3Harian: existing.i3_h || 0, input3Imda: existing.i3_i || 0, input3Nilai: existing.i3_a || 0,
+                };
+            });
+
+            window.nilaiState.editPerilaku = siswa.perilaku || { kerajinan: 'A', kedisiplinan: 'A', kebersihan: 'A' };
+            window.nilaiState.editKehadiran = siswa.kehadiran || { sakit: 0, izin: 0, alpa: 0 };
+            window.renderNilaiForm();
+        };
+
+        window.setActiveInputMenu = (menu) => { window.nilaiState.activeInputMenu = menu; window.renderNilaiForm(); };
+
+        window.handleSubjectChange = (idMapel, field, value) => {
+            let val = parseInt(value) || 0; if(val < 0) val = 0; if(val > 100) val = 100;
+            const subIdx = window.nilaiState.editSubjects.findIndex(s => s.id === idMapel);
+            if(subIdx > -1) {
+                const menu = window.nilaiState.activeInputMenu; 
+                window.nilaiState.editSubjects[subIdx][`${menu}${field}`] = val;
+                const h = window.nilaiState.editSubjects[subIdx][`${menu}Harian`];
+                const i = window.nilaiState.editSubjects[subIdx][`${menu}Imda`];
+                window.nilaiState.editSubjects[subIdx][`${menu}Nilai`] = Math.round((h + i) / 2);
+            }
+            window.renderNilaiForm();
+        };
+
+        window.handlePerilakuChange = (field, value) => { window.nilaiState.editPerilaku[field] = value; window.renderNilaiForm(); };
+        window.handleKehadiranChange = (field, value) => { let val = parseInt(value) || 0; if(val < 0) val = 0; window.nilaiState.editKehadiran[field] = val; window.renderNilaiForm(); };
+        window.calculateAverageNilai = () => { const subs = window.nilaiState.editSubjects; if(subs.length === 0) return 0; const menu = window.nilaiState.activeInputMenu; const total = subs.reduce((sum, sub) => sum + (sub[`${menu}Nilai`] || 0), 0); return Math.round(total / subs.length); };
+
+        window.simpanNilaiBaru = () => {
+            const idSiswa = window.nilaiState.activeStudentId; if(!idSiswa) return;
+            window.nilaiState.editSubjects.forEach(sub => {
+                const existingIdx = window.appState.nilai.findIndex(n => n.id_siswa === idSiswa && n.id_mapel === sub.id);
+                const dataNilai = { id_siswa: idSiswa, id_mapel: sub.id, i1_h: sub.input1Harian, i1_i: sub.input1Imda, i1_a: sub.input1Nilai, i2_h: sub.input2Harian, i2_i: sub.input2Imda, i2_a: sub.input2Nilai, i3_h: sub.input3Harian, i3_i: sub.input3Imda, i3_a: sub.input3Nilai };
+                if(existingIdx > -1) { window.appState.nilai[existingIdx] = { ...window.appState.nilai[existingIdx], ...dataNilai }; } else { window.appState.nilai.push({ id: Date.now() + Math.random(), ...dataNilai }); }
+            });
+            const idxSiswa = window.appState.siswa.findIndex(s => s.id === idSiswa);
+            if(idxSiswa > -1) { window.appState.siswa[idxSiswa].perilaku = { ...window.nilaiState.editPerilaku }; window.appState.siswa[idxSiswa].kehadiran = { ...window.nilaiState.editKehadiran }; }
+            window.saveState(); window.showAlert('Berhasil', 'Semua nilai akademik, perilaku, dan kehadiran berhasil disimpan ke Database Cloud.', 'success');
+        };
+
+        window.renderNilaiForm = () => {
+            const area = document.getElementById('area-form-nilai'); const state = window.nilaiState;
+            if(!state.activeStudentId) { area.innerHTML = `<div class="text-center py-12 md:py-16"><div class="bg-gray-100 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4"><i class="fa-solid fa-pen-to-square text-gray-400 text-2xl md:text-3xl"></i></div><h3 class="text-base md:text-lg font-medium text-gray-900 mb-1">Pilih Siswa Terlebih Dahulu</h3><p class="text-xs md:text-sm text-gray-500">Gunakan menu dropdown di atas.</p></div>`; return; }
+
+            const menuLabel = state.activeInputMenu === 'input1' ? 'SATU' : (state.activeInputMenu === 'input2' ? 'DUA' : 'TIGA');
+            let tableContent = '';
+            if(state.editSubjects.length === 0) { tableContent = `<div class="text-center py-6 text-gray-500 bg-red-50 rounded-lg border border-red-100 text-sm"><i class="fa-solid fa-triangle-exclamation text-red-500 mb-2 text-xl block"></i>Belum ada Master Mapel untuk kelas siswa ini.</div>`; } else {
+                let rows = state.editSubjects.map((sub, index) => {
+                    const subNilaiAkhir = sub[`${state.activeInputMenu}Nilai`] || 0;
+                    return `
+                    <tr class="hover:bg-gray-50/50 transition-colors border-b border-gray-100">
+                        <td class="px-3 py-2 text-gray-500 text-center">${index + 1}</td>
+                        <td class="px-3 py-2"><input type="text" value="${sub.mapel}" readonly class="w-full p-2 bg-gray-50 border border-gray-200 rounded outline-none text-gray-600 font-medium cursor-default text-xs md:text-sm" /></td>
+                        <td class="px-3 py-2"><input type="number" min="0" max="100" value="${sub[`${state.activeInputMenu}Harian`]}" onchange="window.handleSubjectChange(${sub.id}, 'Harian', this.value)" class="w-full p-2 border border-blue-200 rounded focus:ring-2 focus:ring-blue-500 outline-none text-center font-bold text-xs md:text-sm" /></td>
+                        <td class="px-3 py-2"><input type="number" min="0" max="100" value="${sub[`${state.activeInputMenu}Imda`]}" onchange="window.handleSubjectChange(${sub.id}, 'Imda', this.value)" class="w-full p-2 border border-blue-200 rounded focus:ring-2 focus:ring-blue-500 outline-none text-center font-bold text-xs md:text-sm" /></td>
+                        <td class="px-3 py-2"><input type="number" min="0" max="100" value="${subNilaiAkhir}" readonly class="w-full p-2 border border-gray-300 bg-gray-100 rounded outline-none text-center font-bold text-gray-500 text-xs md:text-sm" /></td>
+                    </tr>`;
+                }).join('');
+
+                tableContent = `<div class="table-container shadow-sm border border-gray-200 rounded-lg pb-2 overflow-x-auto"><table class="w-full text-xs md:text-sm text-left whitespace-nowrap"><thead class="bg-blue-50 text-blue-900 font-semibold border-b border-blue-100"><tr><th class="px-3 py-2.5 md:py-3 w-10 text-center">No</th><th class="px-3 py-2.5 md:py-3 min-w-[140px]">Mata Pelajaran (IMDA ${menuLabel})</th><th class="px-3 py-2.5 md:py-3 w-20 md:w-24 text-center">Harian</th><th class="px-3 py-2.5 md:py-3 w-20 md:w-24 text-center">Imda</th><th class="px-3 py-2.5 md:py-3 w-20 md:w-32 text-center">Rata²</th></tr></thead><tbody class="divide-y divide-gray-100">${rows}</tbody></table></div>`;
+            }
+
+            const btnClass1 = state.activeInputMenu === 'input1' ? 'bg-white shadow text-blue-700' : 'text-gray-500 hover:text-gray-900';
+            const btnClass2 = state.activeInputMenu === 'input2' ? 'bg-white shadow text-blue-700' : 'text-gray-500 hover:text-gray-900';
+            const btnClass3 = state.activeInputMenu === 'input3' ? 'bg-white shadow text-blue-700' : 'text-gray-500 hover:text-gray-900';
+            const opt = (val, selected) => `<option value="${val}" ${val === selected ? 'selected' : ''}>${val}</option>`;
+            const p = state.editPerilaku; const k = state.editKehadiran;
+
+            area.innerHTML = `
+            <div class="space-y-4 animate-fade-in">
+                <div class="flex overflow-x-auto space-x-2 bg-gray-100 p-1 md:p-1.5 rounded-lg w-full md:w-fit mt-1 mb-2 md:mb-4 border border-gray-200 hide-scrollbar pb-1">
+                    <button type="button" onclick="window.setActiveInputMenu('input1')" class="flex-1 md:flex-none whitespace-nowrap px-4 py-2 text-xs md:text-sm font-bold rounded-md transition-all ${btnClass1}">IMDA SATU</button>
+                    <button type="button" onclick="window.setActiveInputMenu('input2')" class="flex-1 md:flex-none whitespace-nowrap px-4 py-2 text-xs md:text-sm font-bold rounded-md transition-all ${btnClass2}">IMDA DUA</button>
+                    <button type="button" onclick="window.setActiveInputMenu('input3')" class="flex-1 md:flex-none whitespace-nowrap px-4 py-2 text-xs md:text-sm font-bold rounded-md transition-all ${btnClass3}">IMDA TIGA</button>
+                </div>
+                ${tableContent}
+                ${state.editSubjects.length > 0 ? `
+                <div class="mt-6 md:mt-8 border-t border-gray-200 pt-4 md:pt-6">
+                    <h3 class="text-sm md:text-lg font-semibold text-gray-800 flex items-center gap-2 mb-3"><i class="fa-regular fa-face-smile text-green-500"></i> Penilaian Perilaku</h3>
+                    <div class="grid grid-cols-3 gap-2 md:gap-6 bg-green-50 p-3 md:p-5 rounded-xl border border-green-100">
+                        <div><label class="block text-[10px] md:text-sm font-medium text-gray-700 mb-1 truncate">A. Kerajinan</label><select onchange="window.handlePerilakuChange('kerajinan', this.value)" class="w-full px-1 md:px-3 py-1.5 md:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 outline-none font-bold text-xs md:text-sm text-center">${opt('A', p.kerajinan)}${opt('B', p.kerajinan)}${opt('C', p.kerajinan)}${opt('D', p.kerajinan)}</select></div>
+                        <div><label class="block text-[10px] md:text-sm font-medium text-gray-700 mb-1 truncate">B. Kedisiplinan</label><select onchange="window.handlePerilakuChange('kedisiplinan', this.value)" class="w-full px-1 md:px-3 py-1.5 md:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 outline-none font-bold text-xs md:text-sm text-center">${opt('A', p.kedisiplinan)}${opt('B', p.kedisiplinan)}${opt('C', p.kedisiplinan)}${opt('D', p.kedisiplinan)}</select></div>
+                        <div><label class="block text-[10px] md:text-sm font-medium text-gray-700 mb-1 truncate">C. Kebersihan</label><select onchange="window.handlePerilakuChange('kebersihan', this.value)" class="w-full px-1 md:px-3 py-1.5 md:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 outline-none font-bold text-xs md:text-sm text-center">${opt('A', p.kebersihan)}${opt('B', p.kebersihan)}${opt('C', p.kebersihan)}${opt('D', p.kebersihan)}</select></div>
+                    </div>
+                </div>
+                <div class="mt-4 md:mt-8 border-t border-gray-200 pt-4 md:pt-6">
+                    <h3 class="text-sm md:text-lg font-semibold text-gray-800 flex items-center gap-2 mb-3"><i class="fa-regular fa-calendar-check text-orange-500"></i> Ketidakhadiran</h3>
+                    <div class="grid grid-cols-3 gap-2 md:gap-6 bg-orange-50 p-3 md:p-5 rounded-xl border border-orange-100">
+                        <div><label class="block text-[10px] md:text-sm font-medium text-gray-700 mb-1 truncate">Sakit</label><input type="number" min="0" value="${k.sakit}" onchange="window.handleKehadiranChange('sakit', this.value)" class="w-full px-1 md:px-3 py-1.5 md:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none text-center font-bold text-xs md:text-sm" /></div>
+                        <div><label class="block text-[10px] md:text-sm font-medium text-gray-700 mb-1 truncate">Izin</label><input type="number" min="0" value="${k.izin}" onchange="window.handleKehadiranChange('izin', this.value)" class="w-full px-1 md:px-3 py-1.5 md:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none text-center font-bold text-xs md:text-sm" /></div>
+                        <div><label class="block text-[10px] md:text-sm font-medium text-gray-700 mb-1 truncate">Alpa</label><input type="number" min="0" value="${k.alpa}" onchange="window.handleKehadiranChange('alpa', this.value)" class="w-full px-1 md:px-3 py-1.5 md:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none text-center font-bold text-xs md:text-sm" /></div>
+                    </div>
+                </div>
+                <div class="flex flex-col md:flex-row justify-between items-center mt-6 pt-4 border-t border-gray-100 gap-4">
+                    <div class="bg-blue-50 px-4 md:px-6 py-2.5 md:py-3 rounded-lg flex items-center justify-between w-full md:w-auto md:gap-4 border border-blue-100">
+                        <span class="text-blue-800 font-medium text-xs md:text-sm">Rata-rata IMDA ${menuLabel}:</span>
+                        <span class="text-lg md:text-xl font-bold text-blue-600">${window.calculateAverageNilai()}</span>
+                    </div>
+                    <button onclick="window.simpanNilaiBaru()" class="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 md:py-3 rounded-lg font-medium flex items-center justify-center gap-2 shadow-sm transition-all"><i class="fa-solid fa-floppy-disk text-lg"></i> Simpan ke Database</button>
+                </div>` : ''}
+            </div>`;
+        };
+
+        // HELPER TERBILANG (ANGKA KE HURUF)
+        window.angkaKeHuruf = (angka) => {
+            const huruf = ["Nol", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh"];
+            return huruf[Math.floor(angka)] || angka.toString();
+        };
+
+        // CETAK RAPOR LENGKAP DENGAN LAYOUT 3 KOLOM & QR CODE
         window.cetakRapor = () => {
             const idSiswa = parseInt(document.getElementById('cetak-rapor-siswa').value);
             if(!idSiswa) return window.showAlert('Gagal', 'Pilih nama siswa terlebih dahulu dari dropdown.', 'error');
             const siswa = window.appState.siswa.find(s => s.id === idSiswa); if(!siswa) return;
 
-            const semester = document.getElementById('cetak-rapor-semester').value; const tahun = document.getElementById('cetak-rapor-tahun').value; const pengaturan = window.appState.pengaturan || {};
+            const printImda = document.getElementById('cetak-rapor-imda').value;
+            const tahun = document.getElementById('cetak-rapor-tahun').value;
+
+            const imdaLabelName = printImda === 'i1_a' ? 'SATU' : printImda === 'i2_a' ? 'DUA' : printImda === 'i3_a' ? 'TIGA' : 'Rata-Rata Akhir';
+
+            // 1. Mengambil data mapel & nilai anak ini
+            const mapels = window.appState.mapel.filter(m => m.kelas.toLowerCase() === siswa.kelas.toLowerCase());
+            let academicSubjects = [];
+            let totalNilaiRaw = 0;
+
+            mapels.forEach(m => {
+                const n = window.appState.nilai.find(x => x.id_siswa === idSiswa && x.id_mapel === m.id) || {};
+                let nilaiAngka = 0;
+                if(printImda === 'average') {
+                    nilaiAngka = ((n.i1_a || 0) + (n.i2_a || 0) + (n.i3_a || 0)) / 3;
+                } else {
+                    nilaiAngka = n[printImda] || 0;
+                }
+                totalNilaiRaw += (nilaiAngka / 10);
+                academicSubjects.push({ id: m.id, mapel: m.nama, nilaiAsli: nilaiAngka });
+            });
+
+            const totalNilai = totalNilaiRaw.toFixed(1);
+            const rataRataSiswa = academicSubjects.length ? (totalNilaiRaw / academicSubjects.length).toFixed(2) : "0.00";
+
+            // 2. Kalkulasi Ranking dan Rata-rata Kelas
+            const classStudents = window.appState.siswa.filter(s => s.kelas === siswa.kelas);
+            const classAverages = classStudents.map(st => {
+                const mapelKelas = window.appState.mapel.filter(m => m.kelas.toLowerCase() === st.kelas.toLowerCase());
+                let stTotal = 0;
+                mapelKelas.forEach(m => {
+                    const n = window.appState.nilai.find(x => x.id_siswa === st.id && x.id_mapel === m.id) || {};
+                    let v = printImda === 'average' ? (((n.i1_a||0) + (n.i2_a||0) + (n.i3_a||0))/3) : (n[printImda]||0);
+                    stTotal += (v / 10);
+                });
+                const stAvg = mapelKelas.length ? (stTotal / mapelKelas.length) : 0;
+                return { id: st.id, avg: stAvg };
+            });
             
-            let htmlKop = pengaturan.kop_rapor ? `<div class="kop-rapor-garis mb-4"><img src="${pengaturan.kop_rapor}" style="max-width: 100%; max-height: 120px; object-fit: contain;"></div>` : `<div class="kop-rapor-garis mb-4"><h1 style="font-size: 24pt; font-weight: bold; text-transform: uppercase;">${pengaturan.struk_judul || 'MADRASAH AL-KHOIROT'}</h1><p style="font-size: 12pt;">${pengaturan.struk_alamat || 'Alamat Madrasah'}</p></div>`;
-            
-            const nilaiSiswa = window.appState.nilai.filter(n => n.id_siswa === idSiswa); let rows = '';
-            
-            if(nilaiSiswa.length === 0) { rows = `<tr><td colspan="6" style="text-align: center; padding: 20px;">Belum ada nilai akademik yang terinput. Pastikan untuk mengisi nilai di menu Input Nilai.</td></tr>`; } 
-            else {
-                nilaiSiswa.forEach((n, idx) => {
-                    const mapel = window.appState.mapel.find(m => m.id === n.id_mapel) || {nama: 'Mapel Dihapus'};
-                    const predikat = n.nilai >= 90 ? 'A' : n.nilai >= 80 ? 'B' : n.nilai >= 70 ? 'C' : 'D';
-                    const deskripsi = predikat === 'A' ? 'Sangat Baik' : predikat === 'B' ? 'Baik' : predikat === 'C' ? 'Cukup' : 'Kurang';
-                    rows += `<tr><td style="text-align: center;">${idx+1}</td><td style="font-weight: bold;">${mapel.nama}</td><td style="text-align: center;">75</td><td style="text-align: center; font-weight: bold; font-size: 13pt;">${n.nilai}</td><td style="text-align: center; font-weight: bold;">${predikat}</td><td style="text-align: center;">${deskripsi}</td></tr>`;
+            classAverages.sort((a, b) => b.avg - a.avg);
+            const studentRank = classAverages.findIndex(s => s.id === idSiswa) + 1;
+            const totalClassStudents = classStudents.length;
+            const classAverageTotalRaw = classAverages.reduce((sum, s) => sum + s.avg, 0);
+            const classAverageTotal = classStudents.length ? (classAverageTotalRaw / classStudents.length).toFixed(1) : "0.0";
+
+            // 3. Nama Kepala Sekolah dan Wali Kelas
+            const isTPQ = siswa.kelas.toUpperCase().includes('SHIFIR');
+            const titleKepala = isTPQ ? 'Kepala Madrasah TPQ' : 'Kepala Madrasah Madin';
+            const dataKepala = window.appState.guru.find(t => t.jabatan === titleKepala);
+            const namaKepala = dataKepala ? dataKepala.nama : (isTPQ ? 'YANTI APRILIA SARI' : '.......................');
+
+            const getJabatanWaliKelas = (kelas) => {
+                if (kelas.includes('I-SATU')) return 'Wali Kelas I';
+                if (kelas.includes('II-DUA')) return 'Wali Kelas II';
+                if (kelas.includes('III-TIGA')) return 'Wali Kelas III';
+                if (kelas.includes('IV-EMPAT')) return 'Wali Kelas IV';
+                if (kelas.includes('V-LIMA')) return 'Wali Kelas V';
+                if (kelas.includes('VI-ENAM')) return 'Wali Kelas VI';
+                return `Wali Kelas ${kelas}`;
+            };
+            const dataWali = window.appState.guru.find(t => t.jabatan === getJabatanWaliKelas(siswa.kelas));
+            const namaWaliKelas = dataWali ? dataWali.nama : '.......................';
+
+            // 4. Tanggal
+            const today = new Date();
+            const formattedDate = `${today.getDate()} ${today.toLocaleString('id-ID', { month: 'long' })} ${today.getFullYear()} M`;
+
+            const p = siswa.perilaku || {kerajinan: '-', kedisiplinan: '-', kebersihan: '-'};
+            const k = siswa.kehadiran || {sakit: 0, izin: 0, alpa: 0};
+
+            // 5. Tabel Nilai Html
+            let rows = '';
+            if(academicSubjects.length === 0) {
+                rows = `<tr><td colspan="5" style="border:1px solid black; padding: 10px; text-align: center;">Belum ada mapel untuk kelas ini.</td></tr>`;
+            } else {
+                academicSubjects.forEach((sub, index) => {
+                    const rataFan = sub.nilaiAsli / 10;
+                    const sisa = Math.round((rataFan - Math.floor(rataFan)) * 10) / 10;
+                    const finalAngka = sisa <= 0.5 ? Math.floor(rataFan) : Math.ceil(rataFan);
+                    const isMerah = finalAngka <= 5;
+                    const cStyle = isMerah ? "color: red; font-weight: bold;" : "";
+                    
+                    rows += `
+                    <tr>
+                        <td style="border:1px solid black; padding:6px; text-align:center;">${index + 1}</td>
+                        <td style="border:1px solid black; padding:6px;">${sub.mapel}</td>
+                        <td style="border:1px solid black; padding:6px; text-align:center; ${cStyle}">${finalAngka}</td>
+                        <td style="border:1px solid black; padding:6px; padding-left:8px; ${cStyle}">${window.angkaKeHuruf(finalAngka)}</td>
+                        <td style="border:1px solid black; padding:6px; text-align:center; ${cStyle}">${rataFan.toFixed(1)}</td>
+                    </tr>`;
                 });
             }
-            
+
+            const kopSurat = window.appState.pengaturan.kop_rapor ? `<div style="text-align:center; border-bottom: 4px double black; padding-bottom: 8px; margin-bottom: 5px;"><img src="${window.appState.pengaturan.kop_rapor}" style="max-width: 100%; max-height: 120px; object-fit: contain;"></div>` : '';
+
+            // 6. Merakit seluruh Rapor Html menggunakan INLINE CSS yang aman untuk Print
             const printHtml = `
-            <div class="rapor-print">
-                ${htmlKop}
-                <h2 style="text-align: center; font-weight: bold; font-size: 16pt; margin: 20px 0; text-decoration: underline;">LAPORAN HASIL BELAJAR (RAPOR)</h2>
-                <table class="no-border" style="width: 100%; font-size: 12pt;">
-                    <tr><td width="18%">Nama Lengkap</td><td width="2%">:</td><td width="40%" style="font-weight: bold; text-transform: uppercase;">${siswa.nama}</td><td width="18%">Kelas</td><td width="2%">:</td><td width="20%">${siswa.kelas}</td></tr>
-                    <tr><td>Nomor Induk</td><td>:</td><td>${siswa.nis}</td><td>Semester</td><td>:</td><td>${semester}</td></tr>
-                    <tr><td>Nama Wali</td><td>:</td><td>${siswa.wali}</td><td>Tahun Ajaran</td><td>:</td><td>${tahun}</td></tr>
-                </table>
-                <table style="width: 100%; font-size: 12pt; border-collapse: collapse; margin-bottom: 40px; margin-top: 10px;">
-                    <thead style="background-color: #f3f4f6; font-weight: bold;">
-                        <tr><th style="border: 1px solid black; padding: 10px; width: 5%;">No</th><th style="border: 1px solid black; padding: 10px; width: 35%;">Mata Pelajaran</th><th style="border: 1px solid black; padding: 10px; width: 10%;">KKM</th><th style="border: 1px solid black; padding: 10px; width: 15%;">Nilai Angka</th><th style="border: 1px solid black; padding: 10px; width: 15%;">Predikat</th><th style="border: 1px solid black; padding: 10px; width: 20%;">Keterangan</th></tr>
-                    </thead>
-                    <tbody>${rows}</tbody>
-                </table>
-                <div style="display: flex; justify-content: space-between; margin-top: 60px; font-size: 12pt;">
-                    <div style="text-align: center; width: 35%;"><p>Mengetahui,</p><p>Orang Tua / Wali Murid</p><br><br><br><br><p style="font-weight: bold; border-bottom: 1px solid black; display: inline-block; min-width: 200px; padding-bottom: 3px;">${siswa.wali}</p></div>
-                    <div style="text-align: center; width: 35%;"><p>Diberikan di: ............................</p><p>Tanggal: ....................................</p><p>Wali Kelas / Guru Pengajar</p><br><br><br><p style="font-weight: bold; border-bottom: 1px solid black; display: inline-block; min-width: 200px; padding-bottom: 3px;"></p></div>
+            <div style="font-family: Arial, sans-serif; color: black; background: white; padding: 20px; width: 100%; max-width: 850px; margin: 0 auto; font-size: 10pt; line-height: 1.4;">
+                ${kopSurat}
+                
+                <!-- Header Identitas -->
+                <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 16px; margin-top: 20px;">
+                    <table style="width: auto; border-collapse: collapse;">
+                        <tr><td style="padding-right: 16px; padding-bottom: 4px;">Nama</td><td>: ${siswa.nama.toUpperCase()}</td></tr>
+                        <tr><td style="padding-right: 16px; padding-bottom: 4px;">Kelas</td><td>: ${siswa.kelas}</td></tr>
+                    </table>
+                    <table style="width: auto; border-collapse: collapse;">
+                        <tr><td style="padding-right: 16px; padding-bottom: 4px;">Imda</td><td>: ${imdaLabelName}</td></tr>
+                        <tr><td style="padding-right: 16px; padding-bottom: 4px;">Tahun Ajaran</td><td>: ${tahun}</td></tr>
+                    </table>
+                </div>
+
+                <!-- Bagian Utama: Kiri & Kanan -->
+                <div style="display: flex; gap: 16px; align-items: stretch; margin-bottom: 16px;">
+                    
+                    <!-- KIRI: Tabel Akademik (70%) -->
+                    <div style="width: 70%; display: flex; flex-direction: column; gap: 16px;">
+                        <table style="width: 100%; border-collapse: collapse; border: 1px solid black; font-size: 10pt;">
+                            <thead style="background-color: #f9fafb;">
+                                <tr>
+                                    <th style="border: 1px solid black; padding: 6px; text-align: center; width: 40px;" rowspan="2">NO</th>
+                                    <th style="border: 1px solid black; padding: 6px; text-align: left;" rowspan="2">MATA PELAJARAN</th>
+                                    <th style="border: 1px solid black; padding: 6px; text-align: center;" colspan="2">NILAI</th>
+                                    <th style="border: 1px solid black; padding: 6px; text-align: center; width: 80px;" rowspan="2">Rata-rata<br/>Fan</th>
+                                </tr>
+                                <tr>
+                                    <th style="border: 1px solid black; padding: 6px; text-align: center; width: 50px;">Angka</th>
+                                    <th style="border: 1px solid black; padding: 6px; text-align: center; width: 100px;">Huruf</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${rows}
+                            </tbody>
+                        </table>
+
+                        <div style="border: 1px solid black; flex: 1; display: flex; flex-direction: column; min-height: 80px; font-size: 10pt;">
+                            <div style="text-align: center; font-weight: bold; border-bottom: 1px solid black; padding: 6px; background-color: #f9fafb;">Taujihad Wali Kelas</div>
+                            <div style="flex: 1; padding: 8px;"></div>
+                        </div>
+                    </div>
+
+                    <!-- KANAN: Tabel Info (30%) -->
+                    <div style="width: 30%; flex-shrink: 0; display: flex; flex-direction: column; gap: 32px; font-size: 10pt;">
+                        <div style="border: 1px solid black; display: flex; flex-direction: column;">
+                            <div style="text-align: center; font-weight: bold; border-bottom: 1px solid black; padding: 6px; background-color: #f9fafb;">Perilaku Murid</div>
+                            <div style="display: flex; border-bottom: 1px solid black;"><div style="flex: 1; padding: 6px;">A. Kerajinan</div><div style="font-weight: bold; border-left: 1px solid black; padding: 6px; width: 40px; text-align: center;">${p.kerajinan}</div></div>
+                            <div style="display: flex; border-bottom: 1px solid black;"><div style="flex: 1; padding: 6px;">B. Kedisiplinan</div><div style="font-weight: bold; border-left: 1px solid black; padding: 6px; width: 40px; text-align: center;">${p.kedisiplinan}</div></div>
+                            <div style="display: flex;"><div style="flex: 1; padding: 6px;">C. Kebersihan</div><div style="font-weight: bold; border-left: 1px solid black; padding: 6px; width: 40px; text-align: center;">${p.kebersihan}</div></div>
+                        </div>
+
+                        <div style="border: 1px solid black; display: flex; flex-direction: column;">
+                            <div style="text-align: center; font-weight: bold; border-bottom: 1px solid black; padding: 6px; background-color: #f9fafb;">Ketidakhadiran</div>
+                            <div style="display: flex; border-bottom: 1px solid black;"><div style="flex: 1; padding: 6px;">Alpa</div><div style="font-weight: bold; border-left: 1px solid black; padding: 6px; width: 40px; text-align: center;">${k.alpa}</div></div>
+                            <div style="display: flex; border-bottom: 1px solid black;"><div style="flex: 1; padding: 6px;">Sakit</div><div style="font-weight: bold; border-left: 1px solid black; padding: 6px; width: 40px; text-align: center;">${k.sakit}</div></div>
+                            <div style="display: flex;"><div style="flex: 1; padding: 6px;">Izin</div><div style="font-weight: bold; border-left: 1px solid black; padding: 6px; width: 40px; text-align: center;">${k.izin}</div></div>
+                        </div>
+
+                        <div style="border: 1px solid black; display: flex; flex-direction: column;">
+                            <div style="text-align: center; font-weight: bold; border-bottom: 1px solid black; padding: 6px; background-color: #f9fafb;">Nilai Imda</div>
+                            <div style="display: flex; border-bottom: 1px solid black;"><div style="flex: 1; padding: 6px;">Jumlah</div><div style="font-weight: bold; border-left: 1px solid black; padding: 6px; width: 40px; text-align: center;">${totalNilai}</div></div>
+                            <div style="display: flex; border-bottom: 1px solid black;"><div style="flex: 1; padding: 6px;">Alpa</div><div style="font-weight: bold; border-left: 1px solid black; padding: 6px; width: 40px; text-align: center;">${k.alpa}</div></div>
+                            <div style="display: flex; border-bottom: 1px solid black;"><div style="flex: 1; padding: 6px;">Jmlh Bersih</div><div style="font-weight: bold; border-left: 1px solid black; padding: 6px; width: 40px; text-align: center;">${totalNilai}</div></div>
+                            <div style="display: flex; border-bottom: 1px solid black;"><div style="flex: 1; padding: 6px;">Rata-Rata</div><div style="font-weight: bold; border-left: 1px solid black; padding: 6px; width: 40px; text-align: center;">${rataRataSiswa}</div></div>
+                            <div style="display: flex;"><div style="flex: 1; padding: 6px;">Rata Kelas</div><div style="font-weight: bold; border-left: 1px solid black; padding: 6px; width: 40px; text-align: center;">${classAverageTotal}</div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bagian Bawah: Ranking & Tanda Tangan -->
+                <div style="font-size: 10pt; margin-top: 10px;">
+                    <p style="font-weight: bold; margin-bottom: 16px; font-size: 9pt;">Peringkat ${studentRank} dari ${totalClassStudents} murid</p>
+
+                    <div style="display: flex; justify-content: flex-end; margin-bottom: 8px;">
+                        <div style="width: 30%; text-align: center;">
+                            <p>........... H / ${formattedDate}</p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; justify-content: space-between; text-align: center; align-items: flex-start;">
+                        <div style="width: 30%;">
+                            <p>Wali Murid</p>
+                            <div style="height: 80px;"></div>
+                            <p style="font-weight: bold; text-transform: uppercase; text-decoration: underline;">${siswa.wali || '.......................'}</p>
+                        </div>
+                        
+                        <div style="width: 35%; margin-top: 40px;">
+                            <p>${titleKepala}</p>
+                            <div style="height: 80px;"></div>
+                            <p style="font-weight: bold; text-transform: uppercase; text-decoration: underline;">${namaKepala}</p>
+                            ${isTPQ && namaKepala === 'YANTI APRILIA SARI' ? '<p>NIG 1961004743</p>' : ''}
+                        </div>
+
+                        <div style="width: 30%;">
+                            <p>Wali Kelas ${siswa.kelas}</p>
+                            <div style="height: 80px;"></div>
+                            <p style="font-weight: bold; text-transform: uppercase; text-decoration: underline;">${namaWaliKelas}</p>
+                            
+                            <!-- QR Code / Barcode Tempat -->
+                            <div style="margin-top: 40px; display: flex; justify-content: center;">
+                                <svg id="barcode-rapor-${siswa.id}"></svg>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>`;
             
-            const printArea = document.getElementById('print-area'); printArea.innerHTML = printHtml;
-            const style = document.createElement('style'); style.id = 'temp-print-style-rapor'; style.innerHTML = `@media print { @page { margin: 1cm; size: A4 portrait;} }`; document.head.appendChild(style);
+            const printArea = document.getElementById('print-area');
+            printArea.innerHTML = printHtml;
+            
+            // Generate Barcode SVG setelah elemen masuk ke DOM
+            try { JsBarcode(`#barcode-rapor-${siswa.id}`, siswa.nis, { format: "CODE128", width: 1.5, height: 40, displayValue: false, background: "transparent", margin: 0 }); } catch (e) { console.log("Barcode error:", e); }
+
             printArea.classList.remove('hidden');
-            setTimeout(() => { window.print(); setTimeout(() => { printArea.classList.add('hidden'); printArea.innerHTML = ''; const tempStyle = document.getElementById('temp-print-style-rapor'); if (tempStyle) tempStyle.remove(); }, 500); }, 300);
-        };
-
-
-        /* ================= MANAJEMEN BARANG KOPONTREN ================= */
-        window.bukaModalATK = (id = null) => {
-            const modal = document.getElementById('modal-atk'); const title = document.getElementById('modal-atk-title');
-            const formMode = document.getElementById('atk-mode'); const formId = document.getElementById('atk-id'); const labelStok = document.getElementById('label-atk-stok');
-
-            if(id) {
-                const barang = window.appState.atk.find(a => a.id === id);
-                if(barang) {
-                    title.innerText = "Edit Barang Kopontren"; formMode.value = "edit"; formId.value = id;
-                    document.getElementById('atk-kode').value = barang.kode_barang || ''; document.getElementById('atk-nama').value = barang.nama_barang;
-                    document.getElementById('atk-beli').value = barang.harga_beli; document.getElementById('atk-jual').value = barang.harga_jual;
-                    document.getElementById('atk-stok').value = barang.stok; labelStok.innerText = "Sisa Stok Saat Ini"; document.getElementById('atk-hint').classList.add('hidden');
-                }
-            } else {
-                title.innerText = "Tambah Barang Baru"; formMode.value = "add"; formId.value = "";
-                document.getElementById('atk-kode').value = ''; document.getElementById('atk-nama').value = ''; document.getElementById('atk-beli').value = ''; document.getElementById('atk-jual').value = ''; document.getElementById('atk-stok').value = '';
-                labelStok.innerText = "Stok Awal / Ditambahkan"; document.getElementById('atk-hint').classList.add('hidden');
-            }
-            modal.classList.replace('hidden', 'flex');
-        };
-
-        window.simpanATK = (e) => {
-            e.preventDefault();
-            const mode = document.getElementById('atk-mode').value; const id = parseInt(document.getElementById('atk-id').value);
-            const kode = document.getElementById('atk-kode').value.trim().toUpperCase(); const nama = document.getElementById('atk-nama').value.trim();
-            const beli = parseInt(document.getElementById('atk-beli').value); const jual = parseInt(document.getElementById('atk-jual').value); const stok = parseInt(document.getElementById('atk-stok').value);
-
-            if(!nama || isNaN(beli) || isNaN(jual) || isNaN(stok)) return;
-            if(mode === 'edit') {
-                const idx = window.appState.atk.findIndex(a => a.id === id);
-                if(idx >= 0) window.appState.atk[idx] = { ...window.appState.atk[idx], kode_barang: kode, nama_barang: nama, harga_beli: beli, harga_jual: jual, stok: stok };
-            } else {
-                const existing = window.appState.atk.find(a => a.kode_barang === kode && kode !== '');
-                if(existing) { existing.stok += stok; existing.harga_beli = beli; existing.harga_jual = jual; existing.nama_barang = nama; } 
-                else { window.appState.atk.push({ id: Date.now(), kode_barang: kode, nama_barang: nama, harga_beli: beli, harga_jual: jual, stok: stok }); }
-            }
-            window.saveState(); window.updateAllViews(); document.getElementById('modal-atk').classList.replace('flex', 'hidden'); window.showAlert('Berhasil', 'Data inventaris sukses disimpan.', 'success');
-        };
-
-        window.cekKodeATK = () => {
-            const kode = document.getElementById('atk-kode').value.trim().toUpperCase();
-            if(kode && document.getElementById('atk-mode').value === 'add') {
-                const existing = window.appState.atk.find(a => a.kode_barang === kode);
-                if(existing) {
-                    document.getElementById('atk-nama').value = existing.nama_barang; document.getElementById('atk-beli').value = existing.harga_beli; document.getElementById('atk-jual').value = existing.harga_jual;
-                    document.getElementById('atk-hint').classList.remove('hidden'); document.getElementById('label-atk-stok').innerText = `Tambah Stok (Saat ini: ${existing.stok})`;
-                } else { document.getElementById('atk-hint').classList.add('hidden'); document.getElementById('label-atk-stok').innerText = "Stok Awal"; }
-            }
-        };
-
-        window.hapusATK = (id) => { window.showConfirm("Hapus Barang", "Anda yakin menghapus barang ini secara permanen?", () => { window.appState.atk = window.appState.atk.filter(a => a.id !== id); window.saveState(); window.updateAllViews(); }); };
-
-        window.renderTabelBarang = () => {
-            const elTblBarang = document.getElementById('table-barang-lengkap'); if(!elTblBarang) return;
-            const st = window.appState; const isAdmin = window.currentUser && window.currentUser.role === 'admin';
-            const kataKunciEl = document.getElementById('cari-barang-inventaris'); const kataKunci = kataKunciEl ? kataKunciEl.value.toLowerCase() : '';
-            const filtered = st.atk.filter(a => (a.nama_barang || '').toLowerCase().includes(kataKunci) || (a.kode_barang || '').toLowerCase().includes(kataKunci));
-
-            if(filtered.length === 0) { elTblBarang.innerHTML = '<tr><td colspan="6" class="text-center py-6 text-gray-500">Tidak ada barang.</td></tr>'; return; }
-            elTblBarang.innerHTML = filtered.map(a => {
-                const btnHapusAtk = isAdmin ? `<button onclick="window.hapusATK(${a.id})" class="text-red-500 hover:bg-red-50 p-2 rounded-lg ml-1"><i class="fa-solid fa-trash"></i></button>` : '';
-                const styleStok = a.stok < 5 ? 'text-red-600 font-bold bg-red-50 px-2 py-1 rounded' : 'font-bold';
-                return `<tr class="hover:bg-gray-50 border-b border-gray-100"><td class="px-6 py-3 font-mono text-xs text-gray-500">${a.kode_barang || '-'}</td><td class="px-6 py-3 font-bold text-sm text-gray-800">${a.nama_barang}</td><td class="px-6 py-3 text-right text-sm text-gray-600">${window.formatRp(a.harga_beli)}</td><td class="px-6 py-3 text-right font-bold text-sm text-orange-600">${window.formatRp(a.harga_jual)}</td><td class="px-6 py-3 text-center text-sm"><span class="${styleStok}">${a.stok}</span></td><td class="px-6 py-3 text-center whitespace-nowrap"><button onclick="window.bukaModalATK(${a.id})" class="text-blue-500 hover:bg-blue-50 p-2 rounded-lg"><i class="fa-solid fa-pen"></i></button>${btnHapusAtk}</td></tr>`;
-            }).join('');
-        };
-
-        window.renderRiwayatSiswa = (idSiswa) => {
-            const container = document.getElementById('riwayat-container'); if(!idSiswa) { container.classList.add('hidden'); return; }
-            const siswa = window.appState.siswa.find(s => s.id === idSiswa); if(!siswa) return;
-
-            document.getElementById('riwayat-nama').innerText = siswa.nama; document.getElementById('riwayat-nis').innerText = siswa.nis;
-            document.getElementById('riwayat-kelas').innerText = `Kelas ${siswa.kelas}`; document.getElementById('riwayat-saldo').innerText = window.formatRp(siswa.saldo);
-
-            const tabunganSiswa = window.appState.tabungan.filter(t => t.id_siswa === idSiswa).reverse();
-            const sppSiswa = window.appState.spp.filter(p => p.id_siswa === idSiswa).reverse();
-
-            document.getElementById('riwayat-tabel-tabungan').innerHTML = tabunganSiswa.map(t => `<tr class="border-b"><td class="px-3 py-2 text-[10px] text-gray-500">${t.tanggal}</td><td class="px-3 py-2 font-bold ${t.jenis === 'Setor' ? 'text-green-600' : 'text-red-600'}">${t.jenis}</td><td class="px-3 py-2 text-right font-bold">${window.formatRp(t.nominal)}</td><td class="px-3 py-2 text-center"><i class="fa-solid fa-check text-green-500"></i></td></tr>`).join('') || '<tr><td colspan="4" class="text-center py-4 text-gray-500">Belum ada transaksi</td></tr>';
-            document.getElementById('riwayat-tabel-spp').innerHTML = sppSiswa.map(p => `<tr class="border-b"><td class="px-3 py-2 text-[10px] text-gray-500">${p.tanggal}</td><td class="px-3 py-2 font-bold text-blue-600">${p.bulan} ${p.tahun}</td><td class="px-3 py-2 text-right font-bold">${window.formatRp(p.nominal)}</td><td class="px-3 py-2 text-center"><i class="fa-solid fa-check text-green-500"></i></td></tr>`).join('') || '<tr><td colspan="4" class="text-center py-4 text-gray-500">Belum ada pembayaran</td></tr>';
-            container.classList.remove('hidden');
+            setTimeout(() => { 
+                window.print(); 
+                setTimeout(() => { 
+                    printArea.classList.add('hidden'); 
+                    printArea.innerHTML = ''; 
+                }, 500); 
+            }, 300);
         };
 
         // --- PENGATURAN & LAINNYA ---
@@ -1535,8 +1845,7 @@
         window.simpanPengaturanLogin = (e) => { e.preventDefault(); window.appState.pengaturan.admin_user = document.getElementById('setting-admin-user').value; const p = document.getElementById('setting-admin-pass').value; if(p) window.appState.pengaturan.admin_pass = p; window.saveState(); window.updateAllViews(); window.showAlert('Berhasil', 'Kredensial Admin disimpan.', 'success'); };
         window.previewKopRapor = (e) => { const f = e.target.files[0]; if(f) { const reader = new FileReader(); reader.onload = (e) => { window.appState.pengaturan.kop_rapor = e.target.result; document.getElementById('preview-kop-img').src = e.target.result; document.getElementById('preview-kop-img').classList.remove('hidden'); document.getElementById('preview-kop-placeholder').classList.add('hidden'); }; reader.readAsDataURL(f); } };
         window.simpanPengaturanRapor = (e) => { e.preventDefault(); window.saveState(); window.updateAllViews(); window.showAlert('Berhasil', 'Desain Rapor disimpan.', 'success'); };
-        window.resetFormOperator = () => {}; window.simpanOperator = (e) => { e.preventDefault(); window.showAlert('Info', 'Fungsi multi-operator tersedia di mode Pro.', 'info'); };
-    // --- MESIN SUARA BEEP ---
+        
         window.playBeep = () => {
             try {
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -1546,16 +1855,9 @@
                 oscillator.connect(gainNode);
                 gainNode.connect(audioCtx.destination);
                 
-                // Tipe 'square' memberikan karakter suara buzzer elektronik khas alat kasir
                 oscillator.type = 'square'; 
-                
-                // Frekuensi 2000 Hz persis seperti nada tinggi scanner laser asli
                 oscillator.frequency.setValueAtTime(2000, audioCtx.currentTime); 
-                
-                // Volume langsung maksimal saat pertama kali bunyi
                 gainNode.gain.setValueAtTime(1.0, audioCtx.currentTime);
-                
-                // Durasi diperpendek menjadi 0.08 detik agar bunyinya "menghentak" dan tidak bergaung
                 gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.08); 
                 
                 oscillator.start(audioCtx.currentTime);
@@ -1564,7 +1866,9 @@
                 console.log("Suara tidak didukung browser: ", error);
             }
         };
-        // --- LOGIKA SCANNER BARCODE / QR CODE ---
+        
+        window.resetFormOperator = () => {}; window.simpanOperator = (e) => { e.preventDefault(); window.showAlert('Info', 'Fungsi multi-operator tersedia di mode Pro.', 'info'); };
+        
         window.openScanner = (mode) => { 
             window.activeScannerMode = mode;
             document.getElementById('scanner-modal').classList.replace('hidden', 'flex'); 
@@ -1576,12 +1880,10 @@
             
             const config = { fps: 10, qrbox: { width: 250, height: 150 } };
             
-            // Fungsi jika barcode berhasil terbaca
             const onScanSuccess = (decodedText) => {
-                window.playBeep(); // <--- TAMBAHKAN BARIS INI UNTUK BUNYI BEEP
+                window.playBeep();
                 window.closeScanner();
                 
-                // Memasukkan hasil scan ke kolom yang sesuai
                 if (mode === 'tambah-siswa') {
                     document.getElementById('siswa-nis').value = decodedText;
                 } else if (mode === 'tabungan') {
@@ -1610,11 +1912,8 @@
                 }
             };
 
-            // Menyalakan kamera belakang (environment)
             html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess)
-            .then(() => {
-                document.getElementById('scanner-hint').innerText = "Arahkan kamera ke kode...";
-            })
+            .then(() => { document.getElementById('scanner-hint').innerText = "Arahkan kamera ke kode..."; })
             .catch(err => {
                 console.error("Camera error:", err);
                 document.getElementById('scanner-hint').innerText = "Gagal mengakses kamera. Pastikan izin kamera diizinkan di browser Anda.";
@@ -1627,15 +1926,15 @@
                 html5QrCode.stop().then(() => html5QrCode.clear()).catch(err => console.error("Gagal mematikan kamera", err));
             }
         };
+        window.cetakStrukById = () => { window.print(); };
 
-        // --- CORE UPDATE VIEWS ---
         window.updateAllViews = () => {
             const st = window.appState; const isAdmin = window.currentUser && window.currentUser.role === 'admin';
             
             if(document.getElementById('dash-siswa')) document.getElementById('dash-siswa').innerText = st.siswa.length; 
             if(document.getElementById('dash-tabungan')) document.getElementById('dash-tabungan').innerText = window.formatRp(st.siswa.reduce((a,b) => a + (b.saldo || 0), 0)); 
             if(document.getElementById('dash-spp')) document.getElementById('dash-spp').innerText = window.formatRp(st.spp.reduce((a,b) => a + b.nominal, 0)); 
-            if(document.getElementById('dash-pendapatan')) document.getElementById('dash-pendapatan').innerText = window.formatRp(st.penjualan ? st.penjualan.reduce((a,b) => a + (b.total || 0), 0) : 0);
+            if(document.getElementById('dash-pendapatan')) document.getElementById('dash-pendapatan').innerText = window.formatRp(st.penjualan ? st.penjualan.filter(p => p.tanggal.startsWith(window.getToday().split(' ')[0])).reduce((a,b) => a + (b.total || 0), 0) : 0);
             
             const tglSekarang = window.getToday(); const prefixHarian = tglSekarang.split(' ')[0]; const prefixBulanan = prefixHarian.substring(0, 7); const prefixTahunan = prefixHarian.substring(0, 4); 
             let statSetor = 0; let statTarik = 0;
@@ -1643,13 +1942,11 @@
             if(document.getElementById('stat-setor-tabungan')) document.getElementById('stat-setor-tabungan').innerText = window.formatRp(statSetor);
             if(document.getElementById('stat-tarik-tabungan')) document.getElementById('stat-tarik-tabungan').innerText = window.formatRp(statTarik);
 
-            let optSiswa = '<option value="">-- Pilih Nama Siswa --</option>'; st.siswa.forEach(s => optSiswa += `<option value="${s.id}">${s.nis} - ${s.nama}</option>`); 
+            let optSiswa = '<option value="">-- Pilih Nama Siswa --</option>'; st.siswa.forEach(s => optSiswa += `<option value="${s.id}">${s.nis} - ${s.nama} (Kls ${s.kelas})</option>`); 
             ['riwayat-siswa', 'input-nilai-siswa', 'cetak-rapor-siswa'].forEach(id => { const el = document.getElementById(id); if(el && el.tagName === 'SELECT') el.innerHTML = optSiswa; });
             
-            let optMapel = '<option value="">-- Pilih Mata Pelajaran --</option>'; st.mapel.forEach(m => optMapel += `<option value="${m.id}">${m.nama} (Kelas ${m.kelas || '-'})</option>`);
-            if (document.getElementById('input-nilai-mapel')) document.getElementById('input-nilai-mapel').innerHTML = optMapel;
-            
-            window.muatNilaiSiswa(); window.renderTabelBarang();
+            if(window.nilaiState && window.nilaiState.activeStudentId) window.handleSelectStudentForNilai(); else if(window.renderNilaiForm) window.renderNilaiForm();
+            window.renderTabelBarang();
 
             if(document.getElementById('table-siswa')) {
                 document.getElementById('table-siswa').innerHTML = st.siswa.map(s => {
@@ -1676,7 +1973,7 @@
             if(document.getElementById('table-guru')) { document.getElementById('table-guru').innerHTML = st.guru.map(g => `<tr class="hover:bg-gray-50"><td class="px-6 py-4 font-medium text-gray-900 text-xs">${g.nip}</td><td class="px-6 py-4 font-bold text-sm">${g.nama} <br><span class="text-xs text-gray-500 font-normal">${g.jabatan} | ${g.hp}</span></td><td class="px-6 py-4 text-right">${isAdmin ? `<button onclick="window.hapusGuru(${g.id})" class="text-red-500"><i class="fa-solid fa-trash"></i></button>` : ''}</td></tr>`).join(''); }
             if(document.getElementById('table-mapel')) { document.getElementById('table-mapel').innerHTML = st.mapel.map(m => `<tr class="hover:bg-gray-50"><td class="px-6 py-4 font-medium text-gray-900 text-xs">${m.kelas || '-'}</td><td class="px-6 py-4 font-bold text-sm">${m.nama}</td><td class="px-6 py-4 text-right">${isAdmin ? `<button onclick="window.hapusMapel(${m.id})" class="text-red-500"><i class="fa-solid fa-trash"></i></button>` : ''}</td></tr>`).join(''); }
 
-            if(document.getElementById('table-atk')) { document.getElementById('table-atk').innerHTML = st.atk.map(a => `<tr class="hover:bg-gray-50"><td class="px-3 py-2"><div class="font-bold text-xs text-gray-800">${a.nama_barang}</div><div class="text-[9px] text-gray-500 uppercase">${a.kode_barang || '-'}</div></td><td class="px-2 py-2 text-center text-xs font-bold ${a.stok < 5 ? 'text-red-500' : 'text-gray-700'}">${a.stok}</td><td class="px-3 py-2 text-right"><div class="text-xs font-bold text-orange-600">${window.formatRp(a.harga_jual)}</div></td><td class="px-2 py-2 text-center"><button onclick="window.openKonfirmasiKasir(${a.id})" class="text-white bg-gray-800 p-1.5 rounded-md"><i class="fa-solid fa-cart-plus"></i></button></td></tr>`).join(''); }
+            if(document.getElementById('table-atk')) { document.getElementById('table-atk').innerHTML = st.atk.map(a => `<tr class="hover:bg-gray-50"><td class="px-3 py-2"><div class="font-bold text-xs text-gray-800">${a.nama_barang}</div><div class="text-[9px] text-gray-500 uppercase">${a.kode_barang || '-'}</div></td><td class="px-2 py-2 text-center text-xs font-bold ${a.stok < 5 ? 'text-red-500 bg-red-50 px-2 py-1 rounded' : 'text-gray-700'}">${a.stok}</td><td class="px-3 py-2 text-right"><div class="text-xs font-bold text-orange-600">${window.formatRp(a.harga_jual)}</div></td><td class="px-2 py-2 text-center"><button onclick="window.openKonfirmasiKasir(${a.id})" class="text-white bg-gray-800 p-1.5 rounded-md"><i class="fa-solid fa-cart-plus"></i></button></td></tr>`).join(''); }
             if(document.getElementById('kopontren-income-today')) document.getElementById('kopontren-income-today').innerText = window.formatRp(st.penjualan ? st.penjualan.filter(p => p.tanggal.startsWith(prefixHarian)).reduce((a,b) => a + (b.total || 0), 0) : 0);
 
             const elSelectGuruIdCard = document.getElementById('select-guru-idcard');
@@ -1745,25 +2042,13 @@
         const initCloudDatabase = async () => {
             const loader = document.getElementById('startup-loader'); const syncBadge = document.getElementById('cloud-sync-status');
             
-            // CEK APAKAH URL SUDAH DIGANTI ATAU BELUM
             if (SCRIPT_URL === 'GANTI_DENGAN_URL_APPS_SCRIPT_ANDA_DI_SINI' || SCRIPT_URL === '') {
-                loader.classList.replace('flex', 'hidden');
-                console.warn("Jalankan mode offline. Harap masukkan SCRIPT_URL Google Drive.");
-                window.updateAllViews();
-                return;
+                loader.classList.replace('flex', 'hidden'); console.warn("Jalankan mode offline."); window.updateAllViews(); return;
             }
 
             try {
-                // 1. Minta Data Pertama Kali Saat Aplikasi Dibuka
-                const response = await fetch(SCRIPT_URL, { 
-                    method: 'POST', 
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }, 
-                    body: JSON.stringify({ action: 'GET_ALL' }), 
-                    redirect: 'follow' 
-                });
-                
+                const response = await fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'GET_ALL' }), redirect: 'follow' });
                 const result = await response.json();
-                
                 if (result.success && result.data) {
                     window.appState = { ...window.appState, ...result.data };
                     ['guru', 'siswa', 'mapel', 'nilai', 'tabungan', 'spp', 'atk', 'penjualan'].forEach(k => { if (!window.appState[k]) window.appState[k] = []; });
@@ -1771,34 +2056,20 @@
                 
                 loader.classList.replace('flex', 'hidden'); window.updateAllViews();
 
-                // 2. Fungsi Simpan Ke Drive Otomatis Setiap Ada Perubahan Data
                 window.saveState = async () => {
                     syncBadge.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Menyimpan ke Drive...'; syncBadge.classList.remove('opacity-0');
                     if (syncTimeout) clearTimeout(syncTimeout);
                     syncTimeout = setTimeout(async () => {
                         try {
-                            const res = await fetch(SCRIPT_URL, { 
-                                method: 'POST', 
-                                headers: { 'Content-Type': 'text/plain;charset=utf-8' }, 
-                                body: JSON.stringify({ action: 'SYNC_ALL', payload: window.appState }), 
-                                redirect: 'follow' 
-                            });
+                            const res = await fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'SYNC_ALL', payload: window.appState }), redirect: 'follow' });
                             const json = await res.json();
                             if (json.success) syncBadge.innerHTML = '<i class="fa-solid fa-check mr-2 text-green-400"></i>Data Tersimpan!';
                             else throw new Error(json.error);
-                        } catch(e) { 
-                            console.error("Gagal simpan:", e); 
-                            syncBadge.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-2 text-red-400"></i>Gagal Simpan!'; 
-                        }
+                        } catch(e) { console.error("Gagal simpan:", e); syncBadge.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-2 text-red-400"></i>Gagal Simpan!'; }
                         setTimeout(() => syncBadge.classList.add('opacity-0'), 2500);
                     }, 1000); 
                 };
-            } catch (error) {
-                console.error("Inisialisasi Cloud Gagal:", error);
-                loader.classList.replace('flex', 'hidden');
-                window.showAlert('Mode Offline', 'Koneksi ke Google Drive gagal. Anda sedang di mode Offline (Tidak tersimpan permanen).', 'error');
-                window.updateAllViews();
-            }
+            } catch (error) { console.error("Inisialisasi Cloud Gagal:", error); loader.classList.replace('flex', 'hidden'); window.showAlert('Mode Offline', 'Koneksi ke Google Drive gagal.', 'error'); window.updateAllViews(); }
         };
 
         window.onload = () => { initCloudDatabase(); window.generateBarcode("XXXXXX"); };
