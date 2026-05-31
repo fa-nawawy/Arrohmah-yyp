@@ -1685,7 +1685,7 @@
                     if (syncTimeout) clearTimeout(syncTimeout);
                     syncTimeout = setTimeout(async () => {
                         try {
-                            const res = await fetch(SCRIPT_URL,https://script.google.com/macros/s/AKfycbzrO01k8auM1x6WNyiCS8CWRy17wgBbvWwbh--Q1pl5S9GPbfetoxbF_ZzGWVnaAH2Ncg/exec { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'SYNC_ALL', payload: window.appState }) });
+                            const res = await const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzN_QMIm6VABN4H2aIwisecrOIEwZFAzDqATY2aHnsFMJOcoXT7Cbdq55wUmlxvJhOtYQ/exec'; { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'SYNC_ALL', payload: window.appState }) });
                             const json = await res.json();
                             if (json.success) syncBadge.innerHTML = '<i class="fa-solid fa-check mr-2 text-green-400"></i>Data Tersimpan!';
                             else throw new Error(json.error);
