@@ -1536,6 +1536,26 @@
         window.previewKopRapor = (e) => { const f = e.target.files[0]; if(f) { const reader = new FileReader(); reader.onload = (e) => { window.appState.pengaturan.kop_rapor = e.target.result; document.getElementById('preview-kop-img').src = e.target.result; document.getElementById('preview-kop-img').classList.remove('hidden'); document.getElementById('preview-kop-placeholder').classList.add('hidden'); }; reader.readAsDataURL(f); } };
         window.simpanPengaturanRapor = (e) => { e.preventDefault(); window.saveState(); window.updateAllViews(); window.showAlert('Berhasil', 'Desain Rapor disimpan.', 'success'); };
         window.resetFormOperator = () => {}; window.simpanOperator = (e) => { e.preventDefault(); window.showAlert('Info', 'Fungsi multi-operator tersedia di mode Pro.', 'info'); };
+        // --- MESIN SUARA BEEP ---
+        window.playBeep = () => {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                oscillator.type = 'sine'; // Tipe suara
+                oscillator.frequency.setValueAtTime(880, audioCtx.currentTime); // Frekuensi nada (880 Hz)
+                
+                oscillator.start();
+                gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.15); // Durasi suara 0.15 detik
+                oscillator.stop(audioCtx.currentTime + 0.15);
+            } catch (error) {
+                console.log("Suara tidak didukung browser: ", error);
+            }
+        };
         // --- LOGIKA SCANNER BARCODE / QR CODE ---
         window.openScanner = (mode) => { 
             window.activeScannerMode = mode;
@@ -1550,6 +1570,7 @@
             
             // Fungsi jika barcode berhasil terbaca
             const onScanSuccess = (decodedText) => {
+                window.playBeep(); // <--- TAMBAHKAN BARIS INI UNTUK BUNYI BEEP
                 window.closeScanner();
                 
                 // Memasukkan hasil scan ke kolom yang sesuai
