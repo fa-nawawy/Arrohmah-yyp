@@ -421,55 +421,8 @@
                 </div>
 
                 <!-- CETAK RAPOR (AKADEMIK) MENGGUNAKAN DESAIN BARU -->
-               <div id="tab-rapor" class="tab-content max-w-5xl mx-auto">
+                <div id="tab-rapor" class="tab-content max-w-5xl mx-auto">
                     <div class="animate-fade-in space-y-4 md:space-y-6 overflow-x-auto pb-8">
-                        
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-indigo-50 p-4 rounded-xl border border-indigo-100">
-                            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full sm:w-auto">
-                                <div class="flex items-center gap-2 w-full sm:w-auto bg-white px-3 py-2 rounded-lg border border-indigo-200 shadow-sm">
-                                    <label class="text-sm font-bold text-indigo-900 whitespace-nowrap">Siswa:</label>
-                                    <select id="cetak-rapor-siswa" class="bg-transparent text-sm font-bold text-indigo-700 outline-none w-full cursor-pointer max-w-[200px]"></select>
-                                </div>
-                                <div class="flex items-center gap-2 w-full sm:w-auto bg-white px-3 py-2 rounded-lg border border-indigo-200 shadow-sm">
-                                    <label class="text-sm font-bold text-indigo-900 whitespace-nowrap">Pilih Rapor:</label>
-                                    <select id="cetak-rapor-imda" class="bg-transparent text-sm font-bold text-indigo-700 outline-none w-full cursor-pointer">
-                                        <option value="i1_a">Nilai IMDA SATU</option>
-                                        <option value="i2_a">Nilai IMDA DUA</option>
-                                        <option value="i3_a">Nilai IMDA TIGA</option>
-                                        <option value="average">Rata-rata Akhir</option>
-                                    </select>
-                                </div>
-                                <div class="flex items-center gap-2 w-full sm:w-auto bg-white px-3 py-2 rounded-lg border border-indigo-200 shadow-sm hidden">
-                                    <input type="text" id="cetak-rapor-tahun" class="bg-transparent text-sm font-bold text-indigo-700 outline-none w-24" value="1447 H" placeholder="Tahun Ajaran">
-                                </div>
-                            </div>
-                            
-                            <button onclick="window.pratinjauRapor()" class="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-lg font-bold flex items-center justify-center gap-2 shadow-sm transition-all"><i class="fa-solid fa-eye text-sm"></i> PRATINJAU RAPOR</button>
-                        </div>
-
-                        <div id="rapor-instruksi" class="text-center text-gray-500 text-sm mt-8 border-2 border-dashed border-gray-300 p-8 rounded-xl block">
-                            <i class="fa-solid fa-file-invoice text-4xl mb-4 text-gray-400"></i>
-                            <p>Silakan atur pilihan di atas lalu klik tombol <b>Pratinjau Rapor</b>.</p>
-                            <p>Anda dapat melihat bentuk rapor sebelum memutuskan untuk mencetaknya.</p>
-                        </div>
-
-                        <div id="rapor-preview-section" class="hidden mt-6 animate-fade-in">
-                            <div class="flex flex-col sm:flex-row justify-between items-center mb-4 bg-gray-800 text-white p-4 rounded-xl shadow-md gap-4">
-                                <div>
-                                    <h3 class="font-bold text-lg"><i class="fa-solid fa-clipboard-check text-green-400 mr-2"></i>Review Rapor</h3>
-                                    <p class="text-xs text-gray-300">Periksa kembali nilai dan format sebelum dicetak ke kertas A4.</p>
-                                </div>
-                                <button onclick="window.cetakDariPratinjau()" class="w-full sm:w-auto bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-lg font-bold flex items-center justify-center gap-2 shadow-lg transition-transform hover:-translate-y-0.5"><i class="fa-solid fa-print"></i> CETAK SEKARANG</button>
-                            </div>
-                            
-                            <div class="overflow-x-auto bg-gray-200 p-4 sm:p-8 rounded-xl flex justify-center border border-gray-300 shadow-inner">
-                                <div id="kertas-preview" class="bg-white shadow-2xl relative w-full max-w-[850px] min-h-[1000px] text-black">
-                                    </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
                         
                         <!-- Panel Pengaturan Cetak -->
                         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-indigo-50 p-4 rounded-xl border border-indigo-100">
@@ -492,15 +445,35 @@
                                 </div>
                             </div>
                             
-                            <button onclick="window.cetakRapor()" class="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-lg font-bold flex items-center justify-center gap-2 shadow-sm transition-all"><i class="fa-solid fa-print text-sm"></i> CETAK RAPOR</button>
+                            <!-- Tombol Berubah Menjadi Pratinjau -->
+                            <button onclick="window.pratinjauRapor()" class="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-lg font-bold flex items-center justify-center gap-2 shadow-sm transition-all"><i class="fa-solid fa-eye text-sm"></i> PRATINJAU RAPOR</button>
                         </div>
 
-                        <!-- Info Instruksi -->
-                        <div class="text-center text-gray-500 text-sm mt-8 border-2 border-dashed border-gray-300 p-8 rounded-xl">
-                            <i class="fa-solid fa-print text-4xl mb-4 text-gray-400"></i>
-                            <p>Silakan atur pilihan di atas lalu klik tombol <b>Cetak Rapor</b>.</p>
-                            <p>Sistem akan memformat dan menyesuaikan tabel rapor secara otomatis agar pas untuk dicetak di kertas A4.</p>
+                        <!-- Info Instruksi Awal -->
+                        <div id="rapor-instruksi" class="text-center text-gray-500 text-sm mt-8 border-2 border-dashed border-gray-300 p-8 rounded-xl block">
+                            <i class="fa-solid fa-file-invoice text-4xl mb-4 text-gray-400"></i>
+                            <p>Silakan atur pilihan di atas lalu klik tombol <b>Pratinjau Rapor</b>.</p>
+                            <p>Anda dapat melihat bentuk rapor sebelum memutuskan untuk mencetaknya.</p>
                         </div>
+
+                        <!-- Area Review / Preview Rapor -->
+                        <div id="rapor-preview-section" class="hidden mt-6 animate-fade-in">
+                            <div class="flex flex-col sm:flex-row justify-between items-center mb-4 bg-gray-800 text-white p-4 rounded-xl shadow-md gap-4">
+                                <div>
+                                    <h3 class="font-bold text-lg"><i class="fa-solid fa-clipboard-check text-green-400 mr-2"></i>Review Rapor</h3>
+                                    <p class="text-xs text-gray-300">Periksa kembali nilai dan format sebelum dicetak ke kertas A4.</p>
+                                </div>
+                                <button onclick="window.cetakDariPratinjau()" class="w-full sm:w-auto bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-lg font-bold flex items-center justify-center gap-2 shadow-lg transition-transform hover:-translate-y-0.5"><i class="fa-solid fa-print"></i> CETAK SEKARANG</button>
+                            </div>
+                            
+                            <div class="overflow-x-auto bg-gray-200 p-4 sm:p-8 rounded-xl flex justify-center border border-gray-300 shadow-inner">
+                                <!-- Area Kertas Visual -->
+                                <div id="kertas-preview" class="bg-white shadow-2xl relative w-full max-w-[850px] min-h-[1000px] text-black">
+                                    <!-- Injeksi HTML Rapor di sini -->
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
@@ -1647,55 +1620,217 @@
             return huruf[Math.floor(angka)] || angka.toString();
         };
 
-        <div id="tab-rapor" class="tab-content max-w-5xl mx-auto">
-                    <div class="animate-fade-in space-y-4 md:space-y-6 overflow-x-auto pb-8">
-                        
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-indigo-50 p-4 rounded-xl border border-indigo-100">
-                            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full sm:w-auto">
-                                <div class="flex items-center gap-2 w-full sm:w-auto bg-white px-3 py-2 rounded-lg border border-indigo-200 shadow-sm">
-                                    <label class="text-sm font-bold text-indigo-900 whitespace-nowrap">Siswa:</label>
-                                    <select id="cetak-rapor-siswa" class="bg-transparent text-sm font-bold text-indigo-700 outline-none w-full cursor-pointer max-w-[200px]"></select>
-                                </div>
-                                <div class="flex items-center gap-2 w-full sm:w-auto bg-white px-3 py-2 rounded-lg border border-indigo-200 shadow-sm">
-                                    <label class="text-sm font-bold text-indigo-900 whitespace-nowrap">Pilih Rapor:</label>
-                                    <select id="cetak-rapor-imda" class="bg-transparent text-sm font-bold text-indigo-700 outline-none w-full cursor-pointer">
-                                        <option value="i1_a">Nilai IMDA SATU</option>
-                                        <option value="i2_a">Nilai IMDA DUA</option>
-                                        <option value="i3_a">Nilai IMDA TIGA</option>
-                                        <option value="average">Rata-rata Akhir</option>
-                                    </select>
-                                </div>
-                                <div class="flex items-center gap-2 w-full sm:w-auto bg-white px-3 py-2 rounded-lg border border-indigo-200 shadow-sm hidden">
-                                    <input type="text" id="cetak-rapor-tahun" class="bg-transparent text-sm font-bold text-indigo-700 outline-none w-24" value="1447 H" placeholder="Tahun Ajaran">
-                                </div>
-                            </div>
-                            
-                            <button onclick="window.pratinjauRapor()" class="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-lg font-bold flex items-center justify-center gap-2 shadow-sm transition-all"><i class="fa-solid fa-eye text-sm"></i> PRATINJAU RAPOR</button>
+        // 1. FUNGSI UNTUK MENAMPILKAN REVIEW/PRATINJAU DI LAYAR
+        window.pratinjauRapor = () => {
+            const idSiswa = parseInt(document.getElementById('cetak-rapor-siswa').value);
+            if(!idSiswa) return window.showAlert('Gagal', 'Pilih nama siswa terlebih dahulu dari dropdown.', 'error');
+            const siswa = window.appState.siswa.find(s => s.id === idSiswa); if(!siswa) return;
+
+            const printImda = document.getElementById('cetak-rapor-imda').value;
+            const tahun = document.getElementById('cetak-rapor-tahun').value;
+
+            const imdaLabelName = printImda === 'i1_a' ? 'SATU' : printImda === 'i2_a' ? 'DUA' : printImda === 'i3_a' ? 'TIGA' : 'Rata-Rata Akhir';
+
+            // 1. Mengambil data mapel & nilai anak ini
+            const mapels = window.appState.mapel.filter(m => m.kelas.toLowerCase() === siswa.kelas.toLowerCase());
+            let academicSubjects = [];
+            let totalNilaiRaw = 0;
+
+            mapels.forEach(m => {
+                const n = window.appState.nilai.find(x => x.id_siswa === idSiswa && x.id_mapel === m.id) || {};
+                let nilaiAngka = 0;
+                if(printImda === 'average') {
+                    nilaiAngka = ((n.i1_a || 0) + (n.i2_a || 0) + (n.i3_a || 0)) / 3;
+                } else {
+                    nilaiAngka = n[printImda] || 0;
+                }
+                totalNilaiRaw += (nilaiAngka / 10);
+                academicSubjects.push({ id: m.id, mapel: m.nama, nilaiAsli: nilaiAngka });
+            });
+
+            const totalNilai = totalNilaiRaw.toFixed(1);
+            const rataRataSiswa = academicSubjects.length ? (totalNilaiRaw / academicSubjects.length).toFixed(2) : "0.00";
+
+            // 2. Kalkulasi Ranking dan Rata-rata Kelas
+            const classStudents = window.appState.siswa.filter(s => s.kelas === siswa.kelas);
+            const classAverages = classStudents.map(st => {
+                const mapelKelas = window.appState.mapel.filter(m => m.kelas.toLowerCase() === st.kelas.toLowerCase());
+                let stTotal = 0;
+                mapelKelas.forEach(m => {
+                    const n = window.appState.nilai.find(x => x.id_siswa === st.id && x.id_mapel === m.id) || {};
+                    let v = printImda === 'average' ? (((n.i1_a||0) + (n.i2_a||0) + (n.i3_a||0))/3) : (n[printImda]||0);
+                    stTotal += (v / 10);
+                });
+                const stAvg = mapelKelas.length ? (stTotal / mapelKelas.length) : 0;
+                return { id: st.id, avg: stAvg };
+            });
+            
+            classAverages.sort((a, b) => b.avg - a.avg);
+            const studentRank = classAverages.findIndex(s => s.id === idSiswa) + 1;
+            const totalClassStudents = classStudents.length;
+            const classAverageTotalRaw = classAverages.reduce((sum, s) => sum + s.avg, 0);
+            const classAverageTotal = classStudents.length ? (classAverageTotalRaw / classStudents.length).toFixed(1) : "0.0";
+
+            // 3. Nama Kepala Sekolah dan Wali Kelas
+            const isTPQ = siswa.kelas.toUpperCase().includes('SHIFIR');
+            const titleKepala = isTPQ ? 'Kepala Madrasah TPQ' : 'Kepala Madrasah Madin';
+            const dataKepala = window.appState.guru.find(t => t.jabatan === titleKepala);
+            const namaKepala = dataKepala ? dataKepala.nama : (isTPQ ? 'YANTI APRILIA SARI' : '.......................');
+
+            const getJabatanWaliKelas = (kelas) => {
+                if (kelas.includes('I-SATU')) return 'Wali Kelas I';
+                if (kelas.includes('II-DUA')) return 'Wali Kelas II';
+                if (kelas.includes('III-TIGA')) return 'Wali Kelas III';
+                if (kelas.includes('IV-EMPAT')) return 'Wali Kelas IV';
+                if (kelas.includes('V-LIMA')) return 'Wali Kelas V';
+                if (kelas.includes('VI-ENAM')) return 'Wali Kelas VI';
+                return `Wali Kelas ${kelas}`;
+            };
+            const dataWali = window.appState.guru.find(t => t.jabatan === getJabatanWaliKelas(siswa.kelas));
+            const namaWaliKelas = dataWali ? dataWali.nama : '.......................';
+
+            // 4. Tanggal
+            const today = new Date();
+            const formattedDate = `${today.getDate()} ${today.toLocaleString('id-ID', { month: 'long' })} ${today.getFullYear()} M`;
+
+            const p = siswa.perilaku || {kerajinan: '-', kedisiplinan: '-', kebersihan: '-'};
+            const k = siswa.kehadiran || {sakit: 0, izin: 0, alpa: 0};
+
+            // 5. Tabel Nilai Html
+            let rows = '';
+            if(academicSubjects.length === 0) {
+                rows = `<tr><td colspan="5" style="border:1px solid black; padding: 10px; text-align: center;">Belum ada mapel untuk kelas ini.</td></tr>`;
+            } else {
+                academicSubjects.forEach((sub, index) => {
+                    const rataFan = sub.nilaiAsli / 10;
+                    const sisa = Math.round((rataFan - Math.floor(rataFan)) * 10) / 10;
+                    const finalAngka = sisa <= 0.5 ? Math.floor(rataFan) : Math.ceil(rataFan);
+                    const isMerah = finalAngka <= 5;
+                    const cStyle = isMerah ? "color: red; font-weight: bold;" : "";
+                    
+                    rows += `
+                    <tr>
+                        <td style="border:1px solid black; padding:6px; text-align:center;">${index + 1}</td>
+                        <td style="border:1px solid black; padding:6px;">${sub.mapel}</td>
+                        <td style="border:1px solid black; padding:6px; text-align:center; ${cStyle}">${finalAngka}</td>
+                        <td style="border:1px solid black; padding:6px; padding-left:8px; ${cStyle}">${window.angkaKeHuruf(finalAngka)}</td>
+                        <td style="border:1px solid black; padding:6px; text-align:center; ${cStyle}">${rataFan.toFixed(1)}</td>
+                    </tr>`;
+                });
+            }
+
+            const kopSurat = window.appState.pengaturan.kop_rapor ? `<div style="text-align:center; border-bottom: 4px double black; padding-bottom: 8px; margin-bottom: 5px;"><img src="${window.appState.pengaturan.kop_rapor}" style="max-width: 100%; max-height: 120px; object-fit: contain;"></div>` : '';
+
+            // 6. Merakit seluruh Rapor Html
+            const printHtml = `
+            <div style="font-family: Arial, sans-serif; color: black; background: white; padding: 20px; width: 100%; font-size: 10pt; line-height: 1.4; box-sizing: border-box;">
+                ${kopSurat}
+                
+                <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 16px; margin-top: 20px;">
+                    <table style="width: auto; border-collapse: collapse;">
+                        <tr><td style="padding-right: 16px; padding-bottom: 4px;">Nama</td><td>: ${siswa.nama.toUpperCase()}</td></tr>
+                        <tr><td style="padding-right: 16px; padding-bottom: 4px;">Kelas</td><td>: ${siswa.kelas}</td></tr>
+                    </table>
+                    <table style="width: auto; border-collapse: collapse;">
+                        <tr><td style="padding-right: 16px; padding-bottom: 4px;">Imda</td><td>: ${imdaLabelName}</td></tr>
+                        <tr><td style="padding-right: 16px; padding-bottom: 4px;">Tahun Ajaran</td><td>: ${tahun}</td></tr>
+                    </table>
+                </div>
+
+                <div style="display: flex; gap: 16px; align-items: stretch; margin-bottom: 16px;">
+                    <!-- KIRI -->
+                    <div style="width: 70%; display: flex; flex-direction: column; gap: 16px;">
+                        <table style="width: 100%; border-collapse: collapse; border: 1px solid black; font-size: 10pt;">
+                            <thead style="background-color: #f9fafb;">
+                                <tr>
+                                    <th style="border: 1px solid black; padding: 6px; text-align: center; width: 40px;" rowspan="2">NO</th>
+                                    <th style="border: 1px solid black; padding: 6px; text-align: left;" rowspan="2">MATA PELAJARAN</th>
+                                    <th style="border: 1px solid black; padding: 6px; text-align: center;" colspan="2">NILAI</th>
+                                    <th style="border: 1px solid black; padding: 6px; text-align: center; width: 80px;" rowspan="2">Rata-rata<br/>Fan</th>
+                                </tr>
+                                <tr>
+                                    <th style="border: 1px solid black; padding: 6px; text-align: center; width: 50px;">Angka</th>
+                                    <th style="border: 1px solid black; padding: 6px; text-align: center; width: 100px;">Huruf</th>
+                                </tr>
+                            </thead>
+                            <tbody>${rows}</tbody>
+                        </table>
+                        <div style="border: 1px solid black; flex: 1; display: flex; flex-direction: column; min-height: 80px; font-size: 10pt;">
+                            <div style="text-align: center; font-weight: bold; border-bottom: 1px solid black; padding: 6px; background-color: #f9fafb;">Taujihad Wali Kelas</div>
+                            <div style="flex: 1; padding: 8px;"></div>
+                        </div>
+                    </div>
+
+                    <!-- KANAN -->
+                    <div style="width: 30%; flex-shrink: 0; display: flex; flex-direction: column; gap: 32px; font-size: 10pt;">
+                        <div style="border: 1px solid black; display: flex; flex-direction: column;">
+                            <div style="text-align: center; font-weight: bold; border-bottom: 1px solid black; padding: 6px; background-color: #f9fafb;">Perilaku Murid</div>
+                            <div style="display: flex; border-bottom: 1px solid black;"><div style="flex: 1; padding: 6px;">A. Kerajinan</div><div style="font-weight: bold; border-left: 1px solid black; padding: 6px; width: 40px; text-align: center;">${p.kerajinan}</div></div>
+                            <div style="display: flex; border-bottom: 1px solid black;"><div style="flex: 1; padding: 6px;">B. Kedisiplinan</div><div style="font-weight: bold; border-left: 1px solid black; padding: 6px; width: 40px; text-align: center;">${p.kedisiplinan}</div></div>
+                            <div style="display: flex;"><div style="flex: 1; padding: 6px;">C. Kebersihan</div><div style="font-weight: bold; border-left: 1px solid black; padding: 6px; width: 40px; text-align: center;">${p.kebersihan}</div></div>
                         </div>
 
-                        <div id="rapor-instruksi" class="text-center text-gray-500 text-sm mt-8 border-2 border-dashed border-gray-300 p-8 rounded-xl block">
-                            <i class="fa-solid fa-file-invoice text-4xl mb-4 text-gray-400"></i>
-                            <p>Silakan atur pilihan di atas lalu klik tombol <b>Pratinjau Rapor</b>.</p>
-                            <p>Anda dapat melihat bentuk rapor sebelum memutuskan untuk mencetaknya.</p>
+                        <div style="border: 1px solid black; display: flex; flex-direction: column;">
+                            <div style="text-align: center; font-weight: bold; border-bottom: 1px solid black; padding: 6px; background-color: #f9fafb;">Ketidakhadiran</div>
+                            <div style="display: flex; border-bottom: 1px solid black;"><div style="flex: 1; padding: 6px;">Alpa</div><div style="font-weight: bold; border-left: 1px solid black; padding: 6px; width: 40px; text-align: center;">${k.alpa}</div></div>
+                            <div style="display: flex; border-bottom: 1px solid black;"><div style="flex: 1; padding: 6px;">Sakit</div><div style="font-weight: bold; border-left: 1px solid black; padding: 6px; width: 40px; text-align: center;">${k.sakit}</div></div>
+                            <div style="display: flex;"><div style="flex: 1; padding: 6px;">Izin</div><div style="font-weight: bold; border-left: 1px solid black; padding: 6px; width: 40px; text-align: center;">${k.izin}</div></div>
                         </div>
 
-                        <div id="rapor-preview-section" class="hidden mt-6 animate-fade-in">
-                            <div class="flex flex-col sm:flex-row justify-between items-center mb-4 bg-gray-800 text-white p-4 rounded-xl shadow-md gap-4">
-                                <div>
-                                    <h3 class="font-bold text-lg"><i class="fa-solid fa-clipboard-check text-green-400 mr-2"></i>Review Rapor</h3>
-                                    <p class="text-xs text-gray-300">Periksa kembali nilai dan format sebelum dicetak ke kertas A4.</p>
-                                </div>
-                                <button onclick="window.cetakDariPratinjau()" class="w-full sm:w-auto bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-lg font-bold flex items-center justify-center gap-2 shadow-lg transition-transform hover:-translate-y-0.5"><i class="fa-solid fa-print"></i> CETAK SEKARANG</button>
-                            </div>
-                            
-                            <div class="overflow-x-auto bg-gray-200 p-4 sm:p-8 rounded-xl flex justify-center border border-gray-300 shadow-inner">
-                                <div id="kertas-preview" class="bg-white shadow-2xl relative w-full max-w-[850px] min-h-[1000px] text-black">
-                                    </div>
-                            </div>
+                        <div style="border: 1px solid black; display: flex; flex-direction: column;">
+                            <div style="text-align: center; font-weight: bold; border-bottom: 1px solid black; padding: 6px; background-color: #f9fafb;">Nilai Imda</div>
+                            <div style="display: flex; border-bottom: 1px solid black;"><div style="flex: 1; padding: 6px;">Jumlah</div><div style="font-weight: bold; border-left: 1px solid black; padding: 6px; width: 40px; text-align: center;">${totalNilai}</div></div>
+                            <div style="display: flex; border-bottom: 1px solid black;"><div style="flex: 1; padding: 6px;">Alpa</div><div style="font-weight: bold; border-left: 1px solid black; padding: 6px; width: 40px; text-align: center;">${k.alpa}</div></div>
+                            <div style="display: flex; border-bottom: 1px solid black;"><div style="flex: 1; padding: 6px;">Jmlh Bersih</div><div style="font-weight: bold; border-left: 1px solid black; padding: 6px; width: 40px; text-align: center;">${totalNilai}</div></div>
+                            <div style="display: flex; border-bottom: 1px solid black;"><div style="flex: 1; padding: 6px;">Rata-Rata</div><div style="font-weight: bold; border-left: 1px solid black; padding: 6px; width: 40px; text-align: center;">${rataRataSiswa}</div></div>
+                            <div style="display: flex;"><div style="flex: 1; padding: 6px;">Rata Kelas</div><div style="font-weight: bold; border-left: 1px solid black; padding: 6px; width: 40px; text-align: center;">${classAverageTotal}</div></div>
                         </div>
-
                     </div>
                 </div>
+
+                <div style="font-size: 10pt; margin-top: 10px;">
+                    <p style="font-weight: bold; margin-bottom: 16px; font-size: 9pt;">Peringkat ${studentRank} dari ${totalClassStudents} murid</p>
+                    <div style="display: flex; justify-content: flex-end; margin-bottom: 8px;">
+                        <div style="width: 30%; text-align: center;"><p>........... H / ${formattedDate}</p></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; text-align: center; align-items: flex-start;">
+                        <div style="width: 30%;"><p>Wali Murid</p><div style="height: 80px;"></div><p style="font-weight: bold; text-transform: uppercase; text-decoration: underline;">${siswa.wali || '.......................'}</p></div>
+                        <div style="width: 35%; margin-top: 40px;"><p>${titleKepala}</p><div style="height: 80px;"></div><p style="font-weight: bold; text-transform: uppercase; text-decoration: underline;">${namaKepala}</p>${isTPQ && namaKepala === 'YANTI APRILIA SARI' ? '<p>NIG 1961004743</p>' : ''}</div>
+                        <div style="width: 30%;"><p>Wali Kelas ${siswa.kelas}</p><div style="height: 80px;"></div><p style="font-weight: bold; text-transform: uppercase; text-decoration: underline;">${namaWaliKelas}</p><div style="margin-top: 40px; display: flex; justify-content: center;"><svg id="barcode-rapor-${siswa.id}"></svg></div></div>
+                    </div>
+                </div>
+            </div>`;
+            
+            // Tampilkan Review di Layar (Bukan di Print Area)
+            document.getElementById('rapor-instruksi').classList.replace('block', 'hidden');
+            document.getElementById('rapor-preview-section').classList.remove('hidden');
+            
+            const previewArea = document.getElementById('kertas-preview');
+            previewArea.innerHTML = printHtml;
+            
+            // Generate Barcode SVG di dalam preview
+            try { JsBarcode(`#barcode-rapor-${siswa.id}`, siswa.nis, { format: "CODE128", width: 1.5, height: 40, displayValue: false, background: "transparent", margin: 0 }); } catch (e) { console.log("Barcode error:", e); }
+        };
+
+        // 2. FUNGSI UNTUK MENCETAK DARI HASIL REVIEW
+        window.cetakDariPratinjau = () => {
+            // Ambil HTML dari hasil review yang sudah valid (termasuk barcode SVG yang ter-render)
+            const previewHtml = document.getElementById('kertas-preview').innerHTML;
+            const printArea = document.getElementById('print-area');
+            
+            // Pindahkan ke print area tersembunyi
+            printArea.innerHTML = `<div style="max-width: 850px; margin: 0 auto;">${previewHtml}</div>`;
+            printArea.classList.remove('hidden');
+            
+            // Proses cetak browser
+            setTimeout(() => { 
+                window.print(); 
+                setTimeout(() => { 
+                    printArea.classList.add('hidden'); 
+                    printArea.innerHTML = ''; 
+                }, 500); 
+            }, 300);
+        };
 
         // --- PENGATURAN & LAINNYA ---
         window.openKonfirmasiKasir = (id) => { window.switchTab('atk', document.getElementById('nav-btn-kopontren')); const atk = window.appState.atk.find(a => a.id === id); if(atk) window.tambahKeKeranjang(atk, 1); };
