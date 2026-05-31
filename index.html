@@ -1654,13 +1654,16 @@
         };
 
         // =========================================================================================
-        // INISIALISASI FETCH API KE GOOGLE DRIVE
+        // ALAMAT GOOGLE APPS SCRIPT ANDA SUDAH DIMASUKKAN DI SINI
         // =========================================================================================
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzlx9jue79ERKNEfRvaRM-k-D0n0cnFrp6as3XAnW9GI_PD20tP4frgkoEGaOZuijr3uQ/exec';
+        // =========================================================================================
+
         const initCloudDatabase = async () => {
             const loader = document.getElementById('startup-loader'); const syncBadge = document.getElementById('cloud-sync-status');
             
             // CEK APAKAH URL SUDAH DIGANTI ATAU BELUM
-            if (SCRIPT_URL === 'GANTI_DENGAN_URL_APPS_SCRIPT_ANDA_DI_SINI') {
+            if (SCRIPT_URL === 'GANTI_DENGAN_URL_APPS_SCRIPT_ANDA_DI_SINI' || SCRIPT_URL === '') {
                 loader.classList.replace('flex', 'hidden');
                 console.warn("Jalankan mode offline. Harap masukkan SCRIPT_URL Google Drive.");
                 window.updateAllViews();
@@ -1668,8 +1671,14 @@
             }
 
             try {
-                // 1. Minta Data Pertama Kali
-                const response = await fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'GET_ALL' }) });
+                // 1. Minta Data Pertama Kali Saat Aplikasi Dibuka
+                const response = await fetch(SCRIPT_URL, { 
+                    method: 'POST', 
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }, 
+                    body: JSON.stringify({ action: 'GET_ALL' }), 
+                    redirect: 'follow' 
+                });
+                
                 const result = await response.json();
                 
                 if (result.success && result.data) {
@@ -1679,17 +1688,25 @@
                 
                 loader.classList.replace('flex', 'hidden'); window.updateAllViews();
 
-                // 2. Fungsi Simpan Ke Drive Otomatis
+                // 2. Fungsi Simpan Ke Drive Otomatis Setiap Ada Perubahan Data
                 window.saveState = async () => {
                     syncBadge.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Menyimpan ke Drive...'; syncBadge.classList.remove('opacity-0');
                     if (syncTimeout) clearTimeout(syncTimeout);
                     syncTimeout = setTimeout(async () => {
                         try {
-                            const res = await const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxI5JVQsgyX-9674G2kVAZri2RTB3YK4xfZf57KnZwtBSt0Of1CTjKrRfjM3wfsHLeZUw/exec'; { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'SYNC_ALL', payload: window.appState }) });
+                            const res = await fetch(SCRIPT_URL, { 
+                                method: 'POST', 
+                                headers: { 'Content-Type': 'text/plain;charset=utf-8' }, 
+                                body: JSON.stringify({ action: 'SYNC_ALL', payload: window.appState }), 
+                                redirect: 'follow' 
+                            });
                             const json = await res.json();
                             if (json.success) syncBadge.innerHTML = '<i class="fa-solid fa-check mr-2 text-green-400"></i>Data Tersimpan!';
                             else throw new Error(json.error);
-                        } catch(e) { console.error("Gagal simpan:", e); syncBadge.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-2 text-red-400"></i>Gagal Simpan!'; }
+                        } catch(e) { 
+                            console.error("Gagal simpan:", e); 
+                            syncBadge.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-2 text-red-400"></i>Gagal Simpan!'; 
+                        }
                         setTimeout(() => syncBadge.classList.add('opacity-0'), 2500);
                     }, 1000); 
                 };
