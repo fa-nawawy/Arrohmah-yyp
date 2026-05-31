@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sistem Keuangan & Kopontren Cloud</title>
+    <title>YYP ARROHMAH</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -155,60 +155,60 @@
             <div class="flex-1 overflow-y-auto p-4 space-y-2">
                 <button id="nav-btn-dashboard" onclick="window.switchTab('dashboard', this)" class="nav-btn active w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left text-sm font-bold bg-madrasah-50 text-madrasah-700 transition-colors shadow-sm"><i class="fa-solid fa-chart-pie w-5"></i> Beranda</button>
                 
-                <div id="menu-group-sekretaris" class="mt-2">
+                <div id="menu-group-sekretaris" class="mt-2 hidden">
                     <button onclick="window.toggleSubmenu('submenu-sekretaris', 'icon-sekretaris')" class="w-full flex items-center justify-between px-4 py-3 text-left text-sm font-bold bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors outline-none rounded-xl">
                         <div class="flex items-center gap-3"><i class="fa-solid fa-address-book w-5"></i> Sekretaris</div>
                         <i id="icon-sekretaris" class="fa-solid fa-chevron-down transition-transform duration-300 text-xs"></i>
                     </button>
-                    <div id="submenu-sekretaris" class="hidden flex-col gap-1 mt-2 pl-2 border-l-2 border-blue-100 ml-4">
-                        <button id="nav-btn-guru" onclick="window.switchTab('guru', this)" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors"><i class="fa-solid fa-chalkboard-user w-5"></i> Data Guru</button>
-                        <button id="nav-btn-idcard" onclick="window.switchTab('idcard', this)" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors"><i class="fa-solid fa-id-badge w-5"></i> Cetak Kartu ID</button>
-                        <button id="nav-btn-siswa" onclick="window.switchTab('siswa', this)" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors"><i class="fa-solid fa-users w-5"></i> Data Siswa</button>
+                    <div id="submenu-sekretaris" class="flex flex-col gap-1 mt-2 pl-2 border-l-2 border-blue-100 ml-4">
+                        <button id="nav-btn-guru" onclick="window.switchTab('guru', this)" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors hidden"><i class="fa-solid fa-chalkboard-user w-5"></i> Data Guru</button>
+                        <button id="nav-btn-idcard" onclick="window.switchTab('idcard', this)" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors hidden"><i class="fa-solid fa-id-badge w-5"></i> Cetak Kartu ID</button>
+                        <button id="nav-btn-siswa" onclick="window.switchTab('siswa', this)" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors hidden"><i class="fa-solid fa-users w-5"></i> Data Siswa</button>
                         
-                        <div class="mt-1 relative">
+                        <div id="menu-group-akademik" class="mt-1 relative hidden">
                             <button onclick="window.toggleSubmenu('submenu-akademik', 'icon-akademik')" class="w-full flex items-center justify-between px-4 py-3 text-left text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors outline-none rounded-xl">
                                 <div class="flex items-center gap-3"><i class="fa-solid fa-graduation-cap w-5"></i> Akademik</div>
                                 <i id="icon-akademik" class="fa-solid fa-chevron-down transition-transform duration-300 text-xs"></i>
                             </button>
-                            <div id="submenu-akademik" class="hidden flex-col gap-1 mt-1 pl-4 border-l-2 border-gray-200 ml-2">
-                                <button id="nav-btn-mapel" onclick="window.switchTab('mapel', this)" class="nav-btn w-full flex items-center gap-3 px-4 py-2 rounded-xl text-left text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors"><i class="fa-solid fa-book-open w-5"></i> Mata Pelajaran</button>
-                                <button id="nav-btn-nilai" onclick="window.switchTab('nilai', this)" class="nav-btn w-full flex items-center gap-3 px-4 py-2 rounded-xl text-left text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors"><i class="fa-solid fa-marker w-5"></i> Input Nilai</button>
-                                <button id="nav-btn-rapor" onclick="window.switchTab('rapor', this)" class="nav-btn w-full flex items-center gap-3 px-4 py-2 rounded-xl text-left text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors"><i class="fa-solid fa-print w-5"></i> Cetak Rapor</button>
+                            <div id="submenu-akademik" class="flex flex-col gap-1 mt-1 pl-4 border-l-2 border-gray-200 ml-2">
+                                <button id="nav-btn-mapel" onclick="window.switchTab('mapel', this)" class="nav-btn w-full flex items-center gap-3 px-4 py-2 rounded-xl text-left text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors hidden"><i class="fa-solid fa-book-open w-5"></i> Mata Pelajaran</button>
+                                <button id="nav-btn-nilai" onclick="window.switchTab('nilai', this)" class="nav-btn w-full flex items-center gap-3 px-4 py-2 rounded-xl text-left text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors hidden"><i class="fa-solid fa-marker w-5"></i> Input Nilai</button>
+                                <button id="nav-btn-rapor" onclick="window.switchTab('rapor', this)" class="nav-btn w-full flex items-center gap-3 px-4 py-2 rounded-xl text-left text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors hidden"><i class="fa-solid fa-print w-5"></i> Cetak Rapor</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div id="menu-group-bendahara" class="mt-2">
+                <div id="menu-group-bendahara" class="mt-2 hidden">
                     <button onclick="window.toggleSubmenu('submenu-bendahara', 'icon-bendahara')" class="w-full flex items-center justify-between px-4 py-3 text-left text-sm font-bold bg-green-50 text-green-700 hover:bg-green-100 transition-colors outline-none rounded-xl">
                         <div class="flex items-center gap-3"><i class="fa-solid fa-vault w-5"></i> Bendahara</div>
                         <i id="icon-bendahara" class="fa-solid fa-chevron-down transition-transform duration-300 text-xs"></i>
                     </button>
-                    <div id="submenu-bendahara" class="hidden flex-col gap-1 mt-2 pl-2 border-l-2 border-green-100 ml-4">
-                        <button id="nav-btn-tabungan" onclick="window.switchTab('tabungan', this)" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors"><i class="fa-solid fa-wallet w-5"></i> Tabungan</button>
-                        <button id="nav-btn-spp" onclick="window.switchTab('spp', this)" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors"><i class="fa-solid fa-file-invoice-dollar w-5"></i> Pemb. Syahriyah</button>
-                        <button id="nav-btn-riwayat" onclick="window.switchTab('riwayat', this)" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors"><i class="fa-solid fa-clock-rotate-left w-5"></i> Riwayat Siswa</button>
+                    <div id="submenu-bendahara" class="flex flex-col gap-1 mt-2 pl-2 border-l-2 border-green-100 ml-4">
+                        <button id="nav-btn-tabungan" onclick="window.switchTab('tabungan', this)" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors hidden"><i class="fa-solid fa-wallet w-5"></i> Tabungan</button>
+                        <button id="nav-btn-spp" onclick="window.switchTab('spp', this)" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors hidden"><i class="fa-solid fa-file-invoice-dollar w-5"></i> Pemb. Syahriyah</button>
+                        <button id="nav-btn-riwayat" onclick="window.switchTab('riwayat', this)" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors hidden"><i class="fa-solid fa-clock-rotate-left w-5"></i> Riwayat Siswa</button>
                     </div>
                 </div>
 
-                <div id="menu-group-koperasi" class="mt-2">
+                <div id="menu-group-koperasi" class="mt-2 hidden">
                     <button onclick="window.toggleSubmenu('submenu-koperasi', 'icon-koperasi')" class="w-full flex items-center justify-between px-4 py-3 text-left text-sm font-bold bg-orange-50 text-orange-700 hover:bg-orange-100 transition-colors outline-none rounded-xl">
                         <div class="flex items-center gap-3"><i class="fa-solid fa-store w-5"></i> Koperasi</div>
                         <i id="icon-koperasi" class="fa-solid fa-chevron-down transition-transform duration-300 text-xs"></i>
                     </button>
-                    <div id="submenu-koperasi" class="hidden flex-col gap-1 mt-2 pl-2 border-l-2 border-orange-100 ml-4">
-                        <button id="nav-btn-kopontren" onclick="window.switchTab('atk', this)" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors"><i class="fa-solid fa-cart-shopping w-5"></i> Kasir Kopontren</button>
-                        <button id="nav-btn-barang" onclick="window.switchTab('barang', this)" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors"><i class="fa-solid fa-boxes-stacked w-5"></i> Data Barang</button>
+                    <div id="submenu-koperasi" class="flex flex-col gap-1 mt-2 pl-2 border-l-2 border-orange-100 ml-4">
+                        <button id="nav-btn-kopontren" onclick="window.switchTab('atk', this)" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors hidden"><i class="fa-solid fa-cart-shopping w-5"></i> Kasir Kopontren</button>
+                        <button id="nav-btn-barang" onclick="window.switchTab('barang', this)" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors hidden"><i class="fa-solid fa-boxes-stacked w-5"></i> Data Barang</button>
                     </div>
                 </div>
                 
-                <div id="menu-group-sistem" class="mt-2">
+                <div id="menu-group-sistem" class="mt-2 hidden">
                     <button onclick="window.toggleSubmenu('submenu-sistem', 'icon-sistem')" class="w-full flex items-center justify-between px-4 py-3 text-left text-sm font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors outline-none rounded-xl">
                         <div class="flex items-center gap-3"><i class="fa-solid fa-laptop-code w-5"></i> Sistem</div>
                         <i id="icon-sistem" class="fa-solid fa-chevron-down transition-transform duration-300 text-xs"></i>
                     </button>
-                    <div id="submenu-sistem" class="hidden flex-col gap-1 mt-2 pl-2 border-l-2 border-gray-200 ml-4">
-                        <button id="nav-btn-pengaturan" onclick="window.bukaModalPengaturan('struk')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors"><i class="fa-solid fa-gear w-5"></i> Pengaturan</button>
+                    <div id="submenu-sistem" class="flex flex-col gap-1 mt-2 pl-2 border-l-2 border-gray-200 ml-4">
+                        <button id="nav-btn-pengaturan" onclick="window.bukaModalPengaturan('struk')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors hidden"><i class="fa-solid fa-gear w-5"></i> Pengaturan</button>
                     </div>
                 </div>
             </div>
@@ -219,7 +219,7 @@
                         <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100"><i class="fa-solid fa-user-tie"></i></div>
                         <div>
                             <p class="text-sm font-bold text-gray-800" id="current-username">Admin</p>
-                            <p class="text-[10px] text-green-500 font-medium flex items-center gap-1"><i class="fa-solid fa-cloud text-[8px]"></i> Cloud Sync ON</p>
+                            <p class="text-[10px] text-green-500 font-medium flex items-center gap-1"><i class="fa-solid fa-cloud text-[8px]"></i> <span id="current-role-badge">Admin Utama</span></p>
                         </div>
                     </div>
                     <button onclick="window.prosesLogout()" class="text-red-500 hover:bg-red-50 w-10 h-10 rounded-xl flex items-center justify-center transition-colors" title="Log Out (Keluar)"><i class="fa-solid fa-right-from-bracket"></i></button>
@@ -536,9 +536,6 @@
                         <div class="flex gap-2">
                             <button onclick="window.bukaModalRiwayatSPP()" class="bg-blue-50 text-blue-600 border border-blue-200 px-4 py-2 rounded-xl text-sm font-bold hover:bg-blue-100 transition-colors shadow-sm flex items-center gap-2">
                                 <i class="fa-solid fa-list-ul"></i> <span class="hidden sm:inline">Riwayat Syahriyah</span>
-                            </button>
-                            <button onclick="window.bukaModalPengaturan('spp')" class="bg-gray-50 text-gray-600 border border-gray-200 px-4 py-2 rounded-xl text-sm font-bold hover:bg-gray-100 transition-colors shadow-sm flex items-center gap-2">
-                                <i class="fa-solid fa-gear"></i> <span class="hidden sm:inline">Pengaturan</span>
                             </button>
                         </div>
                     </div>
@@ -943,7 +940,8 @@
                 <!-- Konten Tab Login Admin -->
                 <div id="setting-tab-login" class="hidden">
                     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 max-w-md mx-auto">
-                        <h3 class="font-bold mb-4 flex items-center text-gray-800"><i class="fa-solid fa-user-shield text-blue-500 mr-2"></i>Pengaturan Akun Admin</h3>
+                        <h3 class="font-bold mb-4 flex items-center text-gray-800"><i class="fa-solid fa-user-shield text-blue-500 mr-2"></i>Pengaturan Akun Admin Utama</h3>
+                        <p class="text-xs text-gray-500 mb-4">Akun admin memiliki akses penuh ke seluruh menu dan pengaturan (termasuk reset data).</p>
                         <form onsubmit="window.simpanPengaturanLogin(event)" class="space-y-4">
                             <div>
                                 <label class="block text-sm font-medium mb-1 text-gray-700">Username Admin</label>
@@ -958,22 +956,64 @@
                     </div>
                 </div>
 
-                <!-- Konten Tab Operator -->
+                <!-- Konten Tab Operator & Hak Akses -->
                 <div id="setting-tab-operator" class="hidden">
-                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 max-w-3xl mx-auto">
-                        <h3 class="font-bold mb-4 flex items-center text-gray-800"><i class="fa-solid fa-users-gear text-blue-500 mr-2"></i>Manajemen Operator / Kasir</h3>
-                        <div id="list-operator" class="space-y-3 mb-6 max-h-48 overflow-y-auto pr-2 border-b border-gray-100 pb-4"></div>
-                        <div class="bg-gray-50 p-5 rounded-xl border border-gray-200 relative">
-                            <button type="button" onclick="window.resetFormOperator()" class="absolute top-4 right-4 text-xs font-bold text-gray-500 hover:text-gray-800 hidden bg-white border border-gray-300 px-3 py-1.5 rounded-lg shadow-sm" id="btn-batal-op">Batal Edit</button>
-                            <h4 class="font-bold text-sm text-gray-700 mb-4" id="form-operator-title">Tambah Operator Baru</h4>
-                            <form onsubmit="window.simpanOperator(event)">
-                                <input type="hidden" id="op-id">
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                                    <div><label class="block text-xs font-medium mb-1">Username</label><input type="text" id="op-user" class="w-full border p-2.5 rounded-lg text-sm" required></div>
-                                    <div><label class="block text-xs font-medium mb-1">Password</label><input type="password" id="op-pass" class="w-full border p-2.5 rounded-lg text-sm" placeholder="Kosongkan jika tak diubah"></div>
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 max-w-4xl mx-auto">
+                        <div class="flex justify-between items-center mb-4 border-b border-gray-100 pb-2">
+                            <h3 class="font-bold flex items-center text-gray-800"><i class="fa-solid fa-users-gear text-blue-500 mr-2"></i>Manajemen Operator & Hak Akses</h3>
+                            <button type="button" onclick="window.resetFormOperator()" class="text-xs font-bold bg-blue-50 text-blue-600 px-3 py-1.5 rounded-lg hover:bg-blue-100"><i class="fa-solid fa-plus mr-1"></i> Tambah Baru</button>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <!-- Tabel List Operator -->
+                            <div class="lg:col-span-1 border-r border-gray-100 pr-0 lg:pr-4">
+                                <h4 class="text-xs font-bold text-gray-500 uppercase mb-3">Daftar Operator</h4>
+                                <div id="list-operator" class="space-y-2 max-h-[400px] overflow-y-auto">
+                                    <!-- List Operator akan di-render di sini -->
                                 </div>
-                                <button type="submit" class="w-full bg-blue-600 text-white font-bold rounded-lg p-3 hover:bg-blue-700 shadow-md transition-colors">Simpan Operator</button>
-                            </form>
+                            </div>
+                            
+                            <!-- Form Tambah/Edit Operator -->
+                            <div class="lg:col-span-2">
+                                <div class="bg-gray-50 p-5 rounded-xl border border-gray-200">
+                                    <h4 class="font-bold text-sm text-gray-800 mb-4 pb-2 border-b border-gray-200" id="form-operator-title">Tambah Operator Baru</h4>
+                                    <form onsubmit="window.simpanOperator(event)">
+                                        <input type="hidden" id="op-id">
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                            <div><label class="block text-xs font-bold mb-1 text-gray-700">Username</label><input type="text" id="op-user" class="w-full border border-gray-300 p-2.5 rounded-lg text-sm outline-none focus:border-blue-500" required></div>
+                                            <div><label class="block text-xs font-bold mb-1 text-gray-700">Password</label><input type="password" id="op-pass" class="w-full border border-gray-300 p-2.5 rounded-lg text-sm outline-none focus:border-blue-500" placeholder="Kosongkan jika tak diubah" required></div>
+                                        </div>
+                                        
+                                        <div class="mb-5">
+                                            <label class="block text-xs font-bold mb-3 text-gray-700">Hak Akses Menu (Centang yang diizinkan)</label>
+                                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-3 bg-white p-4 rounded-lg border border-gray-200">
+                                                <!-- Sekretaris -->
+                                                <div class="space-y-2">
+                                                    <h5 class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Sekretaris & Akademik</h5>
+                                                    <label class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer"><input type="checkbox" id="perm-guru" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"> Data Guru</label>
+                                                    <label class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer"><input type="checkbox" id="perm-idcard" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"> Cetak Kartu ID</label>
+                                                    <label class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer"><input type="checkbox" id="perm-siswa" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"> Data Siswa</label>
+                                                    <label class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer"><input type="checkbox" id="perm-mapel" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"> Mata Pelajaran</label>
+                                                    <label class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer"><input type="checkbox" id="perm-nilai" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"> Input Nilai</label>
+                                                    <label class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer"><input type="checkbox" id="perm-rapor" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"> Cetak Rapor</label>
+                                                </div>
+                                                
+                                                <!-- Keuangan -->
+                                                <div class="space-y-2">
+                                                    <h5 class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Bendahara & Koperasi</h5>
+                                                    <label class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer"><input type="checkbox" id="perm-tabungan" class="w-4 h-4 text-green-600 rounded focus:ring-green-500"> Tabungan Siswa</label>
+                                                    <label class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer"><input type="checkbox" id="perm-spp" class="w-4 h-4 text-green-600 rounded focus:ring-green-500"> Pembayaran Syahriyah</label>
+                                                    <label class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer"><input type="checkbox" id="perm-riwayat" class="w-4 h-4 text-green-600 rounded focus:ring-green-500"> Riwayat Siswa</label>
+                                                    <label class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer mt-2"><input type="checkbox" id="perm-atk" class="w-4 h-4 text-orange-600 rounded focus:ring-orange-500"> Kasir Kopontren</label>
+                                                    <label class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer"><input type="checkbox" id="perm-barang" class="w-4 h-4 text-orange-600 rounded focus:ring-orange-500"> Data Barang Koperasi</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <button type="submit" class="w-full bg-blue-600 text-white font-bold rounded-lg p-3 hover:bg-blue-700 shadow-md transition-colors"><i class="fa-solid fa-save mr-2"></i>Simpan Operator</button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1003,25 +1043,24 @@
         </div>
     </div>
 
-    <!-- ===== SCRIPT LOGIKA APLIKASI (GOOGLE DRIVE SCRIPT) ===== -->
+    <!-- ===== SCRIPT LOGIKA APLIKASI ===== -->
     <script>
         window.appState = { 
             guru: [], siswa: [], mapel: [], nilai: [], tabungan: [], spp: [], atk: [], penjualan: [],
             pengaturan: { 
                 struk_judul: 'MADRASAH AL-KHOIROT', struk_alamat: 'Jl. Pendidikan No.1', struk_ucapan: '*** Terima Kasih ***',
-                admin_user: 'admin', admin_pass: '12345', spp_nominal: '', kop_rapor: '', operators: []
+                admin_user: 'admin', admin_pass: '12345', spp_nominal: '', kop_rapor: '', 
+                operators: [] // Menyimpan data operator dan hak aksesnya
             } 
         };
         
         window.cart = []; 
-        window.currentUser = null;
+        window.currentUser = null; // Menyimpan data user yang sedang login (Admin atau Operator)
         let html5QrCode = null; let scannerState = 'stopped'; let activeScannerMode = null;
         window.activeFilterTabungan = 'harian'; 
         let syncTimeout = null;
         window.cropperInstance = null; window.currentImageFile = null;
 
-        // =========================================================================================
-        // ALAMAT GOOGLE APPS SCRIPT ANDA SUDAH DIMASUKKAN DI SINI
         // =========================================================================================
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzlx9jue79ERKNEfRvaRM-k-D0n0cnFrp6as3XAnW9GI_PD20tP4frgkoEGaOZuijr3uQ/exec';
         // =========================================================================================
@@ -1080,18 +1119,107 @@
 
         window.closeConfirm = () => { const modal = document.getElementById('confirm-modal'); if(modal) modal.classList.replace('flex', 'hidden'); };
 
+        /* ======================== SISTEM LOGIN & HAK AKSES ======================== */
+        
         window.prosesLogin = (event) => {
             event.preventDefault();
             const user = document.getElementById('login-user').value.trim(); const pass = document.getElementById('login-pass').value;
-            const set = window.appState.pengaturan || {}; const adminUser = set.admin_user || 'admin'; const adminPass = set.admin_pass || '12345';
+            const set = window.appState.pengaturan || {}; 
+            const adminUser = set.admin_user || 'admin'; 
+            const adminPass = set.admin_pass || '12345';
+            const operators = set.operators || [];
             
+            // Cek jika Login sebagai Admin Utama
             if (user === adminUser && pass === adminPass) {
-                window.currentUser = { username: user, role: 'admin' };
-                document.getElementById('current-username').innerText = user;
-                document.getElementById('login-screen').classList.replace('flex', 'hidden');
-                document.getElementById('main-app').classList.remove('hidden');
-                window.updateAllViews();
-            } else { document.getElementById('login-error').classList.remove('hidden'); }
+                window.currentUser = { username: user, role: 'admin', permissions: 'all' };
+                window.selesaikanProsesLogin();
+            } 
+            else {
+                // Cek jika Login sebagai Operator
+                const op = operators.find(o => o.username === user && o.password === pass);
+                if (op) {
+                    window.currentUser = { username: op.username, role: 'operator', permissions: op.permissions };
+                    window.selesaikanProsesLogin();
+                } else {
+                    document.getElementById('login-error').classList.remove('hidden');
+                }
+            }
+        };
+
+        window.selesaikanProsesLogin = () => {
+            document.getElementById('current-username').innerText = window.currentUser.username;
+            document.getElementById('current-role-badge').innerText = window.currentUser.role === 'admin' ? 'Admin Utama' : 'Operator';
+            document.getElementById('current-role-badge').className = window.currentUser.role === 'admin' ? 'text-green-500 font-bold' : 'text-blue-500 font-bold';
+            
+            document.getElementById('login-screen').classList.replace('flex', 'hidden');
+            document.getElementById('main-app').classList.remove('hidden');
+            
+            // Terapkan pembatasan menu sesuai role
+            window.applyPermissions();
+            
+            // Selalu mulai di tab dashboard
+            window.switchTab('dashboard', document.getElementById('nav-btn-dashboard'));
+            window.updateAllViews();
+        };
+
+        window.applyPermissions = () => {
+            const role = window.currentUser.role;
+            const perms = window.currentUser.permissions || {};
+            const isAdmin = role === 'admin';
+
+            // Fungsi helper untuk menampilkan/menyembunyikan elemen
+            const toggleElement = (id, condition) => {
+                const el = document.getElementById(id);
+                if (el) {
+                    if (condition) el.classList.remove('hidden');
+                    else el.classList.add('hidden');
+                }
+            };
+
+            // 1. Menu Sekretaris & Akademik
+            const hasGuru = isAdmin || perms.guru;
+            const hasIdcard = isAdmin || perms.idcard;
+            const hasSiswa = isAdmin || perms.siswa;
+            const hasMapel = isAdmin || perms.mapel;
+            const hasNilai = isAdmin || perms.nilai;
+            const hasRapor = isAdmin || perms.rapor;
+            const hasAnyAkademik = hasMapel || hasNilai || hasRapor;
+            const hasAnySekretaris = hasGuru || hasIdcard || hasSiswa || hasAnyAkademik;
+
+            toggleElement('nav-btn-guru', hasGuru);
+            toggleElement('nav-btn-idcard', hasIdcard);
+            toggleElement('nav-btn-siswa', hasSiswa);
+            
+            toggleElement('nav-btn-mapel', hasMapel);
+            toggleElement('nav-btn-nilai', hasNilai);
+            toggleElement('nav-btn-rapor', hasRapor);
+            toggleElement('menu-group-akademik', hasAnyAkademik);
+            
+            toggleElement('menu-group-sekretaris', hasAnySekretaris);
+
+            // 2. Menu Bendahara
+            const hasTabungan = isAdmin || perms.tabungan;
+            const hasSpp = isAdmin || perms.spp;
+            const hasRiwayat = isAdmin || perms.riwayat;
+            const hasAnyBendahara = hasTabungan || hasSpp || hasRiwayat;
+
+            toggleElement('nav-btn-tabungan', hasTabungan);
+            toggleElement('nav-btn-spp', hasSpp);
+            toggleElement('nav-btn-riwayat', hasRiwayat);
+            toggleElement('menu-group-bendahara', hasAnyBendahara);
+
+            // 3. Menu Koperasi
+            const hasAtk = isAdmin || perms.atk;
+            const hasBarang = isAdmin || perms.barang;
+            const hasAnyKoperasi = hasAtk || hasBarang;
+
+            toggleElement('nav-btn-kopontren', hasAtk);
+            toggleElement('nav-btn-barang', hasBarang);
+            toggleElement('menu-group-koperasi', hasAnyKoperasi);
+
+            // 4. Menu Sistem / Pengaturan (Hanya untuk Admin Utama)
+            toggleElement('menu-group-sistem', isAdmin);
+            toggleElement('nav-btn-pengaturan', isAdmin); // Pastikan tombol pengaturan juga di-toggle
         };
 
         window.prosesLogout = () => {
@@ -1099,6 +1227,7 @@
                 window.currentUser = null; document.getElementById('login-screen').classList.replace('hidden', 'flex');
                 document.getElementById('main-app').classList.add('hidden');
                 document.getElementById('login-user').value = ''; document.getElementById('login-pass').value = '';
+                document.getElementById('login-error').classList.add('hidden');
             });
         };
 
@@ -1107,6 +1236,106 @@
             if (sidebar.classList.contains('-translate-x-full')) { sidebar.classList.remove('-translate-x-full'); overlay.classList.remove('hidden'); } 
             else { sidebar.classList.add('-translate-x-full'); overlay.classList.add('hidden'); }
         };
+
+        /* ======================== MANAJEMEN OPERATOR ======================== */
+        window.resetFormOperator = () => {
+            document.getElementById('op-id').value = '';
+            document.getElementById('op-user').value = '';
+            document.getElementById('op-pass').value = '';
+            document.getElementById('op-pass').setAttribute('required', 'true');
+            document.getElementById('form-operator-title').innerText = 'Tambah Operator Baru';
+            
+            // Uncheck semua permission
+            ['guru','idcard','siswa','mapel','nilai','rapor','tabungan','spp','riwayat','atk','barang'].forEach(p => {
+                document.getElementById('perm-' + p).checked = false;
+            });
+        };
+
+        window.editOperator = (idStr) => {
+            const operators = window.appState.pengaturan.operators || [];
+            const op = operators.find(o => String(o.id) === String(idStr));
+            if(!op) return;
+
+            document.getElementById('op-id').value = op.id;
+            document.getElementById('op-user').value = op.username;
+            document.getElementById('op-pass').value = ''; 
+            document.getElementById('op-pass').removeAttribute('required'); // Password tak wajib diisi saat edit
+            document.getElementById('form-operator-title').innerText = 'Edit Operator: ' + op.username;
+
+            // Centang permission sesuai data
+            const perms = op.permissions || {};
+            ['guru','idcard','siswa','mapel','nilai','rapor','tabungan','spp','riwayat','atk','barang'].forEach(p => {
+                document.getElementById('perm-' + p).checked = !!perms[p];
+            });
+        };
+
+        window.hapusOperator = (idStr) => {
+            window.showConfirm("Hapus Operator", "Apakah Anda yakin mencabut hak akses operator ini secara permanen?", () => {
+                if(!window.appState.pengaturan.operators) window.appState.pengaturan.operators = [];
+                window.appState.pengaturan.operators = window.appState.pengaturan.operators.filter(o => String(o.id) !== String(idStr));
+                window.saveState();
+                window.updateAllViews();
+                window.resetFormOperator();
+                window.showAlert('Berhasil', 'Operator telah dihapus.', 'success');
+            });
+        };
+
+        window.simpanOperator = (e) => {
+            e.preventDefault();
+            const id = document.getElementById('op-id').value;
+            const username = document.getElementById('op-user').value.trim();
+            const pass = document.getElementById('op-pass').value;
+
+            if(!window.appState.pengaturan.operators) window.appState.pengaturan.operators = [];
+            const operators = window.appState.pengaturan.operators;
+
+            // Ambil nilai checkbox permissions
+            const permissions = {
+                guru: document.getElementById('perm-guru').checked,
+                idcard: document.getElementById('perm-idcard').checked,
+                siswa: document.getElementById('perm-siswa').checked,
+                mapel: document.getElementById('perm-mapel').checked,
+                nilai: document.getElementById('perm-nilai').checked,
+                rapor: document.getElementById('perm-rapor').checked,
+                tabungan: document.getElementById('perm-tabungan').checked,
+                spp: document.getElementById('perm-spp').checked,
+                riwayat: document.getElementById('perm-riwayat').checked,
+                atk: document.getElementById('perm-atk').checked,
+                barang: document.getElementById('perm-barang').checked
+            };
+
+            if (id) {
+                // EDIT
+                const idx = operators.findIndex(o => String(o.id) === String(id));
+                if(idx > -1) {
+                    // Cek duplikasi nama jika ganti username
+                    if(operators[idx].username !== username && operators.find(o => o.username === username)) {
+                        return window.showAlert('Gagal', 'Username sudah dipakai operator lain!', 'error');
+                    }
+                    operators[idx].username = username;
+                    if(pass) operators[idx].password = pass; // Update password hanya jika diisi
+                    operators[idx].permissions = permissions;
+                }
+            } else {
+                // ADD NEW
+                if(operators.find(o => o.username === username)) {
+                    return window.showAlert('Gagal', 'Username sudah terdaftar!', 'error');
+                }
+                operators.push({
+                    id: Date.now(),
+                    username: username,
+                    password: pass,
+                    permissions: permissions
+                });
+            }
+
+            window.saveState();
+            window.updateAllViews();
+            window.resetFormOperator();
+            window.showAlert('Berhasil', 'Data Operator & Hak Akses berhasil disimpan.', 'success');
+        };
+
+        /* ======================== FUNGSI LAINNYA ======================== */
 
         window.tambahSiswa = (e) => {
             e.preventDefault();
@@ -1162,7 +1391,7 @@
             const table = document.getElementById('table-barang-lengkap');
             if (!table) return;
             const keyword = (document.getElementById('cari-barang-inventaris')?.value || '').toLowerCase();
-            const isAdmin = window.currentUser && window.currentUser.role === 'admin';
+            const isAdmin = window.currentUser && window.currentUser.role === 'admin'; // Hanya admin atau yg punya akses yg lihat ini
             
             let filtered = window.appState.atk || [];
             if (keyword) {
@@ -1170,8 +1399,8 @@
             }
             
             table.innerHTML = filtered.length === 0 ? '<tr><td colspan="6" class="text-center py-6 text-gray-500">Tidak ada barang.</td></tr>' : filtered.map(a => {
-                const btnEdit = isAdmin ? `<button onclick="window.editATK(${a.id})" class="text-blue-500 hover:text-blue-700 bg-blue-50 p-1.5 rounded-lg"><i class="fa-solid fa-pen"></i></button>` : '';
-                const btnHapus = isAdmin ? `<button onclick="window.hapusATK(${a.id})" class="text-red-500 hover:text-red-700 bg-red-50 p-1.5 rounded-lg ml-1"><i class="fa-solid fa-trash"></i></button>` : '';
+                const btnEdit = `<button onclick="window.editATK(${a.id})" class="text-blue-500 hover:text-blue-700 bg-blue-50 p-1.5 rounded-lg"><i class="fa-solid fa-pen"></i></button>`;
+                const btnHapus = `<button onclick="window.hapusATK(${a.id})" class="text-red-500 hover:text-red-700 bg-red-50 p-1.5 rounded-lg ml-1"><i class="fa-solid fa-trash"></i></button>`;
                 return `
                 <tr class="hover:bg-gray-50 border-b border-gray-100">
                     <td class="px-6 py-3 font-medium text-gray-500 text-xs font-mono">${a.kode_barang || '-'}</td>
@@ -1294,11 +1523,13 @@
             document.getElementById('riwayat-kelas').innerText = `Kelas ${siswa.kelas}`;
             document.getElementById('riwayat-saldo').innerText = window.formatRp(siswa.saldo);
 
-            const isAdmin = window.currentUser && window.currentUser.role === 'admin';
+            // Karena user sudah bisa buka riwayat, kita asumsikan punya izin hapus (atau bisa dibatasi pakai role)
+            const allowDelete = window.currentUser && (window.currentUser.role === 'admin' || window.currentUser.permissions.tabungan);
+            const allowDeleteSpp = window.currentUser && (window.currentUser.role === 'admin' || window.currentUser.permissions.spp);
 
             const tabungan = window.appState.tabungan.filter(t => t.id_siswa === id).reverse();
             document.getElementById('riwayat-tabel-tabungan').innerHTML = tabungan.length > 0 ? tabungan.map(t => {
-                const btnHapus = isAdmin ? `<td class="px-3 py-2 text-center text-red-400 hover:text-red-600 cursor-pointer" onclick="window.hapusTabungan(${t.id})"><i class="fa-solid fa-trash text-[10px]"></i></td>` : `<td class="px-3 py-2 text-center">-</td>`;
+                const btnHapus = allowDelete ? `<td class="px-3 py-2 text-center text-red-400 hover:text-red-600 cursor-pointer" onclick="window.hapusTabungan(${t.id})"><i class="fa-solid fa-trash text-[10px]"></i></td>` : `<td class="px-3 py-2 text-center">-</td>`;
                 return `
                 <tr class="border-b hover:bg-gray-50">
                     <td class="px-3 py-2 text-[10px] text-gray-500">${t.tanggal}</td>
@@ -1310,7 +1541,7 @@
 
             const spp = window.appState.spp.filter(p => p.id_siswa === id).reverse();
             document.getElementById('riwayat-tabel-spp').innerHTML = spp.length > 0 ? spp.map(p => {
-                const btnHapus = isAdmin ? `<td class="px-3 py-2 text-center text-red-400 hover:text-red-600 cursor-pointer" onclick="window.hapusSPP(${p.id})"><i class="fa-solid fa-trash text-[10px]"></i></td>` : `<td class="px-3 py-2 text-center">-</td>`;
+                const btnHapus = allowDeleteSpp ? `<td class="px-3 py-2 text-center text-red-400 hover:text-red-600 cursor-pointer" onclick="window.hapusSPP(${p.id})"><i class="fa-solid fa-trash text-[10px]"></i></td>` : `<td class="px-3 py-2 text-center">-</td>`;
                 return `
                 <tr class="border-b hover:bg-gray-50">
                     <td class="px-3 py-2 text-[10px] text-gray-500">${p.tanggal}</td>
@@ -1846,7 +2077,7 @@
 
         window.simpanPengaturanStruk = (e) => { e.preventDefault(); window.appState.pengaturan.struk_judul = document.getElementById('setting-struk-judul').value; window.appState.pengaturan.struk_alamat = document.getElementById('setting-struk-alamat').value; window.appState.pengaturan.struk_ucapan = document.getElementById('setting-struk-ucapan').value; window.saveState(); window.updateAllViews(); window.showAlert('Berhasil', 'Desain Struk disimpan.', 'success'); };
         window.simpanPengaturanSPP = (e) => { e.preventDefault(); window.appState.pengaturan.spp_nominal = document.getElementById('setting-spp-nominal').value; window.saveState(); window.updateAllViews(); window.showAlert('Berhasil', 'Nominal Syahriyah disimpan.', 'success'); };
-        window.simpanPengaturanLogin = (e) => { e.preventDefault(); window.appState.pengaturan.admin_user = document.getElementById('setting-admin-user').value; const p = document.getElementById('setting-admin-pass').value; if(p) window.appState.pengaturan.admin_pass = p; window.saveState(); window.updateAllViews(); window.showAlert('Berhasil', 'Kredensial Admin disimpan.', 'success'); };
+        window.simpanPengaturanLogin = (e) => { e.preventDefault(); window.appState.pengaturan.admin_user = document.getElementById('setting-admin-user').value; const p = document.getElementById('setting-admin-pass').value; if(p) window.appState.pengaturan.admin_pass = p; window.saveState(); window.updateAllViews(); window.showAlert('Berhasil', 'Kredensial Admin Utama disimpan.', 'success'); };
         window.previewKopRapor = (e) => { const f = e.target.files[0]; if(f) { const reader = new FileReader(); reader.onload = (e) => { window.appState.pengaturan.kop_rapor = e.target.result; document.getElementById('preview-kop-img').src = e.target.result; document.getElementById('preview-kop-img').classList.remove('hidden'); document.getElementById('preview-kop-placeholder').classList.add('hidden'); }; reader.readAsDataURL(f); } };
         window.simpanPengaturanRapor = (e) => { e.preventDefault(); window.saveState(); window.updateAllViews(); window.showAlert('Berhasil', 'Desain Rapor disimpan.', 'success'); };
         
@@ -1870,8 +2101,6 @@
                 console.log("Suara tidak didukung browser: ", error);
             }
         };
-        
-        window.resetFormOperator = () => {}; window.simpanOperator = (e) => { e.preventDefault(); window.showAlert('Info', 'Fungsi multi-operator tersedia di mode Pro.', 'info'); };
         
         window.openScanner = (mode) => { 
             window.activeScannerMode = mode;
@@ -1933,7 +2162,8 @@
         window.cetakStrukById = () => { window.print(); };
 
         window.updateAllViews = () => {
-            const st = window.appState; const isAdmin = window.currentUser && window.currentUser.role === 'admin';
+            const st = window.appState; 
+            const isAdmin = window.currentUser && window.currentUser.role === 'admin';
             
             if(document.getElementById('dash-siswa')) document.getElementById('dash-siswa').innerText = st.siswa.length; 
             if(document.getElementById('dash-tabungan')) document.getElementById('dash-tabungan').innerText = window.formatRp(st.siswa.reduce((a,b) => a + (b.saldo || 0), 0)); 
@@ -1952,36 +2182,61 @@
             if(window.nilaiState && window.nilaiState.activeStudentId) window.handleSelectStudentForNilai(); else if(window.renderNilaiForm) window.renderNilaiForm();
             window.renderTabelBarang();
 
+            // Render Daftar Siswa
+            const allowDeleteSiswa = window.currentUser && (isAdmin || window.currentUser.permissions.siswa);
             if(document.getElementById('table-siswa')) {
                 document.getElementById('table-siswa').innerHTML = st.siswa.map(s => {
-                    const btnHapusSiswa = isAdmin ? `<button onclick="window.hapusSiswa(${s.id})" class="text-[10px] text-red-500 hover:underline mt-1 inline-flex items-center gap-1"><i class="fa-solid fa-trash"></i> Hapus</button>` : '';
+                    const btnHapusSiswa = allowDeleteSiswa ? `<button onclick="window.hapusSiswa(${s.id})" class="text-[10px] text-red-500 hover:underline mt-1 inline-flex items-center gap-1"><i class="fa-solid fa-trash"></i> Hapus</button>` : '';
                     return `<tr class="hover:bg-gray-50"><td class="px-6 py-4 font-medium text-gray-900 text-xs">${s.nis}</td><td class="px-6 py-4 font-bold text-sm">${s.nama} <br><span class="text-xs text-gray-500 font-normal">Kelas: ${s.kelas}</span></td><td class="px-6 py-4 text-right"><span class="font-bold text-green-600 block">${window.formatRp(s.saldo)}</span>${btnHapusSiswa}</td></tr>`;
                 }).join('');
             }
             
+            // Render Daftar Transaksi
+            const allowDeleteTabungan = window.currentUser && (isAdmin || window.currentUser.permissions.tabungan);
             if(document.getElementById('table-tabungan')) {
                 document.getElementById('table-tabungan').innerHTML = [...st.tabungan].slice(-100).reverse().map(t => {
-                    const btn = isAdmin ? `<button onclick="window.hapusTabungan(${t.id})" class="text-red-500 hover:text-red-700 bg-red-50 p-2 rounded-lg ml-1"><i class="fa-solid fa-trash"></i></button>` : '';
+                    const btn = allowDeleteTabungan ? `<button onclick="window.hapusTabungan(${t.id})" class="text-red-500 hover:text-red-700 bg-red-50 p-2 rounded-lg ml-1"><i class="fa-solid fa-trash"></i></button>` : '';
                     const style = t.jenis === 'Setor' ? 'text-green-600 bg-green-100' : 'text-red-600 bg-red-100';
                     return `<tr class="border-b"><td class="px-6 py-3 text-[11px] text-gray-500">${t.tanggal}</td><td class="px-6 py-3 font-bold text-sm text-gray-700">${(st.siswa.find(s => s.id === t.id_siswa) || {}).nama || '-'}</td><td class="px-6 py-3 text-xs"><span class="px-2 py-1 font-bold rounded-md ${style}">${t.jenis}</span></td><td class="px-6 py-3 text-right font-bold text-sm ${t.jenis === 'Setor' ? 'text-green-600' : 'text-red-600'}">${window.formatRp(t.nominal)}</td><td class="px-4 py-3 text-center">${btn}</td></tr>`;
                 }).join('');
             }
 
+            const allowDeleteSpp = window.currentUser && (isAdmin || window.currentUser.permissions.spp);
             if(document.getElementById('table-spp')) {
                 document.getElementById('table-spp').innerHTML = [...st.spp].slice(-100).reverse().map(p => {
-                    const btn = isAdmin ? `<button onclick="window.hapusSPP(${p.id})" class="text-red-500 hover:text-red-700 bg-red-50 p-2 rounded-lg ml-1"><i class="fa-solid fa-trash"></i></button>` : '';
+                    const btn = allowDeleteSpp ? `<button onclick="window.hapusSPP(${p.id})" class="text-red-500 hover:text-red-700 bg-red-50 p-2 rounded-lg ml-1"><i class="fa-solid fa-trash"></i></button>` : '';
                     return `<tr class="border-b"><td class="px-6 py-3 font-bold text-sm text-gray-700">${(st.siswa.find(s => s.id === p.id_siswa) || {}).nama || '-'}</td><td class="px-6 py-3 text-xs font-bold text-blue-700">${p.bulan} ${p.tahun}</td><td class="px-6 py-3 text-xs">${p.metode}</td><td class="px-6 py-3 text-right font-bold text-sm text-gray-800">${window.formatRp(p.nominal)}</td><td class="px-4 py-3 text-center">${btn}</td></tr>`;
                 }).join('');
             }
 
-            if(document.getElementById('table-guru')) { document.getElementById('table-guru').innerHTML = st.guru.map(g => `<tr class="hover:bg-gray-50"><td class="px-6 py-4 font-medium text-gray-900 text-xs">${g.nip}</td><td class="px-6 py-4 font-bold text-sm">${g.nama} <br><span class="text-xs text-gray-500 font-normal">${g.jabatan} | ${g.hp}</span></td><td class="px-6 py-4 text-right">${isAdmin ? `<button onclick="window.hapusGuru(${g.id})" class="text-red-500"><i class="fa-solid fa-trash"></i></button>` : ''}</td></tr>`).join(''); }
-            if(document.getElementById('table-mapel')) { document.getElementById('table-mapel').innerHTML = st.mapel.map(m => `<tr class="hover:bg-gray-50"><td class="px-6 py-4 font-medium text-gray-900 text-xs">${m.kelas || '-'}</td><td class="px-6 py-4 font-bold text-sm">${m.nama}</td><td class="px-6 py-4 text-right">${isAdmin ? `<button onclick="window.hapusMapel(${m.id})" class="text-red-500"><i class="fa-solid fa-trash"></i></button>` : ''}</td></tr>`).join(''); }
+            const allowDeleteGuru = window.currentUser && (isAdmin || window.currentUser.permissions.guru);
+            if(document.getElementById('table-guru')) { document.getElementById('table-guru').innerHTML = st.guru.map(g => `<tr class="hover:bg-gray-50"><td class="px-6 py-4 font-medium text-gray-900 text-xs">${g.nip}</td><td class="px-6 py-4 font-bold text-sm">${g.nama} <br><span class="text-xs text-gray-500 font-normal">${g.jabatan} | ${g.hp}</span></td><td class="px-6 py-4 text-right">${allowDeleteGuru ? `<button onclick="window.hapusGuru(${g.id})" class="text-red-500"><i class="fa-solid fa-trash"></i></button>` : ''}</td></tr>`).join(''); }
+            
+            const allowDeleteMapel = window.currentUser && (isAdmin || window.currentUser.permissions.mapel);
+            if(document.getElementById('table-mapel')) { document.getElementById('table-mapel').innerHTML = st.mapel.map(m => `<tr class="hover:bg-gray-50"><td class="px-6 py-4 font-medium text-gray-900 text-xs">${m.kelas || '-'}</td><td class="px-6 py-4 font-bold text-sm">${m.nama}</td><td class="px-6 py-4 text-right">${allowDeleteMapel ? `<button onclick="window.hapusMapel(${m.id})" class="text-red-500"><i class="fa-solid fa-trash"></i></button>` : ''}</td></tr>`).join(''); }
 
             if(document.getElementById('table-atk')) { document.getElementById('table-atk').innerHTML = st.atk.map(a => `<tr class="hover:bg-gray-50"><td class="px-3 py-2"><div class="font-bold text-xs text-gray-800">${a.nama_barang}</div><div class="text-[9px] text-gray-500 uppercase">${a.kode_barang || '-'}</div></td><td class="px-2 py-2 text-center text-xs font-bold ${a.stok < 5 ? 'text-red-500 bg-red-50 px-2 py-1 rounded' : 'text-gray-700'}">${a.stok}</td><td class="px-3 py-2 text-right"><div class="text-xs font-bold text-orange-600">${window.formatRp(a.harga_jual)}</div></td><td class="px-2 py-2 text-center"><button onclick="window.openKonfirmasiKasir(${a.id})" class="text-white bg-gray-800 p-1.5 rounded-md"><i class="fa-solid fa-cart-plus"></i></button></td></tr>`).join(''); }
             if(document.getElementById('kopontren-income-today')) document.getElementById('kopontren-income-today').innerText = window.formatRp(st.penjualan ? st.penjualan.filter(p => p.tanggal.startsWith(prefixHarian)).reduce((a,b) => a + (b.total || 0), 0) : 0);
 
             const elSelectGuruIdCard = document.getElementById('select-guru-idcard');
             if (elSelectGuruIdCard) { let opts = `<option value="">-- Pilih Nama Guru --</option>`; st.guru.forEach(g => { opts += `<option value="${g.id}">${g.nama} - ${g.jabatan}</option>`; }); elSelectGuruIdCard.innerHTML = opts; }
+
+            // Render Daftar Operator di Pengaturan
+            if(document.getElementById('list-operator') && isAdmin) {
+                const ops = st.pengaturan.operators || [];
+                document.getElementById('list-operator').innerHTML = ops.length === 0 ? '<p class="text-xs text-gray-500 py-4">Belum ada operator.</p>' : ops.map(o => `
+                <div class="flex items-center justify-between bg-white border border-gray-200 p-3 rounded-lg shadow-sm">
+                    <div>
+                        <h5 class="font-bold text-sm text-gray-800">${o.username}</h5>
+                        <p class="text-[10px] text-gray-500">Operator Akun</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button type="button" onclick="window.editOperator('${o.id}')" class="bg-blue-50 text-blue-600 hover:bg-blue-100 p-2 rounded-md"><i class="fa-solid fa-pen text-xs"></i></button>
+                        <button type="button" onclick="window.hapusOperator('${o.id}')" class="bg-red-50 text-red-600 hover:bg-red-100 p-2 rounded-md"><i class="fa-solid fa-trash text-xs"></i></button>
+                    </div>
+                </div>
+                `).join('');
+            }
 
             if(st.pengaturan) {
                 const p = st.pengaturan;
