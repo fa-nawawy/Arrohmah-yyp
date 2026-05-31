@@ -1536,8 +1536,68 @@
         window.previewKopRapor = (e) => { const f = e.target.files[0]; if(f) { const reader = new FileReader(); reader.onload = (e) => { window.appState.pengaturan.kop_rapor = e.target.result; document.getElementById('preview-kop-img').src = e.target.result; document.getElementById('preview-kop-img').classList.remove('hidden'); document.getElementById('preview-kop-placeholder').classList.add('hidden'); }; reader.readAsDataURL(f); } };
         window.simpanPengaturanRapor = (e) => { e.preventDefault(); window.saveState(); window.updateAllViews(); window.showAlert('Berhasil', 'Desain Rapor disimpan.', 'success'); };
         window.resetFormOperator = () => {}; window.simpanOperator = (e) => { e.preventDefault(); window.showAlert('Info', 'Fungsi multi-operator tersedia di mode Pro.', 'info'); };
-        window.openScanner = () => { document.getElementById('scanner-modal').classList.replace('hidden', 'flex'); }; window.closeScanner = () => { document.getElementById('scanner-modal').classList.replace('flex', 'hidden'); };
-        window.cetakStrukById = () => { window.print(); };
+        // --- LOGIKA SCANNER BARCODE / QR CODE ---
+        window.openScanner = (mode) => { 
+            window.activeScannerMode = mode;
+            document.getElementById('scanner-modal').classList.replace('hidden', 'flex'); 
+            document.getElementById('scanner-hint').innerText = "Meminta izin kamera...";
+            
+            if (!html5QrCode) {
+                html5QrCode = new Html5Qrcode("reader");
+            }
+            
+            const config = { fps: 10, qrbox: { width: 250, height: 150 } };
+            
+            // Fungsi jika barcode berhasil terbaca
+            const onScanSuccess = (decodedText) => {
+                window.closeScanner();
+                
+                // Memasukkan hasil scan ke kolom yang sesuai
+                if (mode === 'tambah-siswa') {
+                    document.getElementById('siswa-nis').value = decodedText;
+                } else if (mode === 'tabungan') {
+                    document.getElementById('tabungan-siswa').value = decodedText;
+                    window.cekSiswaTabungan();
+                } else if (mode === 'spp') {
+                    document.getElementById('spp-siswa').value = decodedText;
+                    window.cekSiswaSPP();
+                } else if (mode === 'riwayat') {
+                    const siswa = window.appState.siswa.find(s => s.nis === decodedText);
+                    if(siswa) {
+                        document.getElementById('riwayat-siswa').value = siswa.id;
+                        window.renderRiwayatSiswa(siswa.id);
+                    } else {
+                        window.showAlert('Tidak Ditemukan', 'Siswa dengan NIS tersebut tidak ditemukan.', 'error');
+                    }
+                } else if (mode === 'atk') {
+                    document.getElementById('kasir-barang').value = decodedText;
+                    window.updateHargaKasir();
+                } else if (mode === 'atk-modal') {
+                    document.getElementById('atk-kode').value = decodedText;
+                    window.cekKodeATK();
+                } else if (mode === 'kasir-bayar') {
+                    document.getElementById('kasir-siswa').value = decodedText;
+                    window.cekSiswaKasir();
+                }
+            };
+
+            // Menyalakan kamera belakang (environment)
+            html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess)
+            .then(() => {
+                document.getElementById('scanner-hint').innerText = "Arahkan kamera ke kode...";
+            })
+            .catch(err => {
+                console.error("Camera error:", err);
+                document.getElementById('scanner-hint').innerText = "Gagal mengakses kamera. Pastikan izin kamera diizinkan di browser Anda.";
+            });
+        }; 
+        
+        window.closeScanner = () => { 
+            document.getElementById('scanner-modal').classList.replace('flex', 'hidden'); 
+            if (html5QrCode && html5QrCode.isScanning) {
+                html5QrCode.stop().then(() => html5QrCode.clear()).catch(err => console.error("Gagal mematikan kamera", err));
+            }
+        };
 
         // --- CORE UPDATE VIEWS ---
         window.updateAllViews = () => {
