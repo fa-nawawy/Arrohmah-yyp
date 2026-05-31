@@ -1536,7 +1536,7 @@
         window.previewKopRapor = (e) => { const f = e.target.files[0]; if(f) { const reader = new FileReader(); reader.onload = (e) => { window.appState.pengaturan.kop_rapor = e.target.result; document.getElementById('preview-kop-img').src = e.target.result; document.getElementById('preview-kop-img').classList.remove('hidden'); document.getElementById('preview-kop-placeholder').classList.add('hidden'); }; reader.readAsDataURL(f); } };
         window.simpanPengaturanRapor = (e) => { e.preventDefault(); window.saveState(); window.updateAllViews(); window.showAlert('Berhasil', 'Desain Rapor disimpan.', 'success'); };
         window.resetFormOperator = () => {}; window.simpanOperator = (e) => { e.preventDefault(); window.showAlert('Info', 'Fungsi multi-operator tersedia di mode Pro.', 'info'); };
-       // --- MESIN SUARA BEEP ---
+    // --- MESIN SUARA BEEP ---
         window.playBeep = () => {
             try {
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -1546,20 +1546,20 @@
                 oscillator.connect(gainNode);
                 gainNode.connect(audioCtx.destination);
                 
-                // Menggunakan tipe 'square' untuk suara elektronik tajam ala mesin kasir
+                // Tipe 'square' memberikan karakter suara buzzer elektronik khas alat kasir
                 oscillator.type = 'square'; 
                 
-                // Frekuensi 1500 Hz untuk nada "Tiit" yang tinggi dan melengking
-                oscillator.frequency.setValueAtTime(1500, audioCtx.currentTime); 
+                // Frekuensi 2000 Hz persis seperti nada tinggi scanner laser asli
+                oscillator.frequency.setValueAtTime(2000, audioCtx.currentTime); 
                 
-                // Volume diset ke maksimal (1.0)
+                // Volume langsung maksimal saat pertama kali bunyi
                 gainNode.gain.setValueAtTime(1.0, audioCtx.currentTime);
                 
-                // Durasi sangat singkat (0.1 detik) agar bunyinya tegas dan tidak bergaung
-                gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.1); 
+                // Durasi diperpendek menjadi 0.08 detik agar bunyinya "menghentak" dan tidak bergaung
+                gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.08); 
                 
-                oscillator.start();
-                oscillator.stop(audioCtx.currentTime + 0.1);
+                oscillator.start(audioCtx.currentTime);
+                oscillator.stop(audioCtx.currentTime + 0.08);
             } catch (error) {
                 console.log("Suara tidak didukung browser: ", error);
             }
