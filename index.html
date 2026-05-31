@@ -1050,9 +1050,9 @@
         window.cropperInstance = null; window.currentImageFile = null;
 
         // =========================================================================================
-        // MASUKKAN URL GOOGLE APPS SCRIPT ANDA DI BAWAH INI
+        // ALAMAT GOOGLE APPS SCRIPT ANDA SUDAH DIMASUKKAN DI SINI
         // =========================================================================================
-        const SCRIPT_URL = 'GANTI_DENGAN_URL_APPS_SCRIPT_ANDA_DI_SINI';
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzlx9jue79ERKNEfRvaRM-k-D0n0cnFrp6as3XAnW9GI_PD20tP4frgkoEGaOZuijr3uQ/exec';
         // =========================================================================================
 
         window.formatRp = (angka) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka || 0);
@@ -1652,12 +1652,6 @@
             printArea.classList.remove('hidden');
             setTimeout(() => { window.print(); setTimeout(() => { printArea.classList.add('hidden'); printArea.innerHTML = ''; const tempStyle = document.getElementById('temp-print-style'); if (tempStyle) tempStyle.remove(); }, 500); }, 300);
         };
-
-        // =========================================================================================
-        // ALAMAT GOOGLE APPS SCRIPT ANDA SUDAH DIMASUKKAN DI SINI
-        // =========================================================================================
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzlx9jue79ERKNEfRvaRM-k-D0n0cnFrp6as3XAnW9GI_PD20tP4frgkoEGaOZuijr3uQ/exec';
-        // =========================================================================================
 
         const initCloudDatabase = async () => {
             const loader = document.getElementById('startup-loader'); const syncBadge = document.getElementById('cloud-sync-status');
