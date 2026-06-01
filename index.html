@@ -1290,7 +1290,10 @@
             }
         };
 
-        window.openCropper = (event) => { 
+      window.currentCropTarget = 'idcard'; // Menyimpan target edit (default: idcard)
+
+        window.openCropper = (event, target = 'idcard') => { 
+            window.currentCropTarget = target;
             const file = event.target.files[0]; 
             if (file) { 
                 window.currentImageFile = file; 
@@ -1300,19 +1303,16 @@
             } 
         };
         
-        window.reopenCropper = () => { 
-            const displayPhoto = document.getElementById('displayPhoto');
-            if (displayPhoto && displayPhoto.src && !displayPhoto.src.includes('svg+xml')) {
-                window.showCropperModal(displayPhoto.src);
-            } else if (window.currentImageFile) { 
+        window.reopenCropper = (target = 'idcard') => { 
+            window.currentCropTarget = target;
+            if (window.currentImageFile) { 
                 const reader = new FileReader(); 
                 reader.onload = function(e) { window.showCropperModal(e.target.result); }; 
                 reader.readAsDataURL(window.currentImageFile); 
-            } else {
-                window.showAlert('Info', 'Silakan pilih guru terlebih dahulu atau unggah foto dari Data Guru.', 'info');
-            }
+            } 
         };
         
+        // window.showCropperModal dan window.closeCropper biarkan seperti aslinya
         window.showCropperModal = (imageSrc) => { 
             const modal = document.getElementById('cropperModal'); 
             const imageEl = document.getElementById('imageToCrop'); 
@@ -1324,14 +1324,26 @@
         
         window.closeCropper = () => { 
             document.getElementById('cropperModal').style.display = 'none'; 
-            const fileInput = document.getElementById('guru-foto');
-            if(fileInput && !window.tempFotoGuru) fileInput.value = ''; 
+            if (document.getElementById('inputPhoto')) document.getElementById('inputPhoto').value = ''; 
+            if (document.getElementById('guru-foto')) document.getElementById('guru-foto').value = ''; 
         };
         
         window.applyCrop = () => { 
             if (!window.cropper) return; 
             const canvas = window.cropper.getCroppedCanvas({ width: 400, height: 400, imageSmoothingEnabled: true, imageSmoothingQuality: 'high' }); 
-            const base64 = canvas.toDataURL('image/jpeg'); 
+            const croppedBase64 = canvas.toDataURL('image/jpeg');
+
+            // Cek target: apakah untuk Guru atau Kartu ID
+            if (window.currentCropTarget === 'guru') {
+                window.tempFotoGuru = croppedBase64;
+                document.getElementById('preview-foto-img').src = croppedBase64;
+                document.getElementById('preview-foto-container').classList.remove('hidden');
+            } else {
+                document.getElementById('displayPhoto').src = croppedBase64; 
+            }
+
+            document.getElementById('cropperModal').style.display = 'none'; 
+        };
             
             // Simpan foto guru
             window.tempFotoGuru = base64;
