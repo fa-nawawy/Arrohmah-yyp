@@ -404,18 +404,11 @@
                                     <label class="block text-sm font-medium mb-1">Nomor ID (NIP/NIS)</label>
                                     <input type="text" id="inputId" class="w-full border p-2.5 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 font-mono" placeholder="12345678" oninput="window.updateText('inputId', 'displayId', 'ID: XXXXXX', 'ID: ')">
                                 </div>
-                                <div class="grid grid-cols-2 gap-4 border-t pt-4 mt-2">
-                                    <div>
-                                        <label class="block text-sm font-medium mb-1 text-gray-700">Unggah Foto Manual</label>
-                                        <input type="file" id="inputPhoto" accept="image/*" class="w-full border p-2 rounded-lg bg-gray-50 text-xs" onchange="window.openCropper(event)">
-                                        <p class="text-[10px] text-gray-500 mt-1">Menggantikan foto otomatis.</p>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium mb-1 text-gray-700">Unggah Background</label>
-                                        <input type="file" id="inputBackground" accept="image/*" class="w-full border p-2 rounded-lg bg-gray-50 text-xs" onchange="window.changeBackground(event)">
-                                        <p class="text-[10px] text-gray-500 mt-1">Menggantikan warna tema bawaan.</p>
-                                    </div>
-                                </div>
+                                <div class="border-t pt-4 mt-2">
+    <label class="block text-sm font-medium mb-1 text-gray-700">Unggah Background</label>
+    <input type="file" id="inputBackground" accept="image/*" class="w-full border p-2 rounded-lg bg-gray-50 text-xs" onchange="window.changeBackground(event)">
+    <p class="text-[10px] text-gray-500 mt-1">Menggantikan warna tema bawaan.</p>
+</div>
                                 <button onclick="window.cetakKartuIDSekarang()" class="w-full bg-gray-800 text-white font-bold p-3 mt-4 rounded-xl hover:bg-gray-900 shadow-md transition flex items-center justify-center gap-2">
                                     <i class="fa-solid fa-print"></i> Cetak Kartu Ini
                                 </button>
