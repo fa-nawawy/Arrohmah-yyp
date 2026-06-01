@@ -7,7 +7,7 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <script src="https://unpkg.com/html5-qrcode"></script>
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 
     <!-- PUSTAKA UNTUK KARTU ID (BARCODE & CROPPER FOTO) -->
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
@@ -346,7 +346,7 @@
                                     
                                     <div>
                                         <label class="block text-sm font-medium mb-1">Foto Profil (Opsional)</label>
-                                        <input type="file" id="guru-foto" accept="image/*" class="w-full border p-2 rounded-lg bg-gray-50 text-xs" onchange="window.previewFotoGuru(event)">
+                                        <input type="file" id="guru-foto" accept="image/*" class="w-full border p-2 rounded-lg bg-gray-50 text-xs" onchange="window.openCropper(event)">
                                         <div id="preview-foto-container" class="hidden mt-2 flex justify-center">
                                             <img id="preview-foto-img" src="" class="w-20 h-20 rounded-full object-cover border-2 border-blue-200 shadow-sm">
                                         </div>
@@ -1221,48 +1221,48 @@
             } 
         };
 
-     // --- Fungsi Upload & Simpan Background ID Card ---
-window.changeBackground = (event) => {
-    const file = event.target.files[0];
-    const cardArea = document.getElementById('printable-area');
-    const themeHeader = document.getElementById('themeHeader');
-    const cardBody = document.querySelector('.id-card-body');
-    
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const base64Image = e.target.result;
+        // --- Fungsi Upload & Simpan Background ID Card ---
+        window.changeBackground = (event) => {
+            const file = event.target.files[0];
+            const cardArea = document.getElementById('printable-area');
+            const themeHeader = document.getElementById('themeHeader');
+            const cardBody = document.querySelector('.id-card-body');
             
-            // 1. Terapkan ke tampilan
-            cardArea.style.backgroundImage = `url(${base64Image})`;
-            cardArea.style.backgroundSize = 'cover';
-            cardArea.style.backgroundPosition = 'center';
-            themeHeader.style.backgroundColor = 'transparent'; 
-            themeHeader.style.textShadow = '1px 1px 3px rgba(0,0,0,0.8)';
-            cardBody.style.backgroundColor = 'transparent';
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const base64Image = e.target.result;
+                    
+                    // 1. Terapkan ke tampilan
+                    cardArea.style.backgroundImage = `url(${base64Image})`;
+                    cardArea.style.backgroundSize = 'cover';
+                    cardArea.style.backgroundPosition = 'center';
+                    themeHeader.style.backgroundColor = 'transparent'; 
+                    themeHeader.style.textShadow = '1px 1px 3px rgba(0,0,0,0.8)';
+                    cardBody.style.backgroundColor = 'transparent';
 
-            // 2. Simpan ke pengaturan database
-            if(!window.appState.pengaturan) window.appState.pengaturan = {};
-            window.appState.pengaturan.bg_idcard = base64Image;
-            window.saveState();
-            
-            window.showAlert('Berhasil', 'Background kartu ID berhasil disimpan.', 'success');
-        }; 
-        reader.readAsDataURL(file);
-    } else {
-        // Hapus tampilan background
-        cardArea.style.backgroundImage = 'none'; 
-        themeHeader.style.backgroundColor = '#0ea5e9'; 
-        themeHeader.style.textShadow = 'none'; 
-        cardBody.style.backgroundColor = 'transparent';
+                    // 2. Simpan ke pengaturan database
+                    if(!window.appState.pengaturan) window.appState.pengaturan = {};
+                    window.appState.pengaturan.bg_idcard = base64Image;
+                    window.saveState();
+                    
+                    window.showAlert('Berhasil', 'Background kartu ID berhasil disimpan.', 'success');
+                }; 
+                reader.readAsDataURL(file);
+            } else {
+                // Hapus tampilan background
+                cardArea.style.backgroundImage = 'none'; 
+                themeHeader.style.backgroundColor = '#0ea5e9'; 
+                themeHeader.style.textShadow = 'none'; 
+                cardBody.style.backgroundColor = 'transparent';
 
-        // Hapus dari pengaturan database
-        if(window.appState.pengaturan && window.appState.pengaturan.bg_idcard) {
-            window.appState.pengaturan.bg_idcard = '';
-            window.saveState();
-        }
-    }
-};
+                // Hapus dari pengaturan database
+                if(window.appState.pengaturan && window.appState.pengaturan.bg_idcard) {
+                    window.appState.pengaturan.bg_idcard = '';
+                    window.saveState();
+                }
+            }
+        };
 
         window.autofillIdCard = (guruId) => {
             const defaultAvatar = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23cbd5e1'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>";
@@ -1301,11 +1301,16 @@ window.changeBackground = (event) => {
         };
         
         window.reopenCropper = () => { 
-            if (window.currentImageFile) { 
+            const displayPhoto = document.getElementById('displayPhoto');
+            if (displayPhoto && displayPhoto.src && !displayPhoto.src.includes('svg+xml')) {
+                window.showCropperModal(displayPhoto.src);
+            } else if (window.currentImageFile) { 
                 const reader = new FileReader(); 
                 reader.onload = function(e) { window.showCropperModal(e.target.result); }; 
                 reader.readAsDataURL(window.currentImageFile); 
-            } 
+            } else {
+                window.showAlert('Info', 'Silakan pilih guru terlebih dahulu atau unggah foto dari Data Guru.', 'info');
+            }
         };
         
         window.showCropperModal = (imageSrc) => { 
@@ -1319,14 +1324,33 @@ window.changeBackground = (event) => {
         
         window.closeCropper = () => { 
             document.getElementById('cropperModal').style.display = 'none'; 
-            document.getElementById('inputPhoto').value = ''; 
+            const fileInput = document.getElementById('guru-foto');
+            if(fileInput && !window.tempFotoGuru) fileInput.value = ''; 
         };
         
         window.applyCrop = () => { 
             if (!window.cropper) return; 
             const canvas = window.cropper.getCroppedCanvas({ width: 400, height: 400, imageSmoothingEnabled: true, imageSmoothingQuality: 'high' }); 
-            document.getElementById('displayPhoto').src = canvas.toDataURL('image/jpeg'); 
-            document.getElementById('cropperModal').style.display = 'none'; 
+            const base64 = canvas.toDataURL('image/jpeg'); 
+            
+            // Simpan foto guru
+            window.tempFotoGuru = base64;
+            
+            // Update preview di Form Data Guru
+            const previewImg = document.getElementById('preview-foto-img');
+            const previewContainer = document.getElementById('preview-foto-container');
+            if (previewImg && previewContainer) {
+                previewImg.src = base64;
+                previewContainer.classList.remove('hidden');
+            }
+            
+            // Update preview di ID Card
+            const displayPhoto = document.getElementById('displayPhoto');
+            if (displayPhoto) {
+                displayPhoto.src = base64;
+            }
+            
+            window.closeCropper();
         };
         
         window.cetakKartuIDSekarang = () => {
@@ -1370,7 +1394,7 @@ window.changeBackground = (event) => {
                 else iconEl.innerHTML = '<i class="fa-solid fa-circle-info text-blue-500"></i>';
                 modal.classList.replace('hidden', 'flex');
                 document.getElementById('alert-close-btn').onclick = () => modal.classList.replace('flex', 'hidden');
-            } else { alert(title + ": " + message); }
+            } else { console.log(title + ": " + message); }
         };
 
         window.showConfirm = (title, message, onYes) => {
@@ -1379,7 +1403,7 @@ window.changeBackground = (event) => {
                 document.getElementById('confirm-title').innerText = title; document.getElementById('confirm-message').innerText = message;
                 modal.classList.replace('hidden', 'flex');
                 document.getElementById('confirm-yes-btn').onclick = () => { modal.classList.replace('flex', 'hidden'); if(onYes) onYes(); };
-            } else { if(confirm(title + ": " + message)) { if(onYes) onYes(); } }
+            } else { console.log("Confirm: " + message); if(onYes) onYes(); }
         };
 
         window.closeConfirm = () => { const modal = document.getElementById('confirm-modal'); if(modal) modal.classList.replace('flex', 'hidden'); };
@@ -1478,22 +1502,6 @@ window.changeBackground = (event) => {
         
         window.tempFotoGuru = ''; 
         
-        window.previewFotoGuru = (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    window.tempFotoGuru = e.target.result;
-                    document.getElementById('preview-foto-img').src = e.target.result;
-                    document.getElementById('preview-foto-container').classList.remove('hidden');
-                };
-                reader.readAsDataURL(file);
-            } else {
-                window.tempFotoGuru = '';
-                document.getElementById('preview-foto-container').classList.add('hidden');
-            }
-        };
-
         window.resetFormGuru = () => {
             document.getElementById('guru-mode').value = 'add';
             document.getElementById('guru-id').value = '';
@@ -1604,7 +1612,7 @@ window.changeBackground = (event) => {
         
         window.cekKodeATK = () => {
             const kode = document.getElementById('atk-kode').value.trim().toUpperCase(); const mode = document.getElementById('atk-mode').value; const hint = document.getElementById('atk-hint');
-            if (mode === 'add' && kode) { const existing = window.appState.atk.find(a => a.kode_barang === kode); if (existing) { hint.classList.remove('hidden'); document.getElementById('atk-nama').value = existing.nama_barang; document.getElementById('atk-beli').value = existing.harga_beli || ''; document.getElementById('atk-jual').value = existing.harga_jual; } else { hint.classList.add('hidden'); } } else { hint.classList.add('hidden'); }
+            if (mode === 'add' && kode) { const existing = window.appState.atk.find(a => a.kode_barang && a.kode_barang === kode); if (existing) { hint.classList.remove('hidden'); document.getElementById('atk-nama').value = existing.nama_barang; document.getElementById('atk-beli').value = existing.harga_beli || ''; document.getElementById('atk-jual').value = existing.harga_jual; } else { hint.classList.add('hidden'); } } else { hint.classList.add('hidden'); }
         };
 
         window.simpanATK = (e) => {
@@ -1692,12 +1700,12 @@ window.changeBackground = (event) => {
 
         /* ======= KASIR KOPONTREN ======= */
         window.handleEnterBarangKasir = (e) => {
-            if(e.key === 'Enter') { e.preventDefault(); const kode = document.getElementById('kasir-barang').value.trim().toUpperCase(); if(!kode) return; const atk = window.appState.atk.find(a => a.kode_barang === kode); if(atk) { window.tambahKeKeranjang(atk, 1); document.getElementById('kasir-barang').value = ''; document.getElementById('kasir-rincian-box').classList.add('hidden'); } else { window.showAlert('Tidak Ditemukan', 'Kode barang / Barcode tidak terdaftar di sistem.', 'error'); } }
+            if(e.key === 'Enter') { e.preventDefault(); const kode = document.getElementById('kasir-barang').value.trim().toUpperCase(); if(!kode) return; const atk = window.appState.atk.find(a => a.kode_barang && a.kode_barang === kode); if(atk) { window.tambahKeKeranjang(atk, 1); document.getElementById('kasir-barang').value = ''; document.getElementById('kasir-rincian-box').classList.add('hidden'); } else { window.showAlert('Tidak Ditemukan', 'Kode barang / Barcode tidak terdaftar di sistem.', 'error'); } }
         };
 
         window.updateHargaKasir = () => {
             const kode = document.getElementById('kasir-barang').value.trim().toUpperCase(); const box = document.getElementById('kasir-rincian-box'); if(!kode) { box.classList.add('hidden'); return; }
-            const atk = window.appState.atk.find(a => a.kode_barang === kode || a.nama_barang.toUpperCase().includes(kode));
+            const atk = window.appState.atk.find(a => (a.kode_barang && a.kode_barang === kode) || (a.nama_barang && a.nama_barang.toUpperCase().includes(kode)));
             if(atk) { document.getElementById('kasir-rincian-nama').innerText = atk.nama_barang; document.getElementById('kasir-rincian-harga').innerText = `${window.formatRp(atk.harga_jual)} x 1`; document.getElementById('kasir-rincian-total').innerText = window.formatRp(atk.harga_jual); document.getElementById('kasir-jumlah').value = 1; box.dataset.id = atk.id; box.classList.remove('hidden'); } else { box.classList.add('hidden'); }
         };
 
@@ -1828,7 +1836,7 @@ window.changeBackground = (event) => {
         window.openScanner = (mode) => { 
             window.activeScannerMode = mode; document.getElementById('scanner-modal').classList.replace('hidden', 'flex'); document.getElementById('scanner-hint').innerText = "Meminta izin kamera...";
             if (!html5QrCode) { html5QrCode = new Html5Qrcode("reader"); }
-            const config = { fps: 10, qrbox: { width: 250, height: 150 } };
+            const config = { fps: 10, qrbox: 200 }; // Diperbarui agar lebih responsif
             const onScanSuccess = (decodedText) => {
                 window.playBeep(); window.closeScanner();
                 if (mode === 'tambah-siswa') { document.getElementById('siswa-nis').value = decodedText; } else if (mode === 'tabungan') { document.getElementById('tabungan-siswa').value = decodedText; window.cekSiswaTabungan(); } else if (mode === 'spp') { document.getElementById('spp-siswa').value = decodedText; window.cekSiswaSPP(); } else if (mode === 'riwayat') { const siswa = window.appState.siswa.find(s => String(s.nis) === String(decodedText)); if(siswa) { document.getElementById('riwayat-siswa').value = siswa.id; window.renderRiwayatSiswa(siswa.id); } else { window.showAlert('Tidak Ditemukan', 'Siswa dengan NIS tersebut tidak ditemukan.', 'error'); } } else if (mode === 'atk') { document.getElementById('kasir-barang').value = decodedText; window.updateHargaKasir(); } else if (mode === 'atk-modal') { document.getElementById('atk-kode').value = decodedText; window.cekKodeATK(); } else if (mode === 'kasir-bayar') { document.getElementById('kasir-siswa').value = decodedText; window.cekSiswaKasir(); }
@@ -1859,146 +1867,126 @@ window.changeBackground = (event) => {
             window.renderTabelBarang();
 
             const allowDeleteSiswa = window.currentUser && (isAdmin || window.currentUser.permissions.siswa);
-            if(document.getElementById('table-siswa')) { document.getElementById('table-siswa').innerHTML = st.siswa.map(s => { const btnHapusSiswa = allowDeleteSiswa ? `<button onclick="window.hapusSiswa('${s.id}')" class="text-[10px] text-red-500 hover:underline mt-1 inline-flex items-center gap-1"><i class="fa-solid fa-trash"></i> Hapus</button>` : ''; return `<tr class="hover:bg-gray-50"><td class="px-6 py-4 font-medium text-gray-900 text-xs">${s.nis}</td><td class="px-6 py-4 font-bold text-sm">${s.nama} <br><span class="text-xs text-gray-500 font-normal">Kelas: ${s.kelas}</span></td><td class="px-6 py-4 text-right"><span class="font-bold text-green-600 block">${window.formatRp(s.saldo)}</span>${btnHapusSiswa}</td></tr>`; }).join(''); }
+            if(document.getElementById('table-siswa')) { document.getElementById('table-siswa').innerHTML = st.siswa.map(s => { const btnHapusSiswa = allowDeleteSiswa ? `<button onclick="window.hapusSiswa('${s.id}')" class="text-[10px] text-red-500 hover:underline mt-1 inline-flex items-center gap-1"><i class="fa-solid fa-trash"></i> Hapus</button>` : ''; return `<tr class="hover:bg-gray-50 border-b border-gray-100"><td class="px-6 py-3 font-medium text-gray-500 text-xs">${s.nis}</td><td class="px-6 py-3 font-bold text-sm text-gray-800">${s.nama} <br><span class="text-[10px] font-normal text-gray-400">Kls: ${s.kelas} | Wali: ${s.wali}</span><br>${btnHapusSiswa}</td><td class="px-6 py-3 text-right font-bold text-green-600">${window.formatRp(s.saldo)}</td></tr>`; }).join(''); }
             
+            const allowDeleteGuru = window.currentUser && (isAdmin || window.currentUser.permissions.guru);
+            if(document.getElementById('table-guru')) { document.getElementById('table-guru').innerHTML = st.guru.map(g => { const btnHapusGuru = allowDeleteGuru ? `<button onclick="window.hapusGuru('${g.id}')" class="text-red-500 hover:bg-red-50 p-1.5 rounded-lg"><i class="fa-solid fa-trash"></i></button>` : ''; return `<tr class="hover:bg-gray-50 border-b border-gray-100"><td class="px-6 py-3 font-medium text-gray-500 text-xs">${g.nip}</td><td class="px-6 py-3"><div class="flex items-center gap-3"><img src="${g.foto || 'data:image/svg+xml;utf8,<svg xmlns=\\\'http://www.w3.org/2000/svg\\\' viewBox=\\\'0 0 24 24\\\' fill=\\\'%23cbd5e1\\\'><path d=\\\'M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z\\\'/></svg>'}" class="w-8 h-8 rounded-full object-cover bg-gray-100 border border-gray-200"><div><p class="font-bold text-sm text-gray-800">${g.nama}</p><p class="text-[10px] text-gray-500">${g.jabatan}</p></div></div></td><td class="px-6 py-3 text-right"><button onclick="window.editGuru('${g.id}')" class="text-blue-500 hover:bg-blue-50 p-1.5 rounded-lg mr-1"><i class="fa-solid fa-pen"></i></button>${btnHapusGuru}</td></tr>`; }).join(''); }
+
+            const allowDeleteMapel = window.currentUser && (isAdmin || window.currentUser.permissions.mapel);
+            if(document.getElementById('table-mapel')) { document.getElementById('table-mapel').innerHTML = st.mapel.map(m => { const btnHapusMapel = allowDeleteMapel ? `<button onclick="window.hapusMapel('${m.id}')" class="text-red-500 hover:bg-red-50 p-1.5 rounded-lg"><i class="fa-solid fa-trash"></i></button>` : ''; return `<tr class="hover:bg-gray-50 border-b border-gray-100"><td class="px-6 py-3 font-medium text-gray-500 text-xs">Kelas ${m.kelas}</td><td class="px-6 py-3 font-bold text-sm text-gray-800">${m.nama}</td><td class="px-6 py-3 text-right">${btnHapusMapel}</td></tr>`; }).join(''); }
+
             const allowDeleteTabungan = window.currentUser && (isAdmin || window.currentUser.permissions.tabungan);
-            if(document.getElementById('table-tabungan')) { document.getElementById('table-tabungan').innerHTML = [...st.tabungan].slice(-100).reverse().map(t => { const btn = allowDeleteTabungan ? `<button onclick="window.hapusTabungan('${t.id}')" class="text-red-500 hover:text-red-700 bg-red-50 p-2 rounded-lg ml-1"><i class="fa-solid fa-trash"></i></button>` : ''; const style = t.jenis === 'Setor' ? 'text-green-600 bg-green-100' : 'text-red-600 bg-red-100'; return `<tr class="border-b"><td class="px-6 py-3 text-[11px] text-gray-500">${t.tanggal}</td><td class="px-6 py-3 font-bold text-sm text-gray-700">${(st.siswa.find(s => String(s.id) === String(t.id_siswa)) || {}).nama || '-'}</td><td class="px-6 py-3 text-xs"><span class="px-2 py-1 font-bold rounded-md ${style}">${t.jenis}</span></td><td class="px-6 py-3 text-right font-bold text-sm ${t.jenis === 'Setor' ? 'text-green-600' : 'text-red-600'}">${window.formatRp(t.nominal)}</td><td class="px-4 py-3 text-center">${btn}</td></tr>`; }).join(''); }
+            if(document.getElementById('table-tabungan')) { const tabunganReverse = [...st.tabungan].reverse(); document.getElementById('table-tabungan').innerHTML = tabunganReverse.map(t => { const s = st.siswa.find(x => String(x.id) === String(t.id_siswa)); const namaSiswa = s ? s.nama : 'Unknown'; const btnHapus = allowDeleteTabungan ? `<button onclick="window.hapusTabungan('${t.id}')" class="text-red-400 hover:text-red-600"><i class="fa-solid fa-trash"></i></button>` : '-'; return `<tr class="border-b hover:bg-gray-50"><td class="px-6 py-3 text-xs text-gray-500">${t.tanggal}</td><td class="px-6 py-3 text-sm font-bold text-gray-800">${namaSiswa}</td><td class="px-6 py-3"><span class="px-2 py-1 rounded-md text-xs font-medium ${t.jenis==='Setor'?'bg-green-100 text-green-700':'bg-red-100 text-red-700'}">${t.jenis}</span></td><td class="px-6 py-3 text-right font-bold text-sm ${t.jenis==='Setor'?'text-green-600':'text-red-600'}">${window.formatRp(t.nominal)}</td><td class="px-4 py-3 text-center">${btnHapus}</td></tr>`; }).join(''); }
 
             const allowDeleteSpp = window.currentUser && (isAdmin || window.currentUser.permissions.spp);
-            if(document.getElementById('table-spp')) { document.getElementById('table-spp').innerHTML = [...st.spp].slice(-100).reverse().map(p => { const btn = allowDeleteSpp ? `<button onclick="window.hapusSPP('${p.id}')" class="text-red-500 hover:text-red-700 bg-red-50 p-2 rounded-lg ml-1"><i class="fa-solid fa-trash"></i></button>` : ''; return `<tr class="border-b"><td class="px-6 py-3 font-bold text-sm text-gray-700">${(st.siswa.find(s => String(s.id) === String(p.id_siswa)) || {}).nama || '-'}</td><td class="px-6 py-3 text-xs font-bold text-blue-700">${p.bulan} ${p.tahun}</td><td class="px-6 py-3 text-xs">${p.metode}</td><td class="px-6 py-3 text-right font-bold text-sm text-gray-800">${window.formatRp(p.nominal)}</td><td class="px-4 py-3 text-center">${btn}</td></tr>`; }).join(''); }
+            if(document.getElementById('table-spp')) { const sppReverse = [...st.spp].reverse(); document.getElementById('table-spp').innerHTML = sppReverse.map(p => { const s = st.siswa.find(x => String(x.id) === String(p.id_siswa)); const namaSiswa = s ? s.nama : 'Unknown'; const btnHapus = allowDeleteSpp ? `<button onclick="window.hapusSPP('${p.id}')" class="text-red-400 hover:text-red-600"><i class="fa-solid fa-trash"></i></button>` : '-'; return `<tr class="border-b hover:bg-gray-50"><td class="px-6 py-3 text-sm font-bold text-gray-800">${namaSiswa}</td><td class="px-6 py-3 text-xs font-medium text-blue-700">${p.bulan} ${p.tahun}</td><td class="px-6 py-3 text-xs text-gray-500">${p.metode}</td><td class="px-6 py-3 text-right font-bold text-sm text-gray-700">${window.formatRp(p.nominal)}</td><td class="px-4 py-3 text-center">${btnHapus}</td></tr>`; }).join(''); }
 
-            const allowDeleteGuru = window.currentUser && (isAdmin || window.currentUser.permissions.guru);
-            if(document.getElementById('table-guru')) { 
-                document.getElementById('table-guru').innerHTML = st.guru.map(g => {
-                    const defaultAvatar = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23cbd5e1'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>";
-                    const fotoSrc = g.foto ? g.foto : defaultAvatar;
-                    const btnEdit = allowDeleteGuru ? `<button onclick="window.editGuru('${g.id}')" class="text-blue-500 hover:text-blue-700 bg-blue-50 p-2 rounded-lg mr-1" title="Edit"><i class="fa-solid fa-pen"></i></button>` : '';
-                    const btnHapus = allowDeleteGuru ? `<button onclick="window.hapusGuru('${g.id}')" class="text-red-500 hover:text-red-700 bg-red-50 p-2 rounded-lg" title="Hapus"><i class="fa-solid fa-trash"></i></button>` : '';
+            if(document.getElementById('kopontren-income-today')) { const totalIncome = st.penjualan ? st.penjualan.filter(p => p.tanggal.startsWith(window.getToday().split(' ')[0])).reduce((a,b) => a + (b.total || 0), 0) : 0; document.getElementById('kopontren-income-today').innerText = window.formatRp(totalIncome); }
+
+            if(document.getElementById('list-operator')) { document.getElementById('list-operator').innerHTML = (st.pengaturan.operators || []).map(o => { return `<div class="bg-white p-3 rounded-xl border border-gray-100 flex justify-between items-center shadow-sm"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center"><i class="fa-solid fa-user-gear text-xs"></i></div><div><p class="text-sm font-bold text-gray-800">${o.username}</p></div></div><div class="flex gap-1"><button onclick="window.editOperator('${o.id}')" class="w-7 h-7 rounded bg-gray-50 text-blue-500 hover:bg-blue-100 flex items-center justify-center transition-colors"><i class="fa-solid fa-pen text-[10px]"></i></button><button onclick="window.hapusOperator('${o.id}')" class="w-7 h-7 rounded bg-gray-50 text-red-500 hover:bg-red-100 flex items-center justify-center transition-colors"><i class="fa-solid fa-trash text-[10px]"></i></button></div></div>`; }).join(''); }
+
+            if(document.getElementById('select-guru-idcard')) { document.getElementById('select-guru-idcard').innerHTML = '<option value="">-- Pilih Nama Guru --</option>' + st.guru.map(g => `<option value="${g.id}">${g.nama} (${g.jabatan})</option>`).join(''); }
+
+            // Sync ke server (Google Sheets / Cloud) jika ada perubahan
+            window.syncKeCloud();
+        };
+
+        window.konfirmasiReset = (tipe) => {
+            const pesan = tipe === 'transaksi' ? 'Apakah Anda yakin ingin MENGHAPUS SEMUA DATA TRANSAKSI (Tabungan, SPP, Penjualan Kopontren)? Saldo siswa juga akan di-reset menjadi Rp 0.' 
+                        : tipe === 'master' ? 'Apakah Anda yakin ingin MENGHAPUS SEMUA DATA MASTER (Siswa, Guru, Mapel, Nilai, Barang Kopontren)?' 
+                        : 'FACTORY RESET: Apakah Anda yakin ingin MENGHAPUS KESELURUHAN DATA dan mengembalikan aplikasi ke kondisi awal?';
+            window.showConfirm("PERINGATAN RESET DATA", pesan, () => {
+                if (tipe === 'transaksi' || tipe === 'semua') { window.appState.tabungan = []; window.appState.spp = []; window.appState.penjualan = []; window.appState.siswa.forEach(s => s.saldo = 0); }
+                if (tipe === 'master' || tipe === 'semua') { window.appState.siswa = []; window.appState.guru = []; window.appState.mapel = []; window.appState.nilai = []; window.appState.atk = []; }
+                if (tipe === 'semua') { window.appState.pengaturan.operators = []; window.appState.pengaturan.struk_judul = 'MADRASAH AL-KHOIROT'; window.appState.pengaturan.struk_alamat = 'Jl. Pendidikan No.1'; window.appState.pengaturan.struk_ucapan = '*** Terima Kasih ***'; window.appState.pengaturan.spp_nominal = ''; window.appState.pengaturan.kop_rapor = ''; window.appState.pengaturan.bg_idcard = ''; }
+                window.saveState(); window.updateAllViews(); window.showAlert('Berhasil', 'Data berhasil di-reset.', 'success');
+            });
+        };
+
+        window.saveState = () => { localStorage.setItem('madrasahCloudData', JSON.stringify(window.appState)); };
+        
+        window.loadState = () => {
+            const saved = localStorage.getItem('madrasahCloudData');
+            if(saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    window.appState = { ...window.appState, ...parsed };
                     
-                    return `<tr class="hover:bg-gray-50"><td class="px-6 py-4 font-medium text-gray-900 text-xs">${g.nip}</td><td class="px-6 py-4 flex items-center gap-3"><img src="${fotoSrc}" class="w-10 h-10 rounded-full object-cover border border-gray-200"><div><span class="font-bold text-sm">${g.nama}</span><br><span class="text-xs text-gray-500 font-normal">${g.jabatan} | ${g.hp}</span></div></td><td class="px-6 py-4 text-right whitespace-nowrap">${btnEdit}${btnHapus}</td></tr>`;
-                }).join(''); 
+                    if(!window.appState.guru) window.appState.guru = [];
+                    if(!window.appState.siswa) window.appState.siswa = [];
+                    if(!window.appState.mapel) window.appState.mapel = [];
+                    if(!window.appState.nilai) window.appState.nilai = [];
+                    if(!window.appState.tabungan) window.appState.tabungan = [];
+                    if(!window.appState.spp) window.appState.spp = [];
+                    if(!window.appState.atk) window.appState.atk = [];
+                    if(!window.appState.penjualan) window.appState.penjualan = [];
+                    if(!window.appState.pengaturan) window.appState.pengaturan = {};
+                    if(!window.appState.pengaturan.operators) window.appState.pengaturan.operators = [];
+                    
+                } catch(e) { console.error("Gagal load state", e); }
             }
+        };
+
+        window.syncKeCloud = () => {
+            clearTimeout(window.syncTimeout);
+            const status = document.getElementById('cloud-sync-status');
+            if(status) {
+                status.classList.remove('opacity-0');
+                status.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Menyimpan ke Drive...';
+            }
+            window.syncTimeout = setTimeout(() => {
+                fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'sync', data: window.appState }) })
+                .then(() => { if(status) { status.innerHTML = '<i class="fa-solid fa-check text-green-400 mr-2"></i> Tersimpan di Cloud'; setTimeout(() => status.classList.add('opacity-0'), 2000); } })
+                .catch(err => { console.error(err); if(status) { status.innerHTML = '<i class="fa-solid fa-cloud-arrow-up text-gray-400 mr-2"></i> Disimpan Lokal'; setTimeout(() => status.classList.add('opacity-0'), 2000); } });
+            }, 1500);
+        };
+
+        window.initApp = () => {
+            window.loadState();
             
-            const allowDeleteMapel = window.currentUser && (isAdmin || window.currentUser.permissions.mapel);
-            if(document.getElementById('table-mapel')) { document.getElementById('table-mapel').innerHTML = st.mapel.map(m => `<tr class="hover:bg-gray-50"><td class="px-6 py-4 font-medium text-gray-900 text-xs">${m.kelas || '-'}</td><td class="px-6 py-4 font-bold text-sm">${m.nama}</td><td class="px-6 py-4 text-right">${allowDeleteMapel ? `<button onclick="window.hapusMapel('${m.id}')" class="text-red-500"><i class="fa-solid fa-trash"></i></button>` : ''}</td></tr>`).join(''); }
-
-            if(document.getElementById('table-atk')) { document.getElementById('table-atk').innerHTML = st.atk.map(a => `<tr class="hover:bg-gray-50"><td class="px-3 py-2"><div class="font-bold text-xs text-gray-800">${a.nama_barang}</div><div class="text-[9px] text-gray-500 uppercase">${a.kode_barang || '-'}</div></td><td class="px-2 py-2 text-center text-xs font-bold ${a.stok < 5 ? 'text-red-500 bg-red-50 px-2 py-1 rounded' : 'text-gray-700'}">${a.stok}</td><td class="px-3 py-2 text-right"><div class="text-xs font-bold text-orange-600">${window.formatRp(a.harga_jual)}</div></td><td class="px-2 py-2 text-center"><button onclick="window.openKonfirmasiKasir('${a.id}')" class="text-white bg-gray-800 p-1.5 rounded-md"><i class="fa-solid fa-cart-plus"></i></button></td></tr>`).join(''); }
-            if(document.getElementById('kopontren-income-today')) document.getElementById('kopontren-income-today').innerText = window.formatRp(st.penjualan ? st.penjualan.filter(p => p.tanggal.startsWith(prefixHarian)).reduce((a,b) => a + (b.total || 0), 0) : 0);
-
-            const elSelectGuruIdCard = document.getElementById('select-guru-idcard');
-            if (elSelectGuruIdCard) { let opts = `<option value="">-- Pilih Nama Guru --</option>`; st.guru.forEach(g => { opts += `<option value="${g.id}">${g.nama} - ${g.jabatan}</option>`; }); elSelectGuruIdCard.innerHTML = opts; }
-
-            if(document.getElementById('list-operator') && isAdmin) {
-                const ops = st.pengaturan.operators || [];
-                document.getElementById('list-operator').innerHTML = ops.length === 0 ? '<p class="text-xs text-gray-500 py-4">Belum ada operator.</p>' : ops.map(o => `<div class="flex items-center justify-between bg-white border border-gray-200 p-3 rounded-lg shadow-sm"><div><h5 class="font-bold text-sm text-gray-800">${o.username}</h5><p class="text-[10px] text-gray-500">Operator Akun</p></div><div class="flex gap-2"><button type="button" onclick="window.editOperator('${o.id}')" class="bg-blue-50 text-blue-600 hover:bg-blue-100 p-2 rounded-md"><i class="fa-solid fa-pen text-xs"></i></button><button type="button" onclick="window.hapusOperator('${o.id}')" class="bg-red-50 text-red-600 hover:bg-red-100 p-2 rounded-md"><i class="fa-solid fa-trash text-xs"></i></button></div></div>`).join('');
+            // Set pengaturan form
+            document.getElementById('setting-struk-judul').value = window.appState.pengaturan.struk_judul || '';
+            document.getElementById('setting-struk-alamat').value = window.appState.pengaturan.struk_alamat || '';
+            document.getElementById('setting-struk-ucapan').value = window.appState.pengaturan.struk_ucapan || '';
+            document.getElementById('setting-spp-nominal').value = window.appState.pengaturan.spp_nominal || '';
+            document.getElementById('setting-admin-user').value = window.appState.pengaturan.admin_user || 'admin';
+            
+            if(window.appState.pengaturan.kop_rapor) {
+                document.getElementById('preview-kop-img').src = window.appState.pengaturan.kop_rapor;
+                document.getElementById('preview-kop-img').classList.remove('hidden');
+                document.getElementById('preview-kop-placeholder').classList.add('hidden');
             }
 
-            if(st.pengaturan) {
-                const p = st.pengaturan;
-                if(document.getElementById('setting-struk-judul')) document.getElementById('setting-struk-judul').value = p.struk_judul || '';
-                if(document.getElementById('setting-struk-alamat')) document.getElementById('setting-struk-alamat').value = p.struk_alamat || '';
-                if(document.getElementById('setting-struk-ucapan')) document.getElementById('setting-struk-ucapan').value = p.struk_ucapan || '';
-                if(document.getElementById('setting-admin-user')) document.getElementById('setting-admin-user').value = p.admin_user || 'admin';
-                if(document.getElementById('setting-spp-nominal')) document.getElementById('setting-spp-nominal').value = p.spp_nominal || '';
-                if(document.getElementById('preview-struk-judul')) document.getElementById('preview-struk-judul').innerText = p.struk_judul || 'MADRASAH';
-                if(document.getElementById('preview-struk-alamat')) document.getElementById('preview-struk-alamat').innerText = p.struk_alamat || 'Alamat Madrasah';
-                
-                if (p.kop_rapor) { 
-                    if(document.getElementById('preview-kop-img')) { 
-                        document.getElementById('preview-kop-img').src = p.kop_rapor; 
-                        document.getElementById('preview-kop-img').classList.remove('hidden'); 
-                        document.getElementById('preview-kop-placeholder').classList.add('hidden'); 
-                    } 
-                }
-
-                // --- TAMBAHKAN KODE INI UNTUK MEMUAT BACKGROUND KARTU ID ---
+            if(window.appState.pengaturan.bg_idcard) {
                 const cardArea = document.getElementById('printable-area');
                 const themeHeader = document.getElementById('themeHeader');
                 const cardBody = document.querySelector('.id-card-body');
-                
-                if (cardArea && themeHeader && cardBody) {
-                    if (p.bg_idcard) {
-                        cardArea.style.backgroundImage = `url(${p.bg_idcard})`;
-                        cardArea.style.backgroundSize = 'cover';
-                        cardArea.style.backgroundPosition = 'center';
-                        themeHeader.style.backgroundColor = 'transparent'; 
-                        themeHeader.style.textShadow = '1px 1px 3px rgba(0,0,0,0.8)';
-                        cardBody.style.backgroundColor = 'transparent';
-                    } else {
-                        cardArea.style.backgroundImage = 'none'; 
-                        themeHeader.style.backgroundColor = '#0ea5e9'; 
-                        themeHeader.style.textShadow = 'none'; 
-                        cardBody.style.backgroundColor = 'transparent';
-                    }
-                }
-                // -----------------------------------------------------------
+                cardArea.style.backgroundImage = `url(${window.appState.pengaturan.bg_idcard})`;
+                cardArea.style.backgroundSize = 'cover';
+                cardArea.style.backgroundPosition = 'center';
+                themeHeader.style.backgroundColor = 'transparent'; 
+                themeHeader.style.textShadow = '1px 1px 3px rgba(0,0,0,0.8)';
+                cardBody.style.backgroundColor = 'transparent';
             }
 
-        window.konfirmasiReset = (tipe) => {
-            if (!window.currentUser || window.currentUser.role !== 'admin') return window.showAlert('Ditolak', 'Hanya Admin Utama yang bisa mereset data.', 'error');
-            let pesan = tipe === 'transaksi' ? "Seluruh transaksi Tabungan, SPP, dan Kopontren akan dihapus (Saldo siswa 0). Lanjutkan?" : tipe === 'master' ? "Menghapus data Master (Siswa, Guru, Mapel, Nilai). Yakin?" : "FACTORY RESET! Semua data dihapus. Yakin?";
-            window.showConfirm("Konfirmasi Reset", pesan, () => window.prosesResetData(tipe));
-        };
-
-        window.prosesResetData = (tipe) => {
-            if (tipe === 'transaksi') { window.appState.tabungan = []; window.appState.spp = []; window.appState.penjualan = []; window.appState.siswa.forEach(s => s.saldo = 0); } 
-            else if (tipe === 'master') { window.appState.siswa = []; window.appState.guru = []; window.appState.mapel = []; window.appState.nilai = []; } 
-            else if (tipe === 'semua') { window.appState.guru = []; window.appState.siswa = []; window.appState.mapel = []; window.appState.nilai = []; window.appState.tabungan = []; window.appState.spp = []; window.appState.atk = []; window.appState.penjualan = []; }
-            window.saveState(); window.updateAllViews(); document.getElementById('modal-pengaturan').classList.replace('flex', 'hidden'); window.showAlert('Berhasil', 'Data direset.', 'success');
-        };
-
-        const initCloudDatabase = async () => {
-            const loader = document.getElementById('startup-loader'); const syncBadge = document.getElementById('cloud-sync-status');
-            
-            if (SCRIPT_URL === 'GANTI_DENGAN_URL_APPS_SCRIPT_ANDA_DI_SINI' || SCRIPT_URL === '') {
-                loader.classList.replace('flex', 'hidden'); console.warn("Jalankan mode offline."); window.updateAllViews(); return;
-            }
-
-            try {
-                const response = await fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'GET_ALL' }), redirect: 'follow' });
-                const result = await response.json();
-                if (result.success && result.data) {
-                    window.appState = { ...window.appState, ...result.data };
-                    ['guru', 'siswa', 'mapel', 'nilai', 'tabungan', 'spp', 'atk', 'penjualan'].forEach(k => { if (!window.appState[k]) window.appState[k] = []; });
-                }
-                
-                loader.classList.replace('flex', 'hidden'); window.updateAllViews();
-
-                window.saveState = async () => {
-                    syncBadge.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Menyimpan ke Drive...'; syncBadge.classList.remove('opacity-0');
-                    if (syncTimeout) clearTimeout(syncTimeout);
-                    syncTimeout = setTimeout(async () => {
-                        try {
-                            const res = await fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'SYNC_ALL', payload: window.appState }), redirect: 'follow' });
-                            const json = await res.json();
-                            if (json.success) syncBadge.innerHTML = '<i class="fa-solid fa-check mr-2 text-green-400"></i>Data Tersimpan!';
-                            else throw new Error(json.error);
-                        } catch(e) { console.warn("Gagal simpan:", e); syncBadge.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-2 text-red-400"></i>Mode Offline (Gagal Simpan)'; }
-                        setTimeout(() => syncBadge.classList.add('opacity-0'), 2500);
-                    }, 1000); 
-                };
-            } catch (error) {
-                console.warn("Inisialisasi Cloud Gagal (CORS/Offline):", error);
-                loader.classList.replace('flex', 'hidden');
-                
-                // Menyiapkan saveState lokal agar tidak error jika dijalankan tanpa koneksi / diblokir browser
-                window.saveState = async () => {
-                    syncBadge.innerHTML = '<i class="fa-solid fa-server mr-2 text-yellow-400"></i>Tersimpan di Lokal';
-                    syncBadge.classList.remove('opacity-0');
-                    if (syncTimeout) clearTimeout(syncTimeout);
-                    syncTimeout = setTimeout(() => syncBadge.classList.add('opacity-0'), 2000);
-                };
-                
-                window.updateAllViews();
-            }
-        };
-
-        window.onload = () => { 
-            initCloudDatabase(); 
+            // Inisialisasi barcode default
             if (typeof window.generateBarcode === 'function') {
-                window.generateBarcode("XXXXXX"); 
+                window.generateBarcode("XXXXXX");
             }
+            
+            // Sembunyikan loader
+            setTimeout(() => {
+                const loader = document.getElementById('startup-loader');
+                if (loader) {
+                    loader.style.opacity = '0';
+                    loader.style.transition = 'opacity 0.5s ease';
+                    setTimeout(() => loader.remove(), 500);
+                }
+            }, 1500);
         };
+
+        // Mulai aplikasi
+        window.addEventListener('DOMContentLoaded', window.initApp);
     </script>
 </body>
 </html>
