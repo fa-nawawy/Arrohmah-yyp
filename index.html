@@ -1221,32 +1221,48 @@
             } 
         };
 
-        // --- Fungsi Upload Background ID Card ---
-        window.changeBackground = (event) => {
-            const file = event.target.files[0];
-            const cardArea = document.getElementById('printable-area');
-            const themeHeader = document.getElementById('themeHeader');
-            const cardBody = document.querySelector('.id-card-body');
+     // --- Fungsi Upload & Simpan Background ID Card ---
+window.changeBackground = (event) => {
+    const file = event.target.files[0];
+    const cardArea = document.getElementById('printable-area');
+    const themeHeader = document.getElementById('themeHeader');
+    const cardBody = document.querySelector('.id-card-body');
+    
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const base64Image = e.target.result;
             
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    cardArea.style.backgroundImage = `url(${e.target.result})`;
-                    cardArea.style.backgroundSize = 'cover';
-                    cardArea.style.backgroundPosition = 'center';
-                    
-                    themeHeader.style.backgroundColor = 'transparent'; 
-                    themeHeader.style.textShadow = '1px 1px 3px rgba(0,0,0,0.8)';
-                    cardBody.style.backgroundColor = 'transparent';
-                }; 
-                reader.readAsDataURL(file);
-            } else {
-                cardArea.style.backgroundImage = 'none'; 
-                themeHeader.style.backgroundColor = '#0ea5e9'; 
-                themeHeader.style.textShadow = 'none'; 
-                cardBody.style.backgroundColor = 'transparent';
-            }
-        };
+            // 1. Terapkan ke tampilan
+            cardArea.style.backgroundImage = `url(${base64Image})`;
+            cardArea.style.backgroundSize = 'cover';
+            cardArea.style.backgroundPosition = 'center';
+            themeHeader.style.backgroundColor = 'transparent'; 
+            themeHeader.style.textShadow = '1px 1px 3px rgba(0,0,0,0.8)';
+            cardBody.style.backgroundColor = 'transparent';
+
+            // 2. Simpan ke pengaturan database
+            if(!window.appState.pengaturan) window.appState.pengaturan = {};
+            window.appState.pengaturan.bg_idcard = base64Image;
+            window.saveState();
+            
+            window.showAlert('Berhasil', 'Background kartu ID berhasil disimpan.', 'success');
+        }; 
+        reader.readAsDataURL(file);
+    } else {
+        // Hapus tampilan background
+        cardArea.style.backgroundImage = 'none'; 
+        themeHeader.style.backgroundColor = '#0ea5e9'; 
+        themeHeader.style.textShadow = 'none'; 
+        cardBody.style.backgroundColor = 'transparent';
+
+        // Hapus dari pengaturan database
+        if(window.appState.pengaturan && window.appState.pengaturan.bg_idcard) {
+            window.appState.pengaturan.bg_idcard = '';
+            window.saveState();
+        }
+    }
+};
 
         window.autofillIdCard = (guruId) => {
             const defaultAvatar = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23cbd5e1'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>";
@@ -1887,9 +1903,36 @@
                 if(document.getElementById('preview-struk-judul')) document.getElementById('preview-struk-judul').innerText = p.struk_judul || 'MADRASAH';
                 if(document.getElementById('preview-struk-alamat')) document.getElementById('preview-struk-alamat').innerText = p.struk_alamat || 'Alamat Madrasah';
                 
-                if (p.kop_rapor) { if(document.getElementById('preview-kop-img')) { document.getElementById('preview-kop-img').src = p.kop_rapor; document.getElementById('preview-kop-img').classList.remove('hidden'); document.getElementById('preview-kop-placeholder').classList.add('hidden'); } }
+                if (p.kop_rapor) { 
+                    if(document.getElementById('preview-kop-img')) { 
+                        document.getElementById('preview-kop-img').src = p.kop_rapor; 
+                        document.getElementById('preview-kop-img').classList.remove('hidden'); 
+                        document.getElementById('preview-kop-placeholder').classList.add('hidden'); 
+                    } 
+                }
+
+                // --- TAMBAHKAN KODE INI UNTUK MEMUAT BACKGROUND KARTU ID ---
+                const cardArea = document.getElementById('printable-area');
+                const themeHeader = document.getElementById('themeHeader');
+                const cardBody = document.querySelector('.id-card-body');
+                
+                if (cardArea && themeHeader && cardBody) {
+                    if (p.bg_idcard) {
+                        cardArea.style.backgroundImage = `url(${p.bg_idcard})`;
+                        cardArea.style.backgroundSize = 'cover';
+                        cardArea.style.backgroundPosition = 'center';
+                        themeHeader.style.backgroundColor = 'transparent'; 
+                        themeHeader.style.textShadow = '1px 1px 3px rgba(0,0,0,0.8)';
+                        cardBody.style.backgroundColor = 'transparent';
+                    } else {
+                        cardArea.style.backgroundImage = 'none'; 
+                        themeHeader.style.backgroundColor = '#0ea5e9'; 
+                        themeHeader.style.textShadow = 'none'; 
+                        cardBody.style.backgroundColor = 'transparent';
+                    }
+                }
+                // -----------------------------------------------------------
             }
-        };
 
         window.konfirmasiReset = (tipe) => {
             if (!window.currentUser || window.currentUser.role !== 'admin') return window.showAlert('Ditolak', 'Hanya Admin Utama yang bisa mereset data.', 'error');
